@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <!-- קישור לפונט Nunito -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700&display=swap">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* הגדרות CSS גלובאליות */
+        :root{
+            --green:#FA2424;
+            --black:#192a56;
+            --light-color:#666;
+            --box-shadow:0 .5rem 1.5rem rgba(0,0,0,.1);
+        }
+
+        *{
+            font-family: 'Nunito', sans-serif;
+            margin:0; padding:0;
+            box-sizing: border-box;
+            text-decoration: none;
+            outline: none; border:none;
+            text-transform: capitalize;
+            transition: all .2s linear;
+        } 
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            display: flex;
+            width: 80%;
+            max-width: 900px;
+            background: #fff;
+            box-shadow: var(--box-shadow);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .swiper-container {
+            width: 50%;
+            height: 100%;
+        }
+
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .login-form {
+            width: 50%;
+            padding: 30px;
+            box-sizing: border-box;
+        }
+
+        .login-form h1 {
+            margin-bottom: 30px;
+            font-size: 24px;
+            text-align: center;
+            color: var(--black);
+        }
+
+        .inputBox {
+            margin-bottom: 15px;
+        }
+
+        .inputBox .input span {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--light-color);
+        }
+
+        .inputBox .input input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: var(--green);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background: var(--black);
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="./images/food8.jpg" alt="Food Image 8"></div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <div class="login-form">
+        <h1>Login</h1>
+        <form action="your_login_handler_url" method="POST">
+            <div class="inputBox">
+                <div class="input">
+                    <span>Username</span>
+                    <input type="text" name="username" placeholder="Enter your username" required>
+                </div>
+            </div>
+            <div class="inputBox">
+                <div class="input">
+                    <span>Password</span>
+                    <input type="password" name="password" placeholder="Enter your password" required>
+                </div>
+            </div>
+            <div class="inputBox">
+                <div class="input">
+                    <span>Email</span>
+                    <input type="email" name="email" placeholder="Enter your email" required>
+                </div>
+            </div>
+
+            <input type="submit" value="Login" class="btn">
+
+        </form>
+    </div>
+</div>
+
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+    var swiper = new Swiper('.swiper-container', {
+        loop: true,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+    });
+</script>
+
+</body>
+</html>

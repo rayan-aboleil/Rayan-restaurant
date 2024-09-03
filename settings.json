@@ -1,0 +1,35 @@
+{
+    "liveServer.settings.port": 5501,
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "xprotocol",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 33060,
+            "driver": "MySQL",
+            "name": "mysql",
+            "database": "project",
+            "username": "root",
+            "connectionTimeout": 30,
+            "password": "rotrot"
+        },
+        {
+            "mysqlOptions": {
+                "authProtocol": "xprotocol",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 33060,
+            "driver": "MySQL",
+            "name": "mysql",
+            "database": "new_schema",
+            "username": "rotrot",
+            "password": "rotrot",
+            "connectionTimeout": 30
+        }
+    ]
+}
