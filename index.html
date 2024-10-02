@@ -4,10 +4,119 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Food Website Design</title>
+    <title>Rayan restaurant</title>
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* Feedback Section Styling */
+        section.feedback {
+            padding: 3rem 0;
+            background: #e6391f;
+            text-align: center;
+        }
+
+        section.feedback .heading {
+            color: #ffffff;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        section.feedback .sub-heading {
+            color: #e4e4e4;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+        }
+
+        section.feedback form {
+            width: 60%;
+            margin: 0 auto;
+            background: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        section.feedback .inputBox {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        section.feedback .inputBox .input {
+            flex: 1;
+            margin: 0 0.5rem;
+            text-align: left;
+        }
+
+        section.feedback .inputBox .input span {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        section.feedback .inputBox .input input,
+        section.feedback .inputBox .input textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 1.1rem;
+            color: #333;
+            background: #f7f7f7;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        section.feedback .inputBox .input textarea {
+            resize: none;
+            height: 100px;
+        }
+
+        section.feedback .stars {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        section.feedback .stars input {
+            display: none;
+        }
+
+        section.feedback .stars label {
+            font-size: 2rem;
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        section.feedback .stars input:checked ~ label {
+            color: #ff6347;
+        }
+
+        section.feedback .stars label:hover,
+        section.feedback .stars label:hover ~ label {
+            color: #ff6347;
+        }
+
+        section.feedback .btn {
+            display: inline-block;
+            padding: 10px 30px;
+            background-color: #ff6347;
+            color: #fff;
+            border-radius: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background 0.3s ease;
+            font-size: 1rem;
+        }
+
+        section.feedback .btn:hover {
+            background-color: #e55335;
+        }
+
+    </style>
 
 </head>
 <body>
@@ -22,14 +131,14 @@
         <a href="#menu">menu</a>
         <a href="#review">review</a>
         <a href="#order">order</a>
-        <a href="login.html">Login / Sign Up</a>
+        <a href="login.html">Logout</a>
     </nav>
 
     <div class="icons">
         <i class="fas fa-bars" id="menu-bars"></i>
         <i class="fas fa-search" id="search-icon"></i>
-        <a href="#" class="fas fa-heart"></a>
-        <a href="#" class="fas fa-shopping-cart"></a>
+        <a href="#menu" class="fas fa-heart"></a>
+        <a href="#order" class="fas fa-shopping-cart"></a>
     </div>
 
 </header>
@@ -39,6 +148,7 @@
     <label for="search-box" class="fas fa-search"></label>
     <i class="fas fa-times" id="close"></i>
 </form>
+
 <section class="home" id="home">
 
     <div class="swiper-container home-slider">
@@ -403,7 +513,7 @@
     </div>
 
 </section>
-
+<% ...;. %>
 
 <section class="review" id="review">
 
@@ -527,6 +637,57 @@
 
 </section>
 
+<section class="feedback" id="feedback">
+    <h3 class="sub-heading">Leave Your Feedback</h3>
+    <h1 class="heading">We Value Your Opinion</h1>
+
+    <form action="/submit_feedback" method="POST">
+
+        <div class="inputBox">
+            <div class="input">
+                <span>Username</span>
+                <input type="text" name="username" placeholder="Enter your username" required>
+            </div>
+            <div class="input">
+                <span>Password</span>
+                <input type="password" name="password" placeholder="Enter your password" required>
+            </div>
+        </div>
+
+        <div class="inputBox">
+            <div class="input">
+                <span>Comments</span>
+                <textarea name="comments" placeholder="Write your feedback here..." cols="30" rows="10" required></textarea>
+            </div>
+        </div>
+
+        <div class="inputBox">
+            <div class="input">
+                <span>Rating</span>
+                <div class="stars">
+                    <input type="radio" name="rating" value="1" id="star1">
+                    <label for="star1" class="fas fa-star"></label>
+
+                    <input type="radio" name="rating" value="2" id="star2">
+                    <label for="star2" class="fas fa-star"></label>
+
+                    <input type="radio" name="rating" value="3" id="star3">
+                    <label for="star3" class="fas fa-star"></label>
+
+                    <input type="radio" name="rating" value="4" id="star4">
+                    <label for="star4" class="fas fa-star"></label>
+
+                    <input type="radio" name="rating" value="5" id="star5">
+                    <label for="star5" class="fas fa-star"></label>
+                </div>
+            </div>
+        </div>
+
+        <input type="submit" value="Submit Feedback" class="btn">
+
+    </form>
+</section>
+
 
 <section class="footer">
     <div class="box-container">
@@ -564,7 +725,7 @@
         
         </div>
     </div>
-    <div class="credit"> Created by <span>Jimmy 2021</span> </div>
+    <div class="credit"> Created by <span>Rayan 2024 </span> </div>
 </section>
 
 
@@ -572,30 +733,35 @@
     <img src="images/loader.gif" alt="">
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-
-<!-- custom js file link  -->
 <script src="js/script.js"></script>
+<h1 id="greeting"></h1>
 
+
+  <script>
+      // בקשה לקבלת שם המשתמש מהשרת
+      fetch('/get-username')
+          .then(response => response.json())
+          .then(data => {
+              // מציג את שם המשתמש שנשמר ב-session או 'Guest' אם אין שם משתמש
+              document.getElementById('greeting').textContent = 'HI ' + data.username;
+          })
+          .catch(error => {
+              console.error('Error fetching username:', error);
+          });
+  </script>
+
+ 
+  <script>
+    // שליפת שם המשתמש מהשרת
+    fetch('/get-username')
+        .then(response => response.json())
+        .then(data => {
+            if (data.username) {
+                document.getElementById('greeting').textContent = 'HI, ' + data.username;
+            }
+        });
+
+</script>
 </body>
 </html>
