@@ -1,12 +1,12 @@
 // db.js
-const mysql = require('mysql2');
+const mysql = require('mysql');
 
 // הגדרת החיבור למסד הנתונים
 const connection = mysql.createConnection({
   host: 'localhost',
-  user: 'rotrot',
-  password: 'rotrot',
-  database: 'new_schema'
+  user: 'root',
+  password: 'root',
+  database: 'rayan'
 });
 
 // בדיקת החיבור
@@ -15,4 +15,4 @@ connection.connect((err) => {
   console.log('Connected to the database!');
 });
 
-module.exports = connection;
+     module.exports = connection;
