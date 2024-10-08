@@ -1,767 +1,854 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rayan restaurant</title>
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
-
-    <style>
-        /* Feedback Section Styling */
-        section.feedback {
-            padding: 3rem 0;
-            background: #e6391f;
-            text-align: center;
-        }
-
-        section.feedback .heading {
-            color: #ffffff;
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        section.feedback .sub-heading {
-            color: #e4e4e4;
-            font-size: 1.8rem;
-            margin-bottom: 2rem;
-        }
-
-        section.feedback form {
-            width: 60%;
-            margin: 0 auto;
-            background: #fff;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        section.feedback .inputBox {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 1.5rem;
-        }
-
-        section.feedback .inputBox .input {
-            flex: 1;
-            margin: 0 0.5rem;
-            text-align: left;
-        }
-
-        section.feedback .inputBox .input span {
-            font-size: 1.2rem;
-            color: #555;
-            margin-bottom: 0.5rem;
-            display: inline-block;
-        }
-
-        section.feedback .inputBox .input input,
-        section.feedback .inputBox .input textarea {
-            width: 100%;
-            padding: 10px;
-            font-size: 1.1rem;
-            color: #333;
-            background: #f7f7f7;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            outline: none;
-        }
-
-        section.feedback .inputBox .input textarea {
-            resize: none;
-            height: 100px;
-        }
-
-        section.feedback .stars {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-        }
-
-        section.feedback .stars input {
-            display: none;
-        }
-
-        section.feedback .stars label {
-            font-size: 2rem;
-            color: #ddd;
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-
-        section.feedback .stars input:checked ~ label {
-            color: #ff6347;
-        }
-
-        section.feedback .stars label:hover,
-        section.feedback .stars label:hover ~ label {
-            color: #ff6347;
-        }
-
-        section.feedback .btn {
-            display: inline-block;
-            padding: 10px 30px;
-            background-color: #ff6347;
-            color: #fff;
-            border-radius: 5px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: background 0.3s ease;
-            font-size: 1rem;
-        }
-
-        section.feedback .btn:hover {
-            background-color: #e55335;
-        }
-
-    </style>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>𝑅𝒶𝓎𝒶𝓃 𝑅𝑒𝓈𝓉𝓊𝓇𝒶𝓃𝓉</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .header {
+      display: flex;
+      align-items: center;
+      padding: 20px;
+     
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: white;
+      font-size: 2.5em; /* Font size for the restaurant name */
+      font-family: 'Brush Script MT', cursive; /* Stylish cursive font */
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+    }
+    .logo img {
+      margin-right: 15px; /* Space between logo image and text */
+    }
+    
+  </style>
 </head>
+
 <body>
-<header>
-
-    <a href="#" class="logo"><i class="fas fa-utensils"></i>Rayan restaurant</a>
-
+  <!-- header section starts -->
+  <header class="header">
+    <a href="#" class="logo">
+      <img
+        src="https://static.vecteezy.com/system/resources/previews/010/653/360/original/spice-meat-balls-in-the-cup-silhouette-of-the-noodle-bowl-for-logo-or-graphic-design-element-bakso-illustration-vector.jpg"
+        alt="logo" height="100px" width="80px">
+      𝑅𝒶𝓎𝒶𝓃 𝑅𝑒𝓈𝓉𝓊𝓇𝒶𝓃𝓉
+    </a>
+  
+    <h2 id="greeting">Welcome</h2>
     <nav class="navbar">
-        <a class="active" href="#home">home</a>
-        <a href="#dishes">dishes</a>
-        <a href="#about">about</a>
-        <a href="#menu">menu</a>
-        <a href="#review">review</a>
-        <a href="#order">order</a>
-        <a href="login.html">Logout</a>
-    </nav>
+     
+        <a href="#home"><i class="fas fa-home"></i> Home</a>
+        <a href="#about"><i class="fas fa-info-circle"></i> About</a>
+        <a href="#menu"><i class="fas fa-utensils"></i> Menu</a>
+        <a href="#feedback"><i class="fas fa-box"></i> Feedback</a>
+        <a href="#review"><i class="fas fa-star"></i> Review</a>
+        <a href="#contact"><i class="fas fa-phone"></i> Contact</a>
+        <a href="#blogs"><i class="fas fa-blog"></i> Blogs</a>
+      </nav>
+    </header>
 
-    <div class="icons">
-        <i class="fas fa-bars" id="menu-bars"></i>
-        <i class="fas fa-search" id="search-icon"></i>
-        <a href="#menu" class="fas fa-heart"></a>
-        <a href="#order" class="fas fa-shopping-cart"></a>
-    </div>
+    
+  <!-- header section ends -->
 
-</header>
-
-<form action="" id="search-form">
-    <input type="search" placeholder="search here..." name="" id="search-box">
-    <label for="search-box" class="fas fa-search"></label>
-    <i class="fas fa-times" id="close"></i>
-</form>
-
-<section class="home" id="home">
-
-    <div class="swiper-container home-slider">
-
-        <div class="swiper-wrapper wrapper">
-
-            <div class="swiper-slide slide">
-                <div class="content">
-                    <span>our special dish</span>
-                    <h3>Burger</h3>
-                    <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit natus dolor cumque?</p> -->
-                    <a href="#order" class="btn">order now</a>
-                </div>
-                <div class="image">
-                    <img src="images/home-img-1.png" alt="">
-                </div>
-            </div>
-
-            <div class="swiper-slide slide">
-                <div class="content">
-                    <span>our special dish</span>
-                    <h3>hot pizza</h3>
-                    <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit natus dolor cumque?</p> -->
-                    <a href="#order" class="btn">order now</a>
-                </div>
-                <div class="image">
-                    <img src="images/home-img-2.png" alt="">
-                </div>
-            </div>
-
-            <div class="swiper-slide slide">
-                <div class="content">
-                    <span>our special dish</span>
-                    <h3>smoked meal</h3>
-                    <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit natus dolor cumque?</p> -->
-                    <a href="#order" class="btn">order now</a>
-                </div>
-                <div class="image">
-                    <img src="images/home-img-3.png" alt="">
-                </div>
-            </div>
-
-        </div>
-
-        <div class="swiper-pagination"></div>
-
-    </div>
-
+  <!-- home section starts -->
+ 
+  <section class="home" id="home">
+  <div class="content">
+    <h3>Experience Gourmet Flavors</h3>  
+    <p>Welcome to our culinary haven, where we bring you an unforgettable journey of flavors, textures, and aromas. Our food ordering platform offers a meticulously crafted menu featuring an extensive variety of dishes that cater to every palate. Whether you are a fan of traditional classics or eager to explore innovative fusion cuisine, you will find a dish that satisfies your cravings. From fresh, locally sourced vegetables to the finest cuts of meat, every ingredient is carefully selected to ensure the highest quality. Our offerings span a wide range of categories, with delicious options for both vegetarians and non-vegetarians, all prepared by our team of expert chefs with passion and attention to detail. With a seamless ordering experience, we bring the restaurant-quality meal right to your doorstep, making it easier than ever to indulge in gourmet food from the comfort of your home.</p>
+    <a href="login.html" class="btn">LOGOUT</a>
+  </div>
 </section>
 
-<section class="dishes" id="dishes">
 
-    <h3 class="sub-heading"> our dishes </h3>
-    <h1 class="heading"> popular dishes </h1>
+  <!-- home section ends -->
 
-    <div class="box-container">
-
-        <div class="box">
-            <a href="#" class="fas fa-heart"></a>
-            <a href="#" class="fas fa-eye"></a>
-            <img src="images/dish-1.png" alt="">
-            <h3>Burger</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <span>$23.99</span>
-            <a href="#" class="btn">add to cart</a>
-        </div>
-
-        <div class="box">
-            <a href="#" class="fas fa-heart"></a>
-            <a href="#" class="fas fa-eye"></a>
-            <img src="images/dish-2.png" alt="">
-            <h3>Chicken nugget</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <span>$20.99</span>
-            <a href="#" class="btn">add to cart</a>
-        </div>
-
-        <div class="box">
-            <a href="#" class="fas fa-heart"></a>
-            <a href="#" class="fas fa-eye"></a>
-            <img src="images/dish-3.png" alt="">
-            <h3>Chicken</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <span>$25.99</span>
-            <a href="#" class="btn">add to cart</a>
-        </div>
-
-        <div class="box">
-            <a href="#" class="fas fa-heart"></a>
-            <a href="#" class="fas fa-eye"></a>
-            <img src="images/dish-4.png" alt="">
-            <h3>Pizza</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <span>$33.99</span>
-            <a href="#" class="btn">add to cart</a>
-        </div>
-
-        <div class="box">
-            <a href="#" class="fas fa-heart"></a>
-            <a href="#" class="fas fa-eye"></a>
-            <img src="images/dish-5.png" alt="">
-            <h3>Chocolate cake</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <span>$15.99</span>
-            <a href="#" class="btn">add to cart</a>
-        </div>
-
-        <div class="box">
-            <a href="#" class="fas fa-heart"></a>
-            <a href="#" class="fas fa-eye"></a>
-            <img src="images/dish-6.png" alt="">
-            <h3>Fried chicken</h3>
-            <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-            </div>
-            <span>$20.99</span>
-            <a href="#" class="btn">add to cart</a>
-        </div>
-
-    </div>
-
-</section>
-
-<section class="about" id="about">
-
-    <h3 class="sub-heading"> about us </h3>
-    <h1 class="heading"> why choose us? </h1>
+  <!-- about section starts -->
+  <section class="about" id="about">
+    <h1 class="heading"> <span>about</span> us </h1>
 
     <div class="row">
-
-        <div class="image">
-            <img src="images/about-img.png" alt="">
-        </div>
-
-        <div class="content">
-            <h3>best food in the country</h3>
-            <div class="icons-container">
-                <div class="icons">
-                    <i class="fas fa-shipping-fast"></i>
-                    <span>free delivery</span>
-                </div>
-                <div class="icons">
-                    <i class="fas fa-dollar-sign"></i>
-                    <span>easy payments</span>
-                </div>
-                <div class="icons">
-                    <i class="fas fa-headset"></i>
-                    <span>service</span>
-                </div>
-            </div>
-            <a href="#" class="btn">learn more</a>
-        </div>
-
-    </div>
-
-</section>
-
-
-<section class="menu" id="menu">
-
-    <h3 class="sub-heading"> our menu </h3>
-    <h1 class="heading"> today's speciality </h1>
-
-    <div class="box-container">
-
-        <div class="box">
-            <div class="image">
-                <img src="images/menu-1.jpg" alt="">
-                <a href="#" class="fas fa-heart"></a>
-            </div>
-            <div class="content">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>
-                <a href="#" class="btn">add to cart</a>
-                <span class="price">$30.99</span>
-            </div>
-        </div>
-
-        <div class="box">
-            <div class="image">
-                <img src="images/menu-2.jpg" alt="">
-                <a href="#" class="fas fa-heart"></a>
-            </div>
-            <div class="content">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>
-                <a href="#" class="btn">add to cart</a>
-                <span class="price">$25.99</span>
-            </div>
-        </div>
-
-        <div class="box">
-            <div class="image">
-                <img src="images/menu-3.jpg" alt="">
-                <a href="#" class="fas fa-heart"></a>
-            </div>
-            <div class="content">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>
-                <a href="#" class="btn">add to cart</a>
-                <span class="price">$22.99</span>
-            </div>
-        </div>
-
-        <div class="box">
-            <div class="image">
-                <img src="images/menu-4.jpg" alt="">
-                <a href="#" class="fas fa-heart"></a>
-            </div>
-            <div class="content">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>
-                <a href="#" class="btn">add to cart</a>
-                <span class="price">$20.99</span>
-            </div>
-        </div>
-
-        <div class="box">
-            <div class="image">
-                <img src="images/menu-5.jpg" alt="">
-                <a href="#" class="fas fa-heart"></a>
-            </div>
-            <div class="content">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>
-                <a href="#" class="btn">add to cart</a>
-                <span class="price">$18.99</span>
-            </div>
-        </div>
-
-        <div class="box">
-            <div class="image">
-                <img src="images/menu-6.jpg" alt="">
-                <a href="#" class="fas fa-heart"></a>
-            </div>
-            <div class="content">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>
-                <a href="#" class="btn">add to cart</a>
-                <span class="price">$17.99</span>
-            </div>
-        </div>
-
-        <div class="box">
-            <div class="image">
-                <img src="images/menu-7.jpg" alt="">
-                <a href="#" class="fas fa-heart"></a>
-            </div>
-            <div class="content">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>
-                <a href="#" class="btn">add to cart</a>
-                <span class="price">$11.99</span>
-            </div>
-        </div>
-
-        <div class="box">
-            <div class="image">
-                <img src="images/menu-8.jpg" alt="">
-                <a href="#" class="fas fa-heart"></a>
-            </div>
-            <div class="content">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>
-                <a href="#" class="btn">add to cart</a>
-                <span class="price">$15.99</span>
-            </div>
-        </div>
-
-        <div class="box">
-            <div class="image">
-                <img src="images/menu-9.jpg" alt="">
-                <a href="#" class="fas fa-heart"></a>
-            </div>
-            <div class="content">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>
-                <a href="#" class="btn">add to cart</a>
-                <span class="price">$12.99</span>
-            </div>
-        </div>
-
-    </div>
-
-</section>
-<% ...;. %>
-
-<section class="review" id="review">
-
-    <h3 class="sub-heading"> customer's review </h3>
-    <h1 class="heading"> what they say </h1>
-
-    <div class="swiper-container review-slider">
-
-        <div class="swiper-wrapper">
-
-            <div class="swiper-slide slide">
-                <i class="fas fa-quote-right"></i>
-                <div class="user">
-                    <img src="images/pic-1.jpg" alt="">
-                    <div class="user-info">
-                        <h3>Maged</h3>
-                        <div class="stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                        </div>
-                    </div>
-                </div>
-                <p>The food is excellent, generous portions and great prices. The service was fast and friendly. I highly recommended it if you’re in the Wellfleet area.</p>
-            </div>
-
-            <div class="swiper-slide slide">
-                <i class="fas fa-quote-right"></i>
-                <div class="user">
-                    <img src="images/pic-2.jpg" alt="">
-                    <div class="user-info">
-                        <h3>Salma</h3>
-                        <div class="stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                        </div>
-                    </div>
-                </div>
-                <p>The most amazing food ever! And also the staff is so nice to everyone. I highly recommend buying food from here. The best pizza ever.</p>
-            </div>
-
-            <div class="swiper-slide slide">
-                <i class="fas fa-quote-right"></i>
-                <div class="user">
-                    <img src="images/pic-3.jpg" alt="">
-                    <div class="user-info">
-                        <h3>Mustafa</h3>
-                        <div class="stars">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                        </div>
-                    </div>
-                </div>
-                <p>Has great pizza, the best! I am picky about my pizza. Their pies are huge, not two much sauce and a great mixture of cheeses.</p>
-            </div>
-    </div>
-    
-</section>
-
-
-
-<section class="order" id="order">
-
-    <h3 class="sub-heading"> order now </h3>
-    <h1 class="heading"> free and fast </h1>
-
-    <form action="">
-
-        <div class="inputBox">
-            <div class="input">
-                <span>your name</span>
-                <input type="text" placeholder="enter your name">
-            </div>
-            <div class="input">
-                <span>your number</span>
-                <input type="number" placeholder="enter your number">
-            </div>
-        </div>
-        <div class="inputBox">
-            <div class="input">
-                <span>your order</span>
-                <input type="text" placeholder="enter food name">
-            </div>
-            <div class="input">
-                <span>additional food</span>
-                <input type="test" placeholder="extra with food">
-            </div>
-        </div>
-        <div class="inputBox">
-            <div class="input">
-                <span>how musch</span>
-                <input type="number" placeholder="how many orders">
-            </div>
-            <div class="input">
-                <span>date and time</span>
-                <input type="datetime-local">
-            </div>
-        </div>
-        <div class="inputBox">
-            <div class="input">
-                <span>your address</span>
-                <textarea name="" placeholder="enter your address" id="" cols="30" rows="10"></textarea>
-            </div>
-            <div class="input">
-                <span>your message</span>
-                <textarea name="" placeholder="enter your message" id="" cols="30" rows="10"></textarea>
-            </div>
-        </div>
-
-        <input type="submit" value="order now" class="btn">
-
-    </form>
-
-</section>
-
-<section class="feedback" id="feedback">
-    <h3 class="sub-heading">Leave Your Feedback</h3>
-    <h1 class="heading">We Value Your Opinion</h1>
-
-    <form action="/submit_feedback" method="POST">
-
-        <div class="inputBox">
-            <div class="input">
-                <span>Username</span>
-                <input type="text" name="username" placeholder="Enter your username" required>
-            </div>
-            <div class="input">
-                <span>Password</span>
-                <input type="password" name="password" placeholder="Enter your password" required>
-            </div>
-        </div>
-
-        <div class="inputBox">
-            <div class="input">
-                <span>Comments</span>
-                <textarea name="comments" placeholder="Write your feedback here..." cols="30" rows="10" required></textarea>
-            </div>
-        </div>
-
-        <div class="inputBox">
-            <div class="input">
-                <span>Rating</span>
-                <div class="stars">
-                    <input type="radio" name="rating" value="1" id="star1">
-                    <label for="star1" class="fas fa-star"></label>
-
-                    <input type="radio" name="rating" value="2" id="star2">
-                    <label for="star2" class="fas fa-star"></label>
-
-                    <input type="radio" name="rating" value="3" id="star3">
-                    <label for="star3" class="fas fa-star"></label>
-
-                    <input type="radio" name="rating" value="4" id="star4">
-                    <label for="star4" class="fas fa-star"></label>
-
-                    <input type="radio" name="rating" value="5" id="star5">
-                    <label for="star5" class="fas fa-star"></label>
-                </div>
-            </div>
-        </div>
-
-        <input type="submit" value="Submit Feedback" class="btn">
-
-    </form>
-</section>
-
-
-<section class="footer">
-    <div class="box-container">
-        <div class="box">
-            <h3>locations</h3>
-            <a href="#">Egypt</a>
-            <a href="#">USA</a>
-            <a href="#">France</a>
-        </div>
-        <div class="box">
-            <h3>quick links</h3>
-            <a href="#home">home</a>
-            <a href="#dishes">dishes</a>
-            <a href="#about">about</a>
-            <a href="#menu">menu</a>
-            <a href="#review">review</a>
-            <a href="#order">order</a>
-            <!-- הוסף את הקישור הזה לעמוד ההתחברות וההרשמה -->
-            <a href="login.html">Login / Sign Up</a>
-        </div>
-        <div class="box">
-            <h3>contact info</h3>
-            <a href="#">01116986853</a>
-            <a href="#">01020133373</a>
-            <a href="#">ag242938@gmail.com</a>
-            <a href="#">fxgamal777@gmail.com</a>
-        </div>
-        <div class="box">
-            <h3>follow us</h3>
-            <a href="#">01116986853</a>
-            <a href="#">01020133373</a>
-            <a href="#">ag242938@gmail.com</a>
-            <a href="#">fxgamal777@gmail.com</a>
-            <a href="mailto:ABOLEILRAYAN0@gmail.com">ABOLEILRAYAN0@gmail.com</a>
+      <div class="image">
         
-        </div>
+        <img src="images/portrait-female-chef-her-team-commercial-kitchen-restaurant_1329608-1619.jpg" alt="Our Team">
+      </div>
+
+      <div class="content">
+        <h3>What makes our Food So Special </h3>
+        <p>
+            At Rayan Restaurant, we believe in creating unforgettable experiences through food. Since our founding, we have been dedicated to providing the perfect blend of culinary artistry and warm hospitality. Our restaurant is more than just a place to dine; it’s a journey of flavors, cultures, and creativity.
+        </p>
+        <p>
+            With a carefully curated menu that draws inspiration from both local ingredients and international cuisine, we offer a diverse selection of dishes that are guaranteed to tantalize your taste buds. From classic favorites to innovative new dishes, we strive to create meals that are not only delicious but also beautifully presented.
+        </p>
+        <p>
+            Our team of expert chefs and attentive staff are committed to ensuring that every visit to Rayan Restaurant is an exceptional one. Whether you're here for a special occasion, a casual meal with friends, or just to explore new flavors, you’ll find that our attention to detail and dedication to quality sets us apart.
+        </p>
+        <p>
+            Join us on this culinary adventure, and discover why Rayan Restaurant has become a favorite destination for food lovers from all over. From our welcoming atmosphere to our expertly crafted dishes, we aim to make every visit to our restaurant a memorable experience.
+        </p>
+        <a href="#contact" class="btn">Learn More</a>
+      </div>
     </div>
-    <div class="credit"> Created by <span>Rayan 2024 </span> </div>
+  </section>
+
+  <section class="order" id="order">
+    <h3 class="sub-heading">ᴡᴀᴛᴄʜ ᴏᴜʀ ᴘʀᴏᴍᴏ</h3>
+    <h1 class="heading">【Ｅｘｐｅｒｉｅｎｃｅ　ｔｈｅ　ａｔｍｏｓｐｈｅｒｅ】 </h1>
+    <h1 class="heading">ℜ𝔞𝔶𝔞𝔫 ℜ𝔢𝔰𝔱𝔲𝔯𝔞𝔫𝔱 </h1>
+    <div class="video-container">
+        <video id="promoVideo" width="700" height="400" controls>
+            <source src="images/your-video.mp4.mp4" type="video/mp4">
+     
+        </video>
+    </div>
+
+  <!-- about section ends -->
+
+  <!-- menu section starts -->
+
+  <section class="menu" id="menu">
+
+    <h1 class="heading"> our <span>menu</span></h1>
+
+    <div class="box-container">
+
+      <div class="box">
+        <div class="image">
+        <img src="https://foodology.co.in/wp-content/uploads/2023/12/0a984f86-43e6-4c3e-9b9c-aa4a23cf3296.jpeg" alt=""></div>
+        <h3>Paneer Tikka</h3>
+        <div class="price">ILS.100 <span> ILS.150</span></div>
+        <a href="Paneer Tikka.html" class="btn">Read more</a>
+
+      </div>
+
+      <div class="box">
+        <div class="image">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZyh3YPttjjeU9J9nz3pTk7pbg79IxlZbtmQ&s" alt="">
+      </div>
+        <h3>Veg Biryani</h3>
+        <div class="price">ILS.60 <span> ILS.80</span></div>
+        <a href="Veg Biryani Page.html" class="btn">Read more</a>      </div>
+
+      <div class="box">
+        <div class="image">
+        <img
+          src="https://cdn.prod.website-files.com/60d34b8627f6e735cf28df18/62a95eaa8489e42404ad8556_Chicken%20Lollipop%20Hero%2016.9.webp" alt="">
+        </div>
+          <h3>Chicken Lollipop</h3>
+          <div class="price">ILS.110 <span> ILS.115</span></div>
+          <a href="Chicken Lollipop.html" class="btn">Read more</a>
+         
+      </div>
+
+      <div class="box">
+      <div class="image">
+        <img src="https://www.holidify.com/images/cmsuploads/compressed/non_20190221162122.jpg" alt="">
+      </div>
+        <h3>Nan</h3>
+        <div class="price">ILS.20 <span> ILS.29</span></div>
+        <a href="Nan.html" class="btn">Read more</a>
+
+      </div>
+
+      <div class="box">
+        <div class="image">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuYecfgTbo1rPSIXa0MnPNnW59egaQNNXqnw&s" alt="">
+      </div>
+        <h3>Rasmalai</h3>
+        <div class="price">ILS.100 <span> ILS.160</span></div>
+        <a href="Rasmalai.html" class="btn">Read more</a>
+
+      </div>
+
+      <div class="box">
+        <div class="image">
+        <img src="https://i.pinimg.com/736x/80/cd/17/80cd171d1966f098469d62c70374469e.jpg" alt="">
+      </div>
+        <h3>Chicken Gravy</h3>
+        <div class="price">ILS.65 <span> ILS.70</span></div>
+        <a href="Chicken Gravy.html" class="btn">Read more</a>
+
+      </div>
+
+      <div class="box">
+        <div class="image">
+        <img src="https://dudhratan.in/wp-content/uploads/2024/02/a77726f9-6d2e-4724-9078-29991138309.jpg" alt="">
+      </div>
+        <h3>Gulab Jamun</h3>
+        <div class="price">ILS.35 <span> ILS.50</span></div>
+        <a href="Gulab Jamun.html" class="btn">Read more</a>
+
+      </div>
+      
+
+      <div class="box">
+        <div class="image">
+        <img src="https://www.awesomecuisine.com/wp-content/uploads/2007/11/vada_pav.jpg" alt="">
+      </div>
+        <h3>Vada Pav</h3>
+        <div class="price">ILS.55<span> ILS.60</span></div>
+        <a href="Vada Pav.html" class="btn">Read more</a>
+
+      </div>
+      
+      <div class="box">
+        <div class="image">
+            <img src="images/plate-food-with-glass-wine-it_1316263-205618.jpg" alt="">
+      </div>
+        <h3>Chicken and Vegetables Platter</h3>
+        <div class="price">Rs.250 <span>Rs. 280</span></div>
+        <a href="Chicken and Vegetables Platter.html" class="btn">Read more</a>
+
+      </div>
+      <div class="box">
+        <div class="image">
+            <img src="images/foie-gras-with-vegetable-salad_1203-9257.jpg" alt="">
+      </div>
+        <h3>foie gras with vegetable salad</h3>
+        <div class="price">Rs.110 <span>Rs. 135</span></div>
+        <a href="foie gras with vegetable salad.html" class="btn">Read more</a>
+
+      </div>
+      <div class="box">
+        <div class="image">
+            <img src="images/grilled-meat-fresh-tomato-cheeseburger-rustic-wooden-table-generated-by-artificial-intelligence_188544-129518.jpg" alt="">
+      </div>
+        <h3>Grilled Meat Fresh Tomato Cheeseburger</h3>
+        <div class="price">ILS.350 <span> ILS.450</span></div> 
+        <a href="Grilled Meat Fresh Tomato Cheeseburger.html" class="btn">Read more</a>
+
+    </div>
+    <div class="box">
+        <div class="image">
+            <img src="images/baked-eggplant-with-tomatoes-garlic-paprika_2829-8506.jpg" alt="">
+      </div>
+        <h3>baked eggplant</h3>
+        <div class="price">ILS.38 <span> ILS.45</span></div>
+        <a href="baked eggplant.html" class="btn">Read more</a>
+
+    </div>
+    <div class="box">
+        <div class="image">
+            <img src="images/plate-appetizers-with-tomatoes-basil_975681-19471.jpg" alt="">
+      </div>
+        <h3>plate appetizers with tomatoes basil</h3>
+        <div class="price">ILS.28<span> ILS.38</span></div>
+        <a href="plate appetizers with tomatoes basil.html" class="btn">Read more</a>
+
+    </div>
+    <div class="box">
+        <div class="image">
+            <img src="images/severing-art-flavors-exploring-food-from-every-angle-ai-generated-best-photo_865967-995476.jpg" alt="">
+      </div>
+        <h3>"Gourmet Bites with a Berry Twist"
+        </h3>
+        <div class="price">ILS.100 <span> ILS.150</span></div>
+        <a href="Gourmet Bites with a Berry Twist.html" class="btn">Read more</a>
+    </div>
+    <div class="box">
+        <div class="image">
+            <img src="images/delicious-salad-dish-white-background_160148-837.jpg" alt="">
+      </div>
+        <h3>" Fresh Salad "</h3>
+        <div class="price">ILS.45<span> ILS.55</span></div>
+        <a href="Fresh Salad.html" class="btn">Read more</a>
+
+    </div>
+    <div class="box">
+        <div class="image">
+            <img src="images/buckwheat-salad-with-cherry-tomatoes-red-onion-fresh-herbs-vegan-food-diet-menu-top-view-flat-lay_2829-6457.jpg" alt="">
+      </div>
+        <h3>" buckwheat salad "</h3>
+        <div class="price">ILS.35 <span> ILS.45</span></div>
+        <a href="buckwheat salad.html" class="btn">Read more</a>
+
+    </div>
+    <div class="box">
+        <div class="image">
+            <img src="images/chicken-caesar-salad-black-background_123827-29280.jpg" alt="">
+      </div>
+        <h3>" Chicken caesar salad "</h3>
+        <div class="price">ILS.55 <span> ILS.80</span></div>
+        <a href="Chicken caesar salad.html" class="btn">Read more</a>
+
+    </div>
+    <div class="box">
+        <div class="image">
+            <img src="images/healthy-salad-with-fish-baked-salmon-tomatoes-lime-lettuce-healthy-dinner-flat-lay-top-view_2829-4274.jpg" alt="">
+      </div>
+        <h3>" salad with fish "</h3>
+        <div class="price">ILS.80<span> ILS.100</span></div>
+        <a href="salad with fish.html" class="btn">Read more</a>
+
+    </div>
+    <div class="box">
+        <div class="image">
+            <img src="images/comprehensive-crab-collection-from-habitat-table-stunning-images-crabs-every-aspect_1044943-152843.jpg" alt="">
+      </div>
+        <h3>" grilled steak "</h3>
+        <div class="price">ILS.110 <span> ILS.150</span></div>
+        <a href="grilled steak.html" class="btn">Read more</a>
+
+    </div>
+    <div class="box">
+        <div class="image">
+            <img src="images/grilled-salmon-fillet-with-fresh-vegetable-salad-generated-by-ai_188544-21273.jpg" alt="">
+      </div>
+        <h3>"grilled salmon fillet "</h3>
+        <div class="price">ILS.130 <span> ILS.150</span></div>
+        <a href="grilled salmon fillet.html" class="btn">Read more</a>
+
+    </div>
+    <div class="box">
+        <div class="image">
+            <img src="images/sliced-salmon-sashimi_1339-5552.jpg" alt="">
+      </div>
+        <h3>"sliced salmon sashimi "</h3>
+        <div class="price">ILS.80 <span> ILS.150</span></div>
+        <a href="sliced salmon sashimi.html" class="btn">Read more</a>
+
+    </div>
+    <div class="box">
+        <div class="image">
+            <img src="images/spaghetti-with-meat-tomato-sauce_140725-1229 (1).jpg" alt="">
+      </div>
+        <h3>"spaghetti with meat "</h3>
+        <div class="price">ILS.43 <span> ILS.55</span></div>
+        <a href="spaghetti with meat.html" class="btn">Read more</a>
+
+    </div>
+    <div class="box">
+        <div class="image">
+            <img src="images/pasta-spaghetti-with-basil-pesto-sauce-cheese-white-plate-stands-table-with_1310248-37.jpg" alt="">
+      </div>
+        <h3>"pasta spaghetti with basil pesto "</h3>
+        <div class="price">ILS.60 <span> ILS.80</span></div>
+        <a href="pasta spaghetti with basil pesto.html" class="btn">Read more</a>
+
+    </div>
+    <div class="box">
+        <div class="image">
+            <img src="images/pasta-italian-wine-food_87720-288432 (1).jpg" alt="">
+      </div>
+        <h3>"pasta italian wine "</h3>
+        <div class="price">ILS.45 <span> ILS.60</span></div>
+        <a href="pasta italian wine.html" class="btn">Read more</a>
+
+    </div>
+    <div class="box">
+        <div class="image">
+            <img src="images/delicious-pizza-with-melted-cheese-tomatoes-olives_9975-24747.jpg" alt="">
+      </div>
+        <h3>"pizza with melted cheese "</h3>
+        <div class="price">ILS.80 <span> ILS.85</span></div>
+        <a href="pizza with melted cheese.html" class="btn">Read more</a>
+
+    </div>
+    <div class="box">
+        <div class="image">
+            <img src="images/flat-lay-composition-with-hot-pepperoni-pizza-wooden-table_632805-19.jpg" alt="">
+      </div>
+        <h3>"pepperoni pizza "</h3>
+        <div class="price">ILS.50 <span> ILS.65</span></div>
+        <a href="pepperoni pizza.html" class="btn">Read more</a>
+
+    </div>
+    <div class="box">
+        <div class="image">
+            <img src="images/pizza-with-cheese-basil-it-sits-wooden-table_1316799-31387.jpg" alt="">
+      </div>
+        <h3>" Margherita  pizza "</h3>
+        <div class="price">ILS.75<span> ILS.88</span></div>
+        <a href="Margherita  pizza.html" class="btn">Read more</a>
+
+    </div>
+    <div class="box">
+        <div class="image">
+            <img src="images/two-sandwiches-bacon-salami-prosciutto-fresh-vegetables-rustic-wooden-cutting-board-club-sandwich-co_1249410-56925.jpg" alt="">
+      </div>
+        <h3>" sandwiches bacon salami "</h3>
+        <div class="price">ILS.45 <span> ILS.55</span></div>
+        <a href="sandwiches bacon salami.html" class="btn">Read more</a>
+
+    </div>
+    <div class="box">
+        <div class="image">
+            <img src="images/fresh-turkey-tomato-sub-sandwiches-wooden-cutting-board_118124-362065.jpg" alt="">
+      </div>
+        <h3>" turkey tomato sub sandwiches "</h3>
+        <div class="price">ILS.45 <span> ILS.50</span></div>
+        <a href="turkey tomato sub sandwiches.html" class="btn">Read more</a>
+
+    </div>
+    <div class="box">
+        <div class="image">
+            <img src="images/delicious-deli-subwaystyle-sandwiches-stylish-background_893571-47375.jpg" alt="">
+      </div>
+        <h3>" subwaystyle sandwiches stylish "</h3>
+        <div class="price">ILS.45 <span> ILS.55</span></div>
+        <a href="subwaystyle sandwiches stylish.html" class="btn">Read more</a>
+
+    </div>
+    <div class="box">
+        <div class="image">
+            <img src="images/juicy-cheeseburger-rustic-wooden-board_9975-24438.jpg" alt="">
+      </div>
+        <h3>" cheeseburger rustic "</h3>
+        <div class="price">ILS.55 <span> ILS.65</span></div>
+        <a href="cheeseburger rustic.html" class="btn">Read more</a>
+
+    </div>
+    <div class="box">
+        <div class="image">
+            <img src="images/tuna-sandwich-wood_1339-7586.jpg" alt="">
+      </div>
+        <h3>" tuna sandwich "</h3>
+        <div class="price">ILS.45 <span> ILS.59</span></div>
+        <a href="tuna sandwich.html" class="btn">Read more</a>
+
+    </div>
+    <div class="box">
+        <div class="image">
+            <img src="images/delicious-cake-with-fruits_23-2150727591.jpg" alt="">
+      </div>
+        <h3>"cake with fruits"</h3>
+        <div class="price">Rs.180 <span>Rs. 190</span></div>
+        <a href="cake with fruits.html" class="btn">Read more</a>
+
+    </div>
+    <div class="box">
+        <div class="image">
+            <img src="images/gourmet-dessert-plate-raspberry-cheesecake-mousse-indulgence-generated-by-ai_188544-31715.jpg" alt="">
+      </div>
+        <h3>"raspberry cheesecake mousse"</h3>
+        <div class="price">ILS.100 <span> ILS.150</span></div>
+        <a href="raspberry cheesecake mousse.html" class="btn">Read more</a>
+
+    </div>
+    <div class="box">
+        <div class="image">
+            <img src="images/tiramisu-with-mascarpone-cheese-chocolate-plate_140725-11024.jpg" alt="">
+      </div>
+        <h3>"tiramisu"</h3>
+        <div class="price">ILS.35 <span> ILS.40</span></div>
+        <a href="tiramisu.html" class="btn">Read more</a>
+
+    </div>
+    <div class="box">
+        <div class="image">
+            <img src="images/chocolate-lava-cake-with-ice-cream_998780-12453.jpg" alt="">
+      </div>
+        <h3>"Chocolate Lava Cake"</h3>
+        <div class="price">ILS.25 <span> ILS.40</span></div>
+        <a href="Chocolate Lava Cake.html" class="btn">Read more</a>
+
+    </div>
+    <div class="box">
+        <div class="image">
+            <img src="images/blend-cocktails-glass-with-orange-fruit_23-2149384396.jpg" alt="">
+      </div>
+        <h3>"blend cocktails glass with orange fruit"</h3>
+        <div class="price">ILS.35 <span> ILS.45</span></div>
+        <a href="blend cocktails glass with orange fruit.html" class="btn">Read more</a>
+    </div>
+    <div class="box">
+        <div class="image">
+            <img src="images/various-summer-mocktails-drinks_136354-36998.jpg" alt="">
+      </div>
+        <h3>"mocktails drinks"</h3>
+        <div class="price">ILS.15 <span> ILS.25</span></div>
+        <a href="mocktails drinks.html" class="btn">Read more</a>
+
+    </div>
+    <div class="box">
+        <div class="image">
+            <img src="images/variety-smoothies-are-lined-up-bar-counter_188544-46286.jpg" alt="">
+      </div>
+        <h3>"smoothies"</h3>
+        <div class="price">ILS.25 <span> ILS.30</span></div>
+        <a href="smoothies.html" class="btn">Read more</a>
+
+    </div>
+    <div class="box">
+        <div class="image">
+            <img src="images/three-square-teapots-with-different-fruit-tastes-tea_178771-532.jpg" alt="">
+      </div>
+        <h3>"square teapots with different fruit tastes"</h3>
+        <div class="price">ILS.25 <span> ILS.29</span></div>
+        <a href="square teapots with different fruit tastes.html" class="btn">Read more</a>
+
+    </div>
+    <div class="box">
+        <div class="image">
+            <img src="images/gourmet-paella-with-seafood-saffron-spice-generated-by-ai_188544-18027.jpg" alt="">
+      </div>
+        <h3>"Specialty Dishes:Gourmet paella with seafood "</h3>
+        <div class="price">ILS.100 <span> ILS.140</span></div>
+        <a href="Gourmet paella with seafood.html" class="btn">Read more</a>
+
+    </div>
+    <div class="box">
+        <div class="image">
+            <img src="images/high-angle-delicious-ramen-bowl_23-2148678742.jpg" alt="">
+      </div>
+        <h3>"Specialty Dishes:ramen "</h3>
+        <div class="price">ILS.70 <span> ILS.90</span></div>
+        <a href="ramen.html" class="btn">Read more</a>
+
+    </div>
+    </div>
+  </section>
+  <!-- Feedback Section for Restaurant Website -->
+<section class="feedback mt-5" id="feedback" style="background-color: #000000; padding: 0; height: 100vh; display: flex;">
+    
+  <!-- תמונה בצד השמאלי שמכסה את כל הצד -->
+  <div class="feedback-image" style="width: 30%; background-image: url('https://image.freepik.com/free-photo/portrait-confident-male-chef-kitchen_23-2147863584.jpg'); background-size: cover; background-position: center;">
+  </div>
+
+  <!-- החלק של הטופס מכסה את כל הצד הימני -->
+  <div class="feedback-form" style="background-color: #000000; padding: 40px; border-radius: 0; width: 50%; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);">
+      <h2 class="text-center" data-aos="fade-up" data-aos-duration="1500" style="color: rgb(255, 255, 255);">
+          Customer Feedback
+      </h2>
+      <p class="text-center feedback__subtitle mb-5" data-aos="fade-up" data-aos-duration="1500" style="color: #ffffff; font-size: 18px; line-height: 1.5;">
+          We value your feedback! Please let us know how your experience was at our restaurant.
+      </p>
+      <form action="/feedback" method="POST">
+          <div class="form-group" style="margin-bottom: 20px;">
+              <label for="name" style="color: #f3f3f3; display: block; font-size: 18px;">
+                  Your Name
+              </label>
+              <input type="text" id="name" name="name" required style="width: 100%; padding: 15px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; background-color: #f9f9f9; color: #333;">
+          </div>
+
+          <div class="form-group" style="margin-bottom: 20px;">
+            <label for="rating" style="color: #ffffff; display: block; font-size: 18px;">
+                Your Satisfaction Level
+            </label>
+            <div class="star-rating">
+              <input type="radio" name="rating" value="excellent" id="excellent" required>
+              <label for="excellent">★ Excellent</label>
+              <input type="radio" name="rating" value="good" id="good">
+              <label for="good">★ Good</label>
+              <input type="radio" name="rating" value="average" id="average">
+              <label for="average">★ Average</label>
+              <input type="radio" name="rating" value="poor" id="poor">
+              <label for="poor">★ Poor</label>
+              <input type="radio" name="rating" value="bad" id="bad">
+              <label for="bad">★ Bad</label>
+          </div>
+        </div>
+        
+
+          <div class="form-group" style="margin-bottom: 20px;">
+              <label for="message" style="color: #ffffff; display: block; font-size: 18px;">
+                  Your Feedback
+              </label>
+              <textarea id="message" name="message" rows="6" required style="width: 100%; padding: 15px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; background-color: #f9f9f9; color: #333;"></textarea>
+          </div>
+
+          <div class="form-buttons" style="text-align: center;">
+              <button type="submit" style="background-color: #fefefb; color: black; padding: 15px 40px; font-size: 18px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease;">
+                  Submit Feedback
+              </button>
+          </div>
+      </form>
+  </div>
 </section>
+  <!-- review section starts -->
 
+  <section class="review" id="review">
 
-<div class="loader-container">
-    <img src="images/loader.gif" alt="">
+    <h1 class="heading"> customer's<span> review</span></h1>
+
+    <div class="box-container">
+
+      <div class="box">
+
+        <img src="images/Staff+Photos.png" class="user" alt="">
+        <h3>David Cohen</h3>
+        <p>I had an amazing experience at Rayan Restaurant. The food was simply delicious, and the portion sizes were generous. The staff was incredibly friendly and attentive, making sure we were comfortable throughout our meal. The atmosphere was warm and inviting, perfect for a family dinner or a casual lunch. I’ll definitely be back soon to try more from the menu!</p>
+
+        <div class="stars">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star-half-alt"></i>
+        </div>
+      </div>
+
+      <div class="box">
+
+        <img
+          src="images/75-758282_walter-circle-person-photo-in-circle-hd-png.png" 
+          class="user" alt="">
+        <h3>Rachel Levi</h3>
+
+        <p>Rayan Restaurant exceeded all my expectations! The variety of dishes on the menu is fantastic, and everything we ordered was bursting with flavor. The service was fast, and the staff was knowledgeable about the menu, offering great recommendations. I was particularly impressed by the presentation of the dishes – every plate looked like a work of art. Highly recommended!
+        </p>
+        <div class="stars">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+        </div>
+      </div>
+
+      <div class="box">
+
+        <img src="images/Ash-Read.png"  class="user" alt="">
+        <h3>Aaron Goldberg</h3>
+        <p>Dining at Rayan Restaurant was a delightful experience. The ambiance was relaxing, and the food was some of the best I’ve ever had. Every dish was fresh and perfectly cooked. The staff went above and beyond to ensure we had a pleasant experience, making it a place I’d love to visit again. Whether you're with family or friends, this is the perfect spot for a memorable meal."</p>
+
+        <div class="stars">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- review section ends -->
+
+ <!-- Our Blogs Section for Restaurant Website -->
+ <section class="blogs mt-5" id="blogs" style="background-color: #030303; padding: 60px 0;">
+  <div class="container" style="max-width: 1200px; margin: 0 auto;">
+      <h2 class="text-center" style="color: #f8f8f8; font-size: 36px; font-weight: bold; margin-bottom: 20px;">Our Blogs</h2>
+      <p class="text-center" style="color: #ffffff; font-size: 18px; margin-bottom: 40px;">
+          Discover the latest updates, news, and tips from our restaurant blog.
+      </p>
+
+      <!-- Blog Cards Container -->
+      <div class="blog-cards" style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+
+          <!-- Blog Card 1 -->
+          <div class="blog-card" style="background-color: #fff; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); width: 30%; overflow: hidden;">
+            <img src="images/cookbook-with-ingredients-tablerecipe-book_434193-6697.jpg" alt="Blog Image" style="width: 100%; height: 200px; object-fit: cover;">
+              <div class="blog-content" style="padding: 20px;">
+                  <h3 style="color: #333; font-size: 22px; margin-bottom: 10px;">15 Essential Cooking Tips</h3>
+                  <p style="color: #777; font-size: 16px; line-height: 1.5;">Cooking is not just an art but also a science that requires precision, understanding, and creativity. These essential tips are designed to enhance your cooking experience and help you become a more skilled chef. Whether it's the importance of thoroughly reading a recipe before starting, ensuring your tools are sharp and efficient, or knowing exactly when to season your dish, each tip adds value to your everyday cooking. It's also important to learn advanced techniques, like using a meat thermometer or cooking pasta to the perfect al dente, to elevate the final result of your meals.</p>
+                  <a href="15 Essential Cooking Tips.html" style="color: #ffdd00; font-weight: bold; text-decoration: none;">Read More</a>
+              </div>
+          </div>
+          <!-- Blog Card 2 -->
+          <div class="blog-card" style="background-color: #fff; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); width: 30%; overflow: hidden;">
+            <img src="images/multitasking-chef-teacher-engaging-students-with-tech-communication-ar-32_1000124-203196.jpg" alt="Blog Image" style="width: 100%; height: 200px; object-fit: cover;">
+              <div class="blog-content" style="padding: 20px;">
+                  <h3 style="color: #333; font-size: 22px; margin-bottom: 10px;">Interviews with Chefs and Staff</h3>
+                  <p style="color: #777; font-size: 16px; line-height: 1.5;">provide a unique opportunity to gain insights into the world of culinary professionals. Through personal stories, chefs and team members share their journeys, from the early days of their careers to their passion for cooking that continues to drive them. These interviews offer a behind-the-scenes look at the challenges and rewards of working in a fast-paced kitchen, the inspiration behind their favorite dishes, and the creative process involved in developing new recipes. Such content not only humanizes the staff but also connects the restaurant’s audience with the people who make the dining experience special..</p>
+                  <a href="Interviews with Chefs and Staff.html" style="color: #ffdd00; font-weight: bold; text-decoration: none;">Read More</a>
+              </div>
+          </div>
+       
+        <!-- Blog Card 3 -->
+<div class="blog-card" style="background-color: #fff; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); width: 30%; overflow: hidden; margin: 10px;">
+  <img src="images/smiling-woman-enjoying-fresh-salad_175117-5253.jpg" alt="Blog Image" style="width: 100%; height: 200px; object-fit: cover;">
+  <div class="blog-content" style="padding: 20px;">
+      <h3 style="color: #333; font-size: 22px; margin-bottom: 10px;">Healthy Eating Tips for Busy Days</h3>
+      <p style="color: #777; font-size: 16px; line-height: 1.5;">
+          Learn how to stay healthy and energized with quick and nutritious meals even on your busiest days.
+      </p>
+      <a href="Healthy Eating Tips.html" style="color: #ffdd00; font-weight: bold; text-decoration: none; font-size: 16px;">Read More</a>
+  </div>
 </div>
 
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-<script src="js/script.js"></script>
-<h1 id="greeting"></h1>
+
+      </div>
+  </div>
+</section>
+
+  <!-- blog section ends -->
+  <!-- contact section starts -->
+
+  <section class="contact" id="contact">
+    <h1 class="heading"> contact<span> us</span></h1>
+
+    <div class="row">
+      <iframe class="map"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3381.142425132497!2d34.77158287448101!3d32.09981582409116!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151d4b7c08381c43%3A0x35dd4a01379a2c82!2sTel%20Aviv%20Port!5e0!3m2!1sen!2sil!4v1720624659560!5m2!1sen!2sil" 
+        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy">
+
+      </iframe>
+
+      <form action="/contact1" method="POST">
+        <div class="inputBox">
+          <span class="fas fa-user"></span>
+          <input type="text" name="name" placeholder="Name"> <!-- Ensure "name" -->
+        </div>
+      
+        <div class="inputBox">
+          <span class="fas fa-envelope"></span>
+          <input type="email" name="email" placeholder="E-mail"> <!-- Ensure "email" -->
+        </div>
+      
+        <div class="inputBox">
+          <span class="fas fa-phone"></span>
+          <input type="number" name="phone" placeholder="Phone No."> <!-- Ensure "phone" -->
+        </div>
+      
+        <input type="submit" value="contact-now" class="btn">
+      </form>
+
+    </div>
+
+  </section>
+
+  <!-- contact section ends -->
 
 
+  <!-- footer section starts -->
+  <style>
+    .footer {
+      background-color: #000; /* Black background */
+      color: #fff; /* White text color */
+      padding: 40px 20px;
+    }
+
+    .box-container {
+      display: flex;
+      justify-content: space-between; /* Spacing between the boxes */
+      flex-wrap: wrap;
+    }
+
+    .box {
+      flex: 1 1 23%; /* Each box takes up approximately 23% of the row */
+      margin: 15px;
+      min-width: 200px;
+    }
+
+    .box h3 {
+      font-size: 1.5em;
+      color: #fff; /* White for headings */
+      margin-bottom: 15px;
+    }
+
+    .box a {
+      display: block;
+      color: #fff; /* White links */
+      text-decoration: none;
+      margin: 5px 0;
+      transition: color 0.3s;
+    }
+
+    .box a:hover {
+      color: #dbd115; /* Optional: Highlight color when hovered */
+    }
+
+    .box a[href^="tel"] {
+      font-weight: bold;
+    }
+
+    .box a[href^="mailto"] {
+      font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+      .box-container {
+        flex-direction: column; /* Stack boxes on small screens */
+      }
+      .box {
+        margin: 20px 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<section class="footer">
+  <div class="box-container">
+    <!-- Box 1 -->
+    <div class="box">
+      <h3>Locations</h3>
+      <a href="#">Egypt</a>
+      <a href="#">USA</a>
+      <a href="#">Israel</a>
+    </div>
+
+    <!-- Box 2 -->
+    <div class="box">
+      <h3>Quick Links</h3>
+      <a href="#home"> Home</a>
+      <a href="#about"></i> About</a>
+      <a href="#menu"> Menu</a>
+      <a href="#feedback"> Feedback</a>
+      <a href="#review"> Review</a>
+      <a href="#contact"> Contact</a>
+      <a href="#blogs"> Blogs</a>
+    </div>
+
+    <!-- Box 3 -->
+    <div class="box">
+      <h3>Contact Info</h3>
+      <a href="tel:0523456789">052-3456789</a>
+      <a href="tel:03-9876543">03-9876543</a>
+      <a href="mailto:rayanrestaurant@gmail.com">rayanrestaurant@gmail.com</a>
+      <a href="mailto:info@rayan.co.il">info@rayan.co.il</a>
+    </div>
+
+    <!-- Box 4 -->
+    <div class="box">
+      <h3>Follow Us</h3>
+      <a href="https://www.facebook.com/rayanrestaurant" target="_blank">Facebook</a>
+      <a href="https://www.instagram.com/rayanrestaurant" target="_blank">Instagram</a>
+      <a href="https://twitter.com/rayanrestaurant" target="_blank">Twitter</a>
+      <a href="mailto:ABOLEILRAYAN0@gmail.com">ABOLEILRAYAN0@gmail.com</a>
+    </div>
+
+  </div>
+
+    <div class="credit">𝒞𝓇𝑒𝒶𝓉𝑒𝒹 𝒷𝓎 <span>>𝑅𝒶𝓎𝒶𝓃 𝟤𝟢𝟤𝟦</span> | all rights reserved</div>
+  </section>
+
+  <!-- footer section ends -->
   <script>
-      // בקשה לקבלת שם המשתמש מהשרת
-      fetch('/get-username')
-          .then(response => response.json())
-          .then(data => {
-              // מציג את שם המשתמש שנשמר ב-session או 'Guest' אם אין שם משתמש
-              document.getElementById('greeting').textContent = 'HI ' + data.username;
-          })
-          .catch(error => {
-              console.error('Error fetching username:', error);
-          });
-  </script>
-
- 
-  <script>
-    // שליפת שם המשתמש מהשרת
+    // בקשה לקבלת שם המשתמש מהשרת
     fetch('/get-username')
         .then(response => response.json())
         .then(data => {
-            if (data.username) {
-                document.getElementById('greeting').textContent = 'HI, ' + data.username;
-            }
+            // מציג את שם המשתמש שנשמר ב-session או 'Guest' אם אין שם משתמש
+            document.getElementById('greeting').textContent = 'HI ' + data.username;
+        })
+        .catch(error => {
+            console.error('Error fetching username:', error);
         });
+</script>
+
+<script>
+         
+  // שליפת שם המשתמש מהשרת
+  fetch('/get-username')
+      .then(response => response.json())
+      .then(data => {
+          if (data.username) {
+              document.getElementById('greeting').textContent = 'Welcome ' + data.username;
+          }
+      });
+</script>
+<script>
+document.getElementById('promoVideo').addEventListener('click', function() {
+  if (this.paused) {
+      this.play(); // הפעלת הסרטון
+  } else {
+      this.pause(); // עצירת הסרטון אם הוא פועל
+  }
+});
 
 </script>
 </body>
+
 </html>
