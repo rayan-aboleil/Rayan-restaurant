@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <style>
+   body, html {
+      height:100%;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: flex-start; /* Form aligns to the left */
+      align-items: center;
+      border-radius: 20px;
+    }
+
+    /* Full screen video */
+    .video-background {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+      z-index: -1;
+      opacity: 0.7;
+    }
+
+    .form-container {
+      background: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      width: 300px;
+      text-align: center;
+    }
+
+    .form-container h2 {
+      margin-bottom: 20px;
+      font-size: 1.8em;
+    }
+
+    input[type="text"], input[type="password"], input[type="email"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      background-color: #000000;
+      color: white;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #393855;
+    }
+
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+    .logo-container {
+      position: absolute;
+      bottom: 50px; /* Distance from the bottom */
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+   
+
+    .logo-container h1 {
+      font-size:5em;
+     
+      font-family: 'Brush Script MT', cursive; /* Stylish cursive font */
+      margin: 10px 0 0 0;
+    }
+  </style>
+</head>
+
+<body>
+    <div class="logo-container">
+       
+        <h1>𝑅𝒶𝓎𝒶𝓃 𝑅𝑒𝓈𝓉𝓊𝓇𝒶𝓃𝓉</h1>
+      </div>
+  <!-- Background Video -->
+  <video autoplay muted loop class="video-background">
+    <source src="images/6037335_Chef_Flame_1920x1080.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <div class="form-container">
+    <h2>Register</h2>
+    <form action="/register" method="POST">
+      <input type="text" name="firstname" placeholder="First Name" required>
+      <input type="text" name="lastname" placeholder="Last Name" required>
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <button type="submit">Register</button>
+      <a href="login.html"><button type="button">Back to Login</button></a>
+    </form>
+  </div>
+
+</body>
+
+</html>

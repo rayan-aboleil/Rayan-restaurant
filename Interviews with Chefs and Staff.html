@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interviews with Chefs and Staff</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #060606;
+            color: #333;
+        }
+        header {
+            background-color: #050505;
+            color: rgb(249, 249, 249);
+            text-align: center;
+            padding: 80px 20px;
+        }
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        header p {
+            font-size: 1.2em;
+            margin-bottom: 40px;
+        }
+        .container {
+            width: 85%;
+            margin: 40px auto;
+            background-color: white;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+        h2 {
+            color: #ee553a;
+            margin-top: 40px;
+            font-size: 2.2em;
+        }
+        .content {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 50px;
+        }
+        .content p {
+            margin-bottom: 20px;
+        }
+        .staff {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .staff-member {
+            flex: 1 1 48%;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .staff-member:hover {
+            transform: scale(1.02);
+        }
+        .staff-member img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-right: 20px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        .staff-member h3 {
+            color: #ff6347;
+            font-size: 1.6em;
+            margin-bottom: 10px;
+        }
+        .staff-member p {
+            font-size: 1em;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        .video-section {
+            text-align: center;
+            margin: 50px 0;
+        }
+        .video-section h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        .video-section iframe {
+            width: 80%;
+            height: 400px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        footer {
+            background-color: #040404;
+            color: rgb(253, 253, 253);
+            text-align: center;
+            padding: 20px;
+            margin-top: 60px;
+        }
+        footer p {
+            margin: 0;
+        }
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+            .staff-member {
+                flex-direction: column;
+                text-align: center;
+            }
+            .staff-member img {
+                margin: 0 auto 20px;
+            }
+            .video-section iframe {
+                width: 95%;
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Interviews with Chefs and Staff</h1>
+    <p>Discover the Stories Behind the People Who Bring Our Food to Life</p>
+</header>
+
+<div class="container">
+    <div class="content">
+        <p>At our restaurant, we believe that the people behind the food are just as important as the dishes themselves. Our chefs and staff work tirelessly to create an unforgettable dining experience for every guest, and their passion for food is what makes it all possible.</p>
+
+        <p>Through personal stories and interviews, our team shares their experiences, challenges, and love for the culinary arts. These insights provide a glimpse into their journeys — from the early days of training to mastering their craft in the fast-paced kitchen environment.</p>
+
+        <p>Each team member brings something unique to the table. Whether it's a chef who spent years perfecting French cuisine or a pastry artist who brings traditional flavors into modern desserts, they all have their own creative process and personal connection to the food they prepare.</p>
+
+        <p>We invite you to meet the talented individuals behind the scenes, learn about their personal journeys, and get inspired by their stories. From the line cooks to the head chef, every person plays a crucial role in making our restaurant special.</p>
+    </div>
+
+    <h2>Meet Our Team</h2>
+    <div class="staff">
+        <div class="staff-member">
+            <img src="images/man-chefs-outfit-with-white-hat-white-chef-hat_1037615-36151.jpg" alt="Chef John Doe">
+            <div>
+                <h3>Chef John Doe</h3>
+                <p>John has been with us for over a decade, perfecting his craft. His love for French cuisine and his attention to detail bring a fine-dining experience to every plate.</p>
+            </div>
+        </div>
+
+        <div class="staff-member">
+            <img src="images/female-chef-putting-sauce-dish_23-2148763119.jpg" alt="Sous Chef Jane Smith">
+            <div>
+                <h3>Sous Chef Jane Smith</h3>
+                <p>With a background in molecular gastronomy, Jane is always pushing the boundaries of culinary innovation, blending science and art in her dishes.</p>
+            </div>
+        </div>
+
+        <div class="staff-member">
+            <img src="images/side-view-smiling-chef-posing_23-2148491333.jpg" alt="Pastry Chef Maria Gomez">
+            <div>
+                <h3>Pastry Chef Maria Gomez</h3>
+                <p>Maria’s desserts are legendary, drawing inspiration from her Latin heritage and combining them with modern pastry techniques to create masterpieces.</p>
+            </div>
+        </div>
+
+        <div class="staff-member">
+            <img src="images/senior-man-choose-ladles-chef-black-cap-his-head_1157-44126.jpg" alt="Line Cook David Brown">
+            <div>
+                <h3>Line Cook David Brown</h3>
+                <p>David is the backbone of our kitchen, ensuring that every dish that leaves the line is up to our high standards. His energy and precision are unmatched.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="video-section">
+        <h2>Watch Our Exclusive Interview</h2>
+        <video id="promoVideo" width="700" height="400" controls>
+            <source src="images/A Day with the Sous Chef at One of America's Most Influential Restaurants _ Bon Appétit.mp4" type="video/mp4">
+     
+        </video>
+    </div>
+</div>
+</div>
+
+<script src="js/script.js"></script>
+</div>
+<footer>
+    <p>© 𝑅𝒶𝓎𝒶𝓃 𝑅𝑒𝓈𝓉𝓊𝓇𝒶𝓃𝓉 | All Rights Reserved</p>
+    <a href="index.html" class="back-button">Back to Home</a>
+</footer>
+
+</body>
+</html>
