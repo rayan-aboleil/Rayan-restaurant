@@ -1,224 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login and Signup Page</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700&display=swap">
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    <style>
-        :root{
-            --primary-color:#FA2424;
-            --secondary-color:#192a56;
-            --light-color:#666;
-            --box-shadow:0 .5rem 1.5rem rgba(0,0,0,.1);
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <style>
+    body, html {
+      height:100%;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: flex-start; /* Form aligns to the left */
+      align-items: center;
+      border-radius: 20px;
+    }
 
-        *{
-            font-family: 'Nunito', sans-serif;
-            margin:0; padding:0;
-            box-sizing: border-box;
-            text-decoration: none;
-            outline: none; border:none;
-            text-transform: capitalize;
-            transition: all .2s linear;
-        } 
+    /* Full screen video */
+    .video-background {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+      z-index: -1;
+      opacity: 0.7;
+    }
 
-        body, html {
-            height: 100%;
-            width: 100%;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #f5f5f5;
-        }
+    .form-container {
+      background: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      width: 300px;
+      text-align: center;
+    }
 
-        .container {
-            display: flex;
-            width: 100%;
-            height: 100%;
-            box-shadow: var(--box-shadow);
-            overflow: hidden;
-            background: #fff;
-        }
+    .form-container h2 {
+      margin-bottom: 20px;    
+      font-size: 1.8em;
+    }
 
-        .image-container {
-            flex: 2; /* הגדלת חלק התמונות */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #eee;
-            overflow: hidden;
-        }
+    input[type="text"], input[type="password"], input[type="email"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
 
-        .swiper-container {
-            width: 100%;
-            height: 100%;
-        }
+    button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      background-color: #000000;
+      color: white;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
 
-        .swiper-slide {
-            background-size: cover;
-            background-position: center;
-            width: 100%;
-            height: 100%;
-        }
+    button:hover {
+      background-color: #393855;
+    }
 
-        .form-container {
-            flex: 1; /* הקטנת חלק תיבות הקלט */
-            padding: 50px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.95);
-        }
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
 
-        .form-container h1 {
-            margin-bottom: 30px;
-            font-size: 32px;
-            color: var(--secondary-color);
-        }
+    a:hover {
+      text-decoration: underline;
+    }
+    .logo-container {
+      position: absolute;
+      bottom: 50px; /* Distance from the bottom */
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-        .inputBox {
-            margin-bottom: 25px;
-        }
+   
 
-        .inputBox .input span {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: bold;
-            color: var(--light-color);
-        }
-
-        .inputBox .input input {
-            width: 100%;
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 18px;
-        }
-
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            background: var(--primary-color);
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-align: center;
-            font-size: 20px;
-            margin-top: 20px;
-        }
-
-        .btn:hover {
-            background: var(--secondary-color);
-        }
-
-        .login-form, .signup-form {
-            width: 100%;
-        }
-
-        .signup-form {
-            margin-left: 20px;
-        }
-
-        .login-form p, .signup-form p {
-            margin-top: 20px;
-            color: var(--light-color);
-            font-size: 16px;
-        }
-    </style>
+    .logo-container h1 {
+      font-size:5em;
+     
+      font-family: 'Brush Script MT', cursive; /* Stylish cursive font */
+      margin: 10px 0 0 0;
+    }
+  </style>
 </head>
+
 <body>
+    <div class="logo-container">
+       
+        <h1>𝑅𝒶𝓎𝒶𝓃 𝑅𝑒𝓈𝓉𝓊𝓇𝒶𝓃𝓉</h1>
+      </div>
+  <!-- Background Video -->
+  <video autoplay muted loop class="video-background">
+    <source src="images/6037335_Chef_Flame_1920x1080.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
 
-<div class="container">
-    <div class="form-container signup-form" id="signup">
-        <h1>Sign Up</h1>
-        <form action="/db.js" method="POST">
-            <div class="inputBox">
-                <div class="input">
-                    <span>Username</span>
-                    <input type="text" name="username" placeholder="Enter your username" required>
-                </div>
-            </div>
-            <div class="inputBox">
-                <div class="input">
-                    <span>Password</span>
-                    <input type="password" name="password" placeholder="Enter your password" required>
-                </div>
-            </div>
-            <div class="inputBox">
-                <div class="input">
-                    <span>Email</span>
-                    <input type="email" name="email" placeholder="Enter your email" required>
-                </div>
-            </div>
-            <input type="submit" value="Sign Up" class="btn">
-            <p>Already have an account? <a href="#login">Login</a></p>
-        </form>
-    </div>
+  <div class="form-container">
+    <h2>Login</h2>
+    <form action="/db.js" method="POST">
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <button type="submit">Login</button>
+      <a href="register.html"><button type="button">Register</button></a>
+    </form>
+  </div>
+  <script>
+    function loginUser(username) {
+        // Store the username in sessionStorage on the client side
+        sessionStorage.setItem("user", username);
 
-    <div class="image-container">
-        <div class="swiper-container">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide" style="background-image: url('./images/food.jpg');"></div>
-                <div class="swiper-slide" style="background-image: url('./images/food2.jpg');"></div>
-                <div class="swiper-slide" style="background-image: url('./images/food1.jpg');"></div>
-                <div class="swiper-slide" style="background-image: url('./images/food4.jpg');"></div>
-                <div class="swiper-slide" style="background-image: url('./images/food3.jpg');"></div>
-                <div class="swiper-slide" style="background-image: url('./images/food6.jpg');"></div>
-                <div class="swiper-slide" style="background-image: url('./images/food7.jpg');"></div>
-                <div class="swiper-slide" style="background-image: url('./images/food5.jpg');"></div>
-                <div class="swiper-slide" style="background-image: url('./images/food8.jpg');"></div>
-            </div>
-            <div class="swiper-pagination"></div>
-        </div>
-    </div>
+        // You can also redirect or perform other actions here
+        window.location.href = "/dashboard";
+    }
 
-    <div class="form-container login-form" id="login">
-        <h1>Login</h1>
-        <form action="/db.js" method="POST">
-            <div class="inputBox">
-                <div class="input">
-                    <span>Username</span>
-                    <input type="text" name="username" placeholder="Enter your username" required>
-                </div>
-            </div>
-            <div class="inputBox">
-                <div class="input">
-                    <span>Password</span>
-                    <input type="password" name="password" placeholder="Enter your password" required>
-                </div>
-            </div>
-            <div class="inputBox">
-                <div class="input">
-                    <span>Email</span>
-                    <input type="email" name="email" placeholder="Enter your email" required>
-                </div>
-            </div>
-            <input type="submit" value="Login" class="btn">
-            <p>Don't have an account? <a href="#signup">Sign up</a></p>
-        </form>
-    </div>
-</div>
-
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-<script>
-    var swiper = new Swiper('.swiper-container', {
-        loop: true,
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
-        autoplay: {
-            delay: 3000,
-            disableOnInteraction: false,
-        },
-    });
+    // Call this function after login validation is successful
 </script>
-
-
 </body>
+
 </html>
