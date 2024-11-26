@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Feedbacks</title>
+    <style>
+        .feedback-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .feedback-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 300px;
+            background: white;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;"> Feedbacks</h1>
+    <div class="feedback-container">
+        <% feedbacks.forEach(function(feedback) { %>
+            <div class="feedback-card">
+                <h4><%= feedback.username %></h4>
+                <p><strong>Rating:</strong> <%= feedback.rating %> / 5</p>
+                <p><%= feedback.Comments %></p>
+                <small>Submitted on: <%= new Date(feedback.created_at).toLocaleString() %></small>
+            </div>
+        <% }); %>
+    </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <button onclick="location.href='/index.html'" style="padding: 10px 20px; font-size: 16px; cursor: pointer;">
+            Back to Home
+        </button>
+    </div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthy Eating Blogs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 10px;
+        }
+        .blog-post {
+            background: #fff;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .blog-post h2 {
+            margin: 0 0 10px;
+            color: #333;
+        }
+        .blog-post h3 {
+            margin: 0 0 10px;
+            color: #555;
+        }
+        .blog-post p {
+            margin: 0 0 10px;
+            color: #666;
+        }
+        .blog-post video {
+            max-width: 100%;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Healthy Eating Blog Posts</h1>
+        <% if (posts.length > 0) { %>
+            <% posts.forEach(post => { %>
+                <div class="blog-post">
+                    <h2><%= post.main_title %></h2>
+                    <h3><%= post.section_title %></h3>
+                    <p><%= post.content %></p>
+                    <% if (post.video_url) { %>
+                        <video controls src="<%= post.video_url %>"></video>
+                    <% } %>
+                    <p><small>Published on: <%= new Date(post.created_at).toLocaleString() %></small></p>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <p>No blog posts available.</p>
+        <% } %>
+    </div>
+</body>
+</html>
