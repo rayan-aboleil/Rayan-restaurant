@@ -5,7 +5,8 @@ const path = require('path');
 const session = require('express-session');
 
 const app = express();
-
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 // Middleware
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -84,15 +85,40 @@ app.post('/register', (req, res) => {
     });
 });
 app.post('/feedback', (req, res) => {
-    const { name, rating, message } = req.body;
+    const {  username, Comments, rating} = req.body;
 
-    const sql = 'INSERT INTO feedback (name, rating, message) VALUES (?, ?, ?)';
-    connection.query(sql, [name, rating, message], (err) => {
+    // הכנסה לטבלה
+    const sqlInsert = 'INSERT INTO feedback ( username, Comments, rating) VALUES (?, ?, ?)';
+    connection.query(sqlInsert, [ username, Comments, rating], (err) => {
         if (err) {
             console.error('Error inserting feedback:', err);
-            return res.status(400).send('Error saving feedback.');
+            return res.status(500).send('Error saving feedback.');
         }
-        res.send('Feedback submitted successfully!');
+
+        // שליפת כל הפידבקים לאחר ההוספה
+        const sqlSelect = 'SELECT * FROM feedback ORDER BY created_at DESC';
+        connection.query(sqlSelect, (err, results) => {
+            if (err) {
+                console.error('Error fetching feedback:', err);
+                return res.status(500).send('Error retrieving feedback.');
+            }
+            res.render('feedback.ejs', { feedbacks: results });
+        });
+    });
+});
+
+
+
+// נתיב להוספת פידבק
+app.post('/feedback', (req, res) => {
+    const { username, Comments, rating} = req.body;
+    const sql = 'INSERT INTO feedback1 ( username, Comments, rating) VALUES (?, ?, ?)';
+    connection.query(sql, [ username, Comments, rating], (err) => {
+        if (err) {
+            console.error('Error inserting feedback:', err);
+            return res.status(500).send('Error saving feedback.');
+        }
+        res.redirect('/feedback'); // לאחר שמירת הפידבק, מפנה לדף הפידבקים
     });
 });
 
