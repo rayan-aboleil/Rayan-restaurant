@@ -1,10 +1,14 @@
-const express = require('express');
+
 const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const path = require('path');
 const session = require('express-session');
 
-const app = express();
+const express = require('express'); // ייבוא Express
+const app = express(); // יצירת אובייקט האפליקציה
+app.use(express.json()); // Middleware לעיבוד JSON
+
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 // Middleware
@@ -112,15 +116,69 @@ app.post('/feedback', (req, res) => {
 // נתיב להוספת פידבק
 app.post('/feedback', (req, res) => {
     const { username, Comments, rating} = req.body;
-    const sql = 'INSERT INTO feedback1 ( username, Comments, rating) VALUES (?, ?, ?)';
+    const sql = 'INSERT INTO feedback ( username, Comments, rating) VALUES (?, ?, ?)';
     connection.query(sql, [ username, Comments, rating], (err) => {
         if (err) {
             console.error('Error inserting feedback:', err);
             return res.status(500).send('Error saving feedback.');
         }
-        res.redirect('/feedback'); // לאחר שמירת הפידבק, מפנה לדף הפידבקים
+        res.redirect('/feedbacks'); // לאחר שמירת הפידבק, מפנה לדף הפידבקים
     });
 });
+app.get('/feedbacks', (req, res) => {
+    const query = `
+        SELECT f.*, r.replay, r.created_at AS reply_created_at 
+        FROM feedback f 
+        LEFT JOIN replays r ON f.id = r.feedback_id 
+        ORDER BY f.created_at DESC
+    `;
+    connection.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching feedbacks:', err);
+            return res.status(500).send('Error retrieving feedbacks.');
+        }
+
+        // ארגון תוצאות להצגת פידבקים עם תגובות
+        const feedbacks = results.reduce((acc, row) => {
+            const existingFeedback = acc.find(f => f.id === row.id);
+            if (!existingFeedback) {
+                acc.push({
+                    id: row.id,
+                    name: row.name,
+                    rating: row.rating,
+                    comments: row.comments,
+                    created_at: row.created_at,
+                    replays: row.replay
+                        ? [{ reply: row.replay, created_at: row.reply_created_at }]
+                        : []
+                });
+            } else if (row.replay) {
+                existingFeedback.replays.push({ reply: row.replay, created_at: row.reply_created_at });
+            }
+            return acc;
+        }, []);
+
+        // שליחת הפידבקים לתצוגה
+        res.render('feedback.ejs', { feedbacks });
+    });
+});
+
+
+
+app.post('/reply', (req, res) => {
+    const { feedbackId, reply } = req.body;
+
+    // הכנס את התגובה לטבלת תגובות
+    const query = 'INSERT INTO replays (feedback_id, replay) VALUES (?, ?)';
+    connection.query(query, [feedbackId, reply], (err) => {
+        if (err) {
+            console.error('Error inserting reply:', err);
+            return res.status(500).send('Error saving reply.');
+        }
+        res.redirect('/feedbacks');  // הפניה חזרה לדף הפידבקים
+    });
+});
+
 
 // Contact route
 app.post('/contact1', (req, res) => {
