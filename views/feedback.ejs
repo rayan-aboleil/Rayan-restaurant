@@ -5,29 +5,126 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>User Feedback</title>
 <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 20px;
+        color: #333;
+        font-size: 24px;
+    }
+
     .feedback-container {
         display: flex;
         flex-wrap: wrap;
         gap: 20px;
         justify-content: center;
+        padding: 20px;
     }
+
     .feedback-card {
-        border: 1px solid #ddd;
+        background-color: #000; /* רקע שחור */
+        color: #fff; /* טקסט לבן */
+        border: 1px solid #444;
         padding: 15px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         max-width: 300px;
-        background: white;
-        text-align: center;
-    }
-    .reply-section {
-        margin-top: 10px;
         text-align: left;
+        transition: transform 0.2s, box-shadow 0.2s;
     }
+
+    .feedback-card:hover {
+        transform: scale(1.03);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .feedback-card h4 {
+        font-size: 18px;
+        margin: 0;
+        font-weight: bold;
+        color: #fff; /* טקסט לבן */
+    }
+
+    .feedback-card p {
+        font-size: 14px;
+        margin: 10px 0;
+        color: #ccc; /* טקסט אפור בהיר */
+    }
+
+    .feedback-card small {
+        display: block;
+        margin-top: 10px;
+        font-size: 12px;
+        color: #aaa; /* טקסט אפור בהיר */
+    }
+
+    .reply-section button {
+        background-color: #444; /* כפתור אפור כהה */
+        color: #fff;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .reply-section button:hover {
+        background-color: #666; /* כפתור אפור בינוני */
+    }
+
+    .reply-section textarea {
+        width: 100%;
+        border: 1px solid #555; /* גבול אפור כהה */
+        border-radius: 5px;
+        padding: 10px;
+        font-size: 14px;
+        margin-top: 10px;
+        background-color: #222; /* רקע כהה */
+        color: #fff; /* טקסט לבן */
+    }
+
+    .reply-section button[type="submit"] {
+        margin-top: 10px;
+        width: 100%;
+        background-color: #007BFF;
+        border: none;
+        color: white;
+        padding: 10px 12px;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .reply-section button[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+
     .replies {
         margin-top: 10px;
+        background: #111; /* רקע שחור כהה */
+        padding: 10px;
+        border: 1px solid #333; /* גבול שחור בהיר */
+        border-radius: 5px;
     }
-</style>   
+
+    .replies p {
+        font-size: 14px;
+        margin: 5px 0;
+        color: #ddd; /* טקסט אפור בהיר */
+    }
+
+    .replies small {
+        font-size: 12px;
+        color: #999; /* טקסט אפור בהיר */
+    }
+</style>
+
+
 </head>
 <body>
     <h1 style="text-align: center;"> Feedback</h1>
