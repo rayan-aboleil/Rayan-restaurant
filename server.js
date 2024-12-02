@@ -188,6 +188,20 @@ app.post('/reply', (req, res) => {
 });
 
 
+app.post('/edit-feedback', (req, res) => {
+    const { feedbackId, comments, rating } = req.body;
+
+    const query = 'UPDATE feedback SET comments = ?, rating = ? WHERE id = ?';
+    connection.query(query, [comments, rating, feedbackId], (err) => {
+        if (err) {
+            console.error('Error updating feedback:', err);
+            return res.status(500).send('Error updating feedback.');
+        }
+        res.redirect('/feedbacks'); // חזרה לדף הפידבקים
+    });
+});
+
+
 // Contact route
 app.post('/contact1', (req, res) => {
     const { name, email, phone } = req.body;
