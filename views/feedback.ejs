@@ -1,44 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Feedbacks</title>
-    <style>
-        .feedback-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-        }
-        .feedback-card {
-            border: 1px solid #ddd;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 300px;
-            background: white;
-            text-align: center;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Feedback</title>
+<style>
+    .feedback-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+    .feedback-card {
+        border: 1px solid #ddd;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 300px;
+        background: white;
+        text-align: center;
+    }
+    .reply-section {
+        margin-top: 10px;
+        text-align: left;
+    }
+    .replies {
+        margin-top: 10px;
+    }
+</style>   
 </head>
 <body>
-    <h1 style="text-align: center;"> Feedbacks</h1>
+    <h1 style="text-align: center;">User Feedback</h1>
     <div class="feedback-container">
         <% feedbacks.forEach(function(feedback) { %>
             <div class="feedback-card">
                 <h4><%= feedback.username %></h4>
                 <p><strong>Rating:</strong> <%= feedback.rating %> / 5</p>
-                <p><%= feedback.Comments %></p>
+                <p><%= feedback.comments %></p>
                 <small>Submitted on: <%= new Date(feedback.created_at).toLocaleString() %></small>
+
+                <!-- Display replies -->
+                <div class="replies">
+                    <% if (feedback.replies && feedback.replies.length > 0) { %>
+                        <% feedback.replies.forEach(function(reply) { %>
+                            <div style="margin-top: 10px; border-top: 1px solid #ddd; padding-top: 5px;">
+                                <p><strong>Reply :</strong> <%= reply.reply %></p>
+                                <small>Submitted on: <%= new Date(reply.created_at).toLocaleString() %></small>
+                                
+                            </div>
+                              
+                        <% }); %>
+                    <% } else { %>
+                        <p>No replies yet.</p>
+                    <% } %>
+                </div>
+                
+
+                <!-- Reply section -->
+                <div class="reply-section">
+                    <button onclick="toggleReplyForm('<%= feedback.id %>')" style="margin-top: 10px;">Reply</button>
+                    <form id="reply-form-<%= feedback.id %>" style="display: none; margin-top: 10px;" method="POST" action="/reply">
+                        <textarea name="reply" rows="3" style="width: 100%; border-radius: 5px;" placeholder="Write your reply here..."></textarea>
+                        <input type="hidden" name="feedbackId" value="<%= feedback.id %>">
+                        <button type="submit" style="margin-top: 10px;">Submit Reply</button>
+                    </form>
+                </div>
             </div>
         <% }); %>
     </div>
-
     <div style="text-align: center; margin-top: 20px;">
         <button onclick="location.href='/index.html'" style="padding: 10px 20px; font-size: 16px; cursor: pointer;">
             Back to Home
         </button>
     </div>
+    <script>
+        function toggleReplyForm(feedbackId) {
+            const form = document.getElementById(`reply-form-${feedbackId}`);
+            if (form.style.display === "none") {
+                form.style.display = "block";
+            } else {
+                form.style.display = "none";
+            }
+        }
+    </script>
+     <script>
+  
+</script>
 </body>
 </html>
