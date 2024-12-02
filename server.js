@@ -88,6 +88,49 @@ app.post('/register', (req, res) => {
         });
     });
 });
+app.get('/feedbacks', (req, res) => {
+    const query = `
+        SELECT f.id AS feedback_id, f.username, f.rating, f.comments, f.created_at,
+               r.id AS reply_id, r.reply, r.created_at AS reply_created_at 
+        FROM feedback f 
+        LEFT JOIN replies r ON f.id = r.feedback_id 
+        ORDER BY f.created_at DESC
+    `;
+    connection.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching feedbacks:', err);
+            return res.status(500).send('Error retrieving feedbacks.');
+        }
+
+        const feedbacks = results.reduce((acc, row) => {
+            let feedback = acc.find(f => f.id === row.feedback_id);
+            if (!feedback) {
+                feedback = {
+                    id: row.feedback_id,
+                    usernamename: row.username,
+                    rating: row.rating,
+                    comments: row.comments,
+                    created_at: row.created_at,
+                    replies: []
+                };
+                acc.push(feedback);
+            }
+            if (row.reply_id) {
+                feedback.replies.push({
+                    id: row.reply_id,
+                    reply: row.reply,
+                    created_at: row.reply_created_at
+                });
+            }
+            return acc;
+        }, []);
+
+        res.render('feedback.ejs', { feedbacks });
+    });
+});
+
+
+
 app.post('/feedback', (req, res) => {
     const {  username, Comments, rating} = req.body;
 
@@ -122,46 +165,11 @@ app.post('/feedback', (req, res) => {
             console.error('Error inserting feedback:', err);
             return res.status(500).send('Error saving feedback.');
         }
-        res.redirect('/feedbacks'); // לאחר שמירת הפידבק, מפנה לדף הפידבקים
+        res.redirect('/');
     });
 });
-app.get('/feedbacks', (req, res) => {
-    const query = `
-        SELECT f.*, r.replay, r.created_at AS reply_created_at 
-        FROM feedback f 
-        LEFT JOIN replays r ON f.id = r.feedback_id 
-        ORDER BY f.created_at DESC
-    `;
-    connection.query(query, (err, results) => {
-        if (err) {
-            console.error('Error fetching feedbacks:', err);
-            return res.status(500).send('Error retrieving feedbacks.');
-        }
 
-        // ארגון תוצאות להצגת פידבקים עם תגובות
-        const feedbacks = results.reduce((acc, row) => {
-            const existingFeedback = acc.find(f => f.id === row.id);
-            if (!existingFeedback) {
-                acc.push({
-                    id: row.id,
-                    name: row.name,
-                    rating: row.rating,
-                    comments: row.comments,
-                    created_at: row.created_at,
-                    replays: row.replay
-                        ? [{ reply: row.replay, created_at: row.reply_created_at }]
-                        : []
-                });
-            } else if (row.replay) {
-                existingFeedback.replays.push({ reply: row.replay, created_at: row.reply_created_at });
-            }
-            return acc;
-        }, []);
 
-        // שליחת הפידבקים לתצוגה
-        res.render('feedback.ejs', { feedbacks });
-    });
-});
 
 
 
@@ -169,7 +177,7 @@ app.post('/reply', (req, res) => {
     const { feedbackId, reply } = req.body;
 
     // הכנס את התגובה לטבלת תגובות
-    const query = 'INSERT INTO replays (feedback_id, replay) VALUES (?, ?)';
+    const query = 'INSERT INTO replies (feedback_id, reply) VALUES (?, ?)';
     connection.query(query, [feedbackId, reply], (err) => {
         if (err) {
             console.error('Error inserting reply:', err);
