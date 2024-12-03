@@ -132,9 +132,9 @@
         <% feedbacks.forEach(function(feedback) { %>
             <div class="feedback-card">
                 <h4><%= feedback.username %></h4>
+                <p><%= feedback.Comments %></p>
                 <p><strong>Rating:</strong> <%= feedback.rating %> / 5</p>
-                <p><%= feedback.comments %></p>
-                <small>Submitted on: <%= new Date(feedback.created_at).toLocaleString() %></small>
+              
 
                 <!-- Display replies -->
                 <div class="replies">
@@ -142,13 +142,13 @@
                         <% feedback.replies.forEach(function(reply) { %>
                             <div style="margin-top: 10px; border-top: 1px solid #ddd; padding-top: 5px;">
                                 <p><strong>Reply :</strong> <%= reply.reply %></p>
-                                <small>Submitted on: <%= new Date(reply.created_at).toLocaleString() %></small>
+                            
                                 
                             </div>
                             <div class="edit-section">
                                 <button onclick="toggleEditForm('<%= feedback.id %>')" style="margin-top: 10px;">Edit</button>
                                 <form id="edit-form-<%= feedback.id %>" style="display: none; margin-top: 10px;" method="POST" action="/edit-feedback">
-                                    <textarea name="comments" rows="3" style="width: 100%; border-radius: 5px;"><%= feedback.comments %></textarea>
+                                    <textarea name="Comments" rows="3" style="width: 100%; border-radius: 5px;"><%= feedback.Comments %></textarea>
                                     <input type="number" name="rating" min="1" max="5" value="<%= feedback.rating %>" style="width: 100%; margin-top: 10px; border-radius: 5px;">
                                     <input type="hidden" name="feedbackId" value="<%= feedback.id %>">
                                     <button type="submit" style="margin-top: 10px;">Save Changes</button>
