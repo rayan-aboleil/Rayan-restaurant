@@ -90,7 +90,7 @@ app.post('/register', (req, res) => {
 });
 app.get('/feedbacks', (req, res) => {
     const query = `
-        SELECT f.id AS feedback_id, f.username, f.rating, f.comments, f.created_at,
+        SELECT f.id AS feedback_id, f.username, f.rating, f.Comments, f.created_at,
                r.id AS reply_id, r.reply, r.created_at AS reply_created_at 
         FROM feedback f 
         LEFT JOIN replies r ON f.id = r.feedback_id 
@@ -107,9 +107,9 @@ app.get('/feedbacks', (req, res) => {
             if (!feedback) {
                 feedback = {
                     id: row.feedback_id,
-                    usernamename: row.username,
+                    username: row.username,
                     rating: row.rating,
-                    comments: row.comments,
+                    Comments: row.Comments,
                     created_at: row.created_at,
                     replies: []
                 };
@@ -156,18 +156,7 @@ app.post('/feedback', (req, res) => {
 
 
 
-// נתיב להוספת פידבק
-app.post('/feedback', (req, res) => {
-    const { username, Comments, rating} = req.body;
-    const sql = 'INSERT INTO feedback ( username, Comments, rating) VALUES (?, ?, ?)';
-    connection.query(sql, [ username, Comments, rating], (err) => {
-        if (err) {
-            console.error('Error inserting feedback:', err);
-            return res.status(500).send('Error saving feedback.');
-        }
-        res.redirect('/');
-    });
-});
+
 
 
 
@@ -189,10 +178,10 @@ app.post('/reply', (req, res) => {
 
 
 app.post('/edit-feedback', (req, res) => {
-    const { feedbackId, comments, rating } = req.body;
+    const { feedbackId, Comments, rating } = req.body;
 
-    const query = 'UPDATE feedback SET comments = ?, rating = ? WHERE id = ?';
-    connection.query(query, [comments, rating, feedbackId], (err) => {
+    const query = 'UPDATE feedback SET Comments = ?, rating = ? WHERE id = ?';
+    connection.query(query, [Comments, rating, feedbackId], (err) => {
         if (err) {
             console.error('Error updating feedback:', err);
             return res.status(500).send('Error updating feedback.');
