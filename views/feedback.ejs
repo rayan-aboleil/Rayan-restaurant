@@ -141,16 +141,24 @@
                     <% if (feedback.replies && feedback.replies.length > 0) { %>
                         <% feedback.replies.forEach(function(reply) { %>
                             <div style="margin-top: 10px; border-top: 1px solid #ddd; padding-top: 5px;">
-                                <p><strong>Reply :</strong> <%= reply.reply %></p>
-                            
-                                
+                                <p><strong>Reply:</strong> <%= reply.reply %></p>
+                
+                                <!-- כפתור עריכת תגובה -->
+                                <button onclick="toggleEditReplyForm('<%= reply.id %>')" style="margin-top: 10px;">Edit Reply</button>
+                
+                                <!-- טופס לעריכת תגובה -->
+                                <form id="edit-reply-form-<%= reply.id %>" style="display: none; margin-top: 10px;" method="POST" action="/edit-reply">
+                                    <textarea name="reply" rows="3" style="width: 100%; border-radius: 5px;"><%= reply.reply %></textarea>
+                                    <input type="hidden" name="replyId" value="<%= reply.id %>">
+                                    <button type="submit" style="margin-top: 10px;">Save Reply</button>
+                                </form>
                             </div>
-                          
                         <% }); %>
                     <% } else { %>
                         <p>No replies yet.</p>
-                 
                     <% } %>
+                </div>
+                
                 
                 <div class="edit-section">
                     <button onclick="toggleEditForm('<%= feedback.id %>')" style="margin-top: 10px;">Edit</button>
@@ -201,8 +209,17 @@
         }
     }
 </script>
-        
-  
+
+<script>   
+function toggleEditReplyForm(replyId) {
+    const form = document.getElementById(`edit-reply-form-${replyId}`);
+    if (form.style.display === "none") {
+        form.style.display = "block";
+    } else {
+        form.style.display = "none";
+    }
+}
+</script>
 
 </body>
 </html>
