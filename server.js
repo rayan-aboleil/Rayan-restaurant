@@ -208,6 +208,29 @@ app.get('/get-username', (req, res) => {
     }
 });
 
+app.post('/delete-feedback-only', (req, res) => {
+    const { feedbackId } = req.body;
+
+    if (!feedbackId) {
+        console.error('Feedback ID is missing.');
+        return res.status(400).send('Feedback ID is required.');
+    }
+
+    const deleteFeedbackQuery = 'DELETE FROM feedback WHERE id = ?';
+    connection.query(deleteFeedbackQuery, [feedbackId], (err, result) => {
+        if (err) {
+            console.error('Error deleting feedback:', err);
+            return res.status(500).send('Error deleting feedback.');
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).send('Feedback not found.');
+        }
+        console.log(`Feedback with ID ${feedbackId} deleted.`);
+        res.redirect('/feedbacks'); // חזרה לעמוד הפידבקים
+    });
+});
+
+
 // Start the server
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
