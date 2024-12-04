@@ -1,16 +1,15 @@
-
 const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const path = require('path');
 const session = require('express-session');
-
 const express = require('express'); // ייבוא Express
+
 const app = express(); // יצירת אובייקט האפליקציה
 app.use(express.json()); // Middleware לעיבוד JSON
 
-
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+
 // Middleware
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -41,19 +40,16 @@ app.get('/', (req, res) => {
 
 // Login route
 app.post('/db.js', (req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
-    const email = req.body.email;
+    const { username, password, email } = req.body;
 
     const query = 'SELECT * FROM project WHERE username = ? AND password = ? AND email = ?';
     connection.query(query, [username, password, email], (err, results) => {
         if (err) throw err;
 
         if (results.length > 0) {
-            // אם ההתחברות מוצלחת, נשמור את שם המשתמש ב-session
             req.session.username = username;
             console.log('Login OK');
-            res.redirect('/index.html'); // הפניה לדף index1.html
+            res.redirect('/index.html'); // הפניה לדף index.html
         } else {
             console.log('Login failed');
             res.send('Invalid username, password, or email.');
@@ -88,6 +84,8 @@ app.post('/register', (req, res) => {
         });
     });
 });
+
+// Feedbacks route
 app.get('/feedbacks', (req, res) => {
     const query = `
         SELECT f.id AS feedback_id, f.username, f.rating, f.Comments, f.created_at,
@@ -96,6 +94,7 @@ app.get('/feedbacks', (req, res) => {
         LEFT JOIN replies r ON f.id = r.feedback_id 
         ORDER BY f.created_at DESC
     `;
+
     connection.query(query, (err, results) => {
         if (err) {
             console.error('Error fetching feedbacks:', err);
@@ -129,54 +128,36 @@ app.get('/feedbacks', (req, res) => {
     });
 });
 
-
-
+// Add feedback route
 app.post('/feedback', (req, res) => {
-    const {  username, Comments, rating} = req.body;
+    const { username, Comments, rating } = req.body;
 
-    // הכנסה לטבלה
-    const sqlInsert = 'INSERT INTO feedback ( username, Comments, rating) VALUES (?, ?, ?)';
-    connection.query(sqlInsert, [ username, Comments, rating], (err) => {
+    const sqlInsert = 'INSERT INTO feedback (username, Comments, rating) VALUES (?, ?, ?)';
+    connection.query(sqlInsert, [username, Comments, rating], (err) => {
         if (err) {
             console.error('Error inserting feedback:', err);
             return res.status(500).send('Error saving feedback.');
         }
 
-        // שליפת כל הפידבקים לאחר ההוספה
-        const sqlSelect = 'SELECT * FROM feedback ORDER BY created_at DESC';
-        connection.query(sqlSelect, (err, results) => {
-            if (err) {
-                console.error('Error fetching feedback:', err);
-                return res.status(500).send('Error retrieving feedback.');
-            }
-            res.render('feedback.ejs', { feedbacks: results });
-        });
+        res.redirect('/feedbacks');
     });
 });
 
-
-
-
-
-
-
-
-
+// Add reply route
 app.post('/reply', (req, res) => {
     const { feedbackId, reply } = req.body;
 
-    // הכנס את התגובה לטבלת תגובות
     const query = 'INSERT INTO replies (feedback_id, reply) VALUES (?, ?)';
     connection.query(query, [feedbackId, reply], (err) => {
         if (err) {
             console.error('Error inserting reply:', err);
             return res.status(500).send('Error saving reply.');
         }
-        res.redirect('/feedbacks');  // הפניה חזרה לדף הפידבקים
+        res.redirect('/feedbacks'); // הפניה חזרה לדף הפידבקים
     });
 });
 
-
+// Edit feedback route
 app.post('/edit-feedback', (req, res) => {
     const { feedbackId, Comments, rating } = req.body;
 
@@ -190,6 +171,19 @@ app.post('/edit-feedback', (req, res) => {
     });
 });
 
+// Edit reply route
+app.post('/edit-reply', (req, res) => {
+    const { replyId, reply } = req.body;
+
+    const query = 'UPDATE replies SET reply = ? WHERE id = ?';
+    connection.query(query, [reply, replyId], (err) => {
+        if (err) {
+            console.error('Error updating reply:', err);
+            return res.status(500).send('Error updating reply.');
+        }
+        res.redirect('/feedbacks'); // חזרה לדף הפידבקים
+    });
+});
 
 // Contact route
 app.post('/contact1', (req, res) => {
@@ -215,7 +209,6 @@ app.get('/get-username', (req, res) => {
 });
 
 // Start the server
-
 app.listen(3000, () => {
-    console.log(`Server is running on port 3000`);
+    console.log('Server is running on port 3000');
 });
