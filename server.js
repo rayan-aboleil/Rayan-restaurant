@@ -208,7 +208,7 @@ app.get('/get-username', (req, res) => {
     }
 });
 
-app.post('/delete-feedback-only', (req, res) => {
+app.post('/delete-feedback', (req, res) => {
     const { feedbackId } = req.body;
 
     if (!feedbackId) {
@@ -216,17 +216,50 @@ app.post('/delete-feedback-only', (req, res) => {
         return res.status(400).send('Feedback ID is required.');
     }
 
-    const deleteFeedbackQuery = 'DELETE FROM feedback WHERE id = ?';
-    connection.query(deleteFeedbackQuery, [feedbackId], (err, result) => {
+    // מחיקת כל התגובות הקשורות לפידבק
+    const deleteRepliesQuery = 'DELETE FROM replies WHERE feedback_id = ?';
+    connection.query(deleteRepliesQuery, [feedbackId], (err) => {
         if (err) {
-            console.error('Error deleting feedback:', err);
-            return res.status(500).send('Error deleting feedback.');
+            console.error('Error deleting replies:', err);
+            return res.status(500).send('Error deleting replies.');
+        }
+
+        // מחיקת הפידבק עצמו לאחר מחיקת התגובות
+        const deleteFeedbackQuery = 'DELETE FROM feedback WHERE id = ?';
+        connection.query(deleteFeedbackQuery, [feedbackId], (err, result) => {
+            if (err) {
+                console.error('Error deleting feedback:', err);
+                return res.status(500).send('Error deleting feedback.');
+            }
+            if (result.affectedRows === 0) {
+                return res.status(404).send('Feedback not found.');
+            }
+            console.log(`Feedback with ID ${feedbackId} and its replies deleted.`);
+            res.redirect('/feedbacks'); // חזרה לדף הפידבקים
+        });
+    });
+});
+
+
+app.post('/delete-reply', (req, res) => {
+    const { replyId } = req.body;
+
+    if (!replyId) {
+        console.error('Reply ID is missing.');
+        return res.status(400).send('Reply ID is required.');
+    }
+
+    const deleteReplyQuery = 'DELETE FROM replies WHERE id = ?';
+    connection.query(deleteReplyQuery, [replyId], (err, result) => {
+        if (err) {
+            console.error('Error deleting reply:', err);
+            return res.status(500).send('Error deleting reply.');
         }
         if (result.affectedRows === 0) {
-            return res.status(404).send('Feedback not found.');
+            return res.status(404).send('Reply not found.');
         }
-        console.log(`Feedback with ID ${feedbackId} deleted.`);
-        res.redirect('/feedbacks'); // חזרה לעמוד הפידבקים
+        console.log(`Reply with ID ${replyId} deleted.`);
+        res.redirect('/feedbacks'); // חזרה לדף הפידבקים
     });
 });
 
