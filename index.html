@@ -513,54 +513,17 @@
   </div>
 
   <!-- החלק של הטופס מכסה את כל הצד הימני -->
-  <div class="feedback-form" style="background-color: #000000; padding: 40px; border-radius: 0; width: 50%; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);">
-      <h2 class="text-center" data-aos="fade-up" data-aos-duration="1500" style="color: rgb(255, 255, 255);">
-          Customer Feedback
-      </h2>
-      <p class="text-center feedback__subtitle mb-5" data-aos="fade-up" data-aos-duration="1500" style="color: #ffffff; font-size: 18px; line-height: 1.5;">
-          We value your feedback! Please let us know how your experience was at our restaurant.
-      </p>
-      <form action="/feedback" method="POST">
-          <div class="form-group" style="margin-bottom: 20px;">
-              <label for="name" style="color: #f3f3f3; display: block; font-size: 18px;">
-                  Your Name
-              </label>
-              <input type="text" id="name" name="name" required style="width: 100%; padding: 15px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; background-color: #f9f9f9; color: #333;">
-          </div>
-
-          <div class="form-group" style="margin-bottom: 20px;">
-            <label for="rating" style="color: #ffffff; display: block; font-size: 18px;">
-                Your Satisfaction Level
-            </label>
-            <div class="star-rating">
-              <input type="radio" name="rating" value="excellent" id="excellent" required>
-              <label for="excellent">★ Excellent</label>
-              <input type="radio" name="rating" value="good" id="good">
-              <label for="good">★ Good</label>
-              <input type="radio" name="rating" value="average" id="average">
-              <label for="average">★ Average</label>
-              <input type="radio" name="rating" value="poor" id="poor">
-              <label for="poor">★ Poor</label>
-              <input type="radio" name="rating" value="bad" id="bad">
-              <label for="bad">★ Bad</label>
-          </div>
-        </div>
-        
-
-          <div class="form-group" style="margin-bottom: 20px;">
-              <label for="message" style="color: #ffffff; display: block; font-size: 18px;">
-                  Your Feedback
-              </label>
-              <textarea id="message" name="message" rows="6" required style="width: 100%; padding: 15px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; background-color: #f9f9f9; color: #333;"></textarea>
-          </div>
-
-          <div class="form-buttons" style="text-align: center;">
-              <button type="submit" style="background-color: #fefefb; color: black; padding: 15px 40px; font-size: 18px; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease;">
-                  Submit Feedback
-              </button>
-          </div>
-      </form>
-  </div>
+  <section id="feedback-options" style="text-align: center; margin-top: 50px;">
+    <h2 style="color: #4CAF50;">Choose Feedback Option</h2>
+    <div style="margin-top: 20px;">
+      <!-- כפתור להצגת פידבקים בלבד -->
+      <button onclick="window.location.href='/view-feedbacks';" style="padding: 15px 30px; margin: 10px; font-size: 18px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">View Feedbacks</button>
+  
+      <!-- כפתור לניהול פידבקים -->
+      <button onclick="window.location.href='/manage-feedbacks';" style="padding: 15px 30px; margin: 10px; font-size: 18px; background-color: #FF5733; color: white; border: none; border-radius: 5px; cursor: pointer;">Manage Feedbacks</button>
+    </div>
+  </section>
+  
 </section>
   <!-- review section starts -->
 
