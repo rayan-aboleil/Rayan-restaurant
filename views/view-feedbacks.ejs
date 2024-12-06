@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Feedbacks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .feedback-card {
+            background-color: #ffffff;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            overflow: hidden;
+        }
+        .feedback-card h3 {
+            margin: 0;
+            color: #555;
+        }
+        .feedback-card p {
+            margin: 10px 0;
+            color: #666;
+        }
+        .feedback-card .rating {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            font-weight: bold;
+            background-color: #ffe082;
+            color: #333;
+        }
+        .feedback-card .created-at {
+            font-size: 0.85em;
+            color: #999;
+        }
+        .back-button {
+            display: block;
+            margin: 30px auto;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Customer Feedbacks</h1>
+        <% feedbacks.forEach(feedback => { %>
+            <div class="feedback-card">
+                <h3><%= feedback.username || 'Anonymous' %></h3>
+                <p><strong>Comments:</strong> <%= feedback.Comments || 'No comments provided' %></p>
+                <% if (feedback.rating) { %>
+                    <span class="rating">Rating: <%= feedback.rating %></span>
+                <% } %>
+                <p class="created-at">Submitted on: <%= new Date(feedback.created_at).toLocaleString() %></p>
+            </div>
+        <% }); %>
+        <a href="/index.html" class="back-button">Back to Home</a>
+    </div>
+</body>
+</html>
