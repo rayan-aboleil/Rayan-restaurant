@@ -116,14 +116,11 @@
   </div>
   <script>
     function loginUser(username) {
-        // Store the username in sessionStorage on the client side
-        sessionStorage.setItem("user", username);
+    sessionStorage.setItem("user", username);
+    alert("Login successful, redirecting to dashboard...");
+    window.location.href = "/dashboard";
+}
 
-        // You can also redirect or perform other actions here
-        window.location.href = "/dashboard";
-    }
-
-    // Call this function after login validation is successful
 </script>
 </body>
 
