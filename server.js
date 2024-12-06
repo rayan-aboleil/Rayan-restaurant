@@ -262,6 +262,59 @@ app.post('/delete-reply', (req, res) => {
         res.redirect('/feedbacks'); // חזרה לדף הפידבקים
     });
 });
+app.get('/view-feedbacks', (req, res) => {
+    const query = 'SELECT * FROM feedback ORDER BY created_at DESC';
+
+    connection.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching feedbacks:', err);
+            return res.status(500).send('Error retrieving feedbacks.');
+        }
+
+        res.render('view-feedbacks.ejs', { feedbacks: results }); // Ensure this EJS file exists
+    });
+});
+app.get('/manage-feedbacks', (req, res) => {
+    const query = `
+        SELECT f.id AS feedback_id, f.username, f.rating, f.Comments, f.created_at,
+               r.id AS reply_id, r.reply, r.created_at AS reply_created_at 
+        FROM feedback f 
+        LEFT JOIN replies r ON f.id = r.feedback_id 
+        ORDER BY f.created_at DESC
+    `;
+
+    connection.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching feedbacks:', err);
+            return res.status(500).send('Error retrieving feedbacks.');
+        }
+
+        const feedbacks = results.reduce((acc, row) => {
+            let feedback = acc.find(f => f.id === row.feedback_id);
+            if (!feedback) {
+                feedback = {
+                    id: row.feedback_id,
+                    username: row.username,
+                    rating: row.rating,
+                    Comments: row.Comments,
+                    created_at: row.created_at,
+                    replies: []
+                };
+                acc.push(feedback);
+            }
+            if (row.reply_id) {
+                feedback.replies.push({
+                    id: row.reply_id,
+                    reply: row.reply,
+                    created_at: row.reply_created_at
+                });
+            }
+            return acc;
+        }, []);
+
+        res.render('manage-feedbacks.ejs', { feedbacks }); // Make sure the EJS file exists
+    });
+});
 
 
 // Start the server
