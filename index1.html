@@ -46,7 +46,7 @@
         <a href="#home"><i class="fas fa-home"></i> Home</a>
         <a href="#about"><i class="fas fa-info-circle"></i> About</a>
         <a href="#menu"><i class="fas fa-utensils"></i> Menu</a>
-       
+        <a href="#feedback"><i class="fas fa-box"></i> Feedback</a>
         <a href="#review"><i class="fas fa-star"></i> Review</a>
        
         <a href="#blogs"><i class="fas fa-blog"></i> Blogs</a>
@@ -505,7 +505,64 @@
     </div>
     </div>
   </section>
+</section>
+<!-- Feedback Section for Restaurant Website -->
+<section class="feedback mt-5" id="feedback" style="background-color: #000000; padding: 0; height: 100vh; display: flex;">
+  
+<!-- תמונה בצד השמאלי שמכסה את כל הצד -->
+<div class="feedback-image" style="width: 30%; background-image: url('https://image.freepik.com/free-photo/portrait-confident-male-chef-kitchen_23-2147863584.jpg'); background-size: cover; background-position: center;">
+</div>
 
+<!-- החלק של הטופס מכסה את כל הצד הימני -->
+<div class="feedback-form" style="background-color: #000000; padding: 40px; border-radius: 0; width: 50%; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);">
+    <h2 class="text-center" data-aos="fade-up" data-aos-duration="1500" style="color: rgb(255, 255, 255);">
+        Customer Feedback
+    </h2>
+   
+    <div class="view-feedbacks">
+      <button class="/view-feedbacks" onclick="window.location.href='/view-feedbacks';">view-feedbacks</button>
+    </div>
+  </div>
+  <script>
+    document.getElementById('showFeedbacksButton').addEventListener('click', function () {
+        // בקשה לשרת לשליפת הפידבקים
+        fetch('/feedbacks') // נתיב API שיחזיר את הפידבקים (לדוגמה)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch feedbacks');
+                }
+                return response.json();
+            })
+            .then(feedbacks => {
+                const feedbacksContainer = document.getElementById('feedbacksContainer');
+                feedbacksContainer.style.display = 'block'; // מציג את הקונטיינר
+                feedbacksContainer.innerHTML = ''; // מנקה נתונים ישנים
+                
+                feedbacks.forEach(feedback => {
+                    // יצירת כרטיס פידבק
+                    const feedbackCard = `
+                        <div style="border: 1px solid white; border-radius: 10px; padding: 15px; margin-bottom: 10px; background-color: #1a1a1a; color: white;">
+                            <h3>${feedback.username}</h3>
+                            <p><strong>Rating:</strong> ${feedback.rating}</p>
+                            <p><strong>Feedback:</strong> ${feedback.comment}</p>
+                        </div>
+                    `;
+                    feedbacksContainer.innerHTML += feedbackCard; // הוספת הכרטיס ל-HTML
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching feedbacks:', error);
+                alert('Failed to load feedbacks');
+            });
+    });
+</script>
+
+  
+
+      
+    </form>
+</div>
+</section>
   
   <!-- review section starts -->
 
