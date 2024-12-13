@@ -274,6 +274,18 @@ app.get('/view-feedbacks', (req, res) => {
         res.render('view-feedbacks.ejs', { feedbacks: results }); // Ensure this EJS file exists
     });
 });
+app.get('/view', (req, res) => {
+    const query = 'SELECT * FROM feedback ORDER BY created_at DESC';
+
+    connection.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching feedbacks:', err);
+            return res.status(500).send('Error retrieving feedbacks.');
+        }
+
+        res.render('Viewfee.ejs', { feedbacks: results }); // Ensure this EJS file exists
+    });
+});
 app.get('/manage-feedbacks', (req, res) => {
     const query = `
         SELECT f.id AS feedback_id, f.username, f.rating, f.Comments, f.created_at,
