@@ -511,13 +511,162 @@
   <!-- תמונה בצד השמאלי שמכסה את כל הצד -->
   <div class="feedback-image" style="width: 30%; background-image: url('https://image.freepik.com/free-photo/portrait-confident-male-chef-kitchen_23-2147863584.jpg'); background-size: cover; background-position: center;">
   </div>
+  <style>
+    /* עיצוב כללי לטופס */
+    form {
+        max-width: 500px;
+        margin: auto;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff; /* רקע הטופס */
+    }
 
+    h3.sub-heading, h1.heading {
+        text-align: center;
+        color: #333; /* צבע טקסט */
+        margin-bottom: 20px;
+    }
+
+    h3.sub-heading {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    h1.heading {
+        font-size: 24px;
+    }
+
+    .inputBox {
+        margin-bottom: 20px;
+    }
+
+    .input {
+        margin-bottom: 15px;
+    }
+
+    .input span {
+        display: block;
+        font-size: 14px;
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+        background-color: #f9f9f9; /* רקע לשדות */
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus,
+    textarea:focus {
+        border-color: #007BFF; /* מסגרת כחולה במצב פוקוס */
+        box-shadow: 0px 4px 6px rgba(0, 123, 255, 0.2);
+        outline: none;
+    }
+
+    textarea {
+        resize: none; /* ביטול שינוי גודל */
+    }
+
+    .stars {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+    }
+
+    .stars input[type="radio"] {
+        display: none;
+    }
+
+    .stars label {
+        font-size: 24px;
+        color: #ccc;
+        cursor: pointer;
+        transition: color 0.3s;
+    }
+
+    .stars input[type="radio"]:checked ~ label {
+        color: #FF9900; /* צבע כוכבים נבחרים */
+    }
+
+    .btn {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+        background-color: #45a049;
+    }
+</style>
+
+  <section class="feedback" id="feedback">
+    <h3 class="sub-heading">Leave Your Feedback</h3>
+    <h1 class="heading">We Value Your Opinion</h1>
+
+    <form action="/submit_feedback" method="POST">
+
+        
+
+        <div class="inputBox">
+            <div class="input">
+                <span>Comments</span>
+                <textarea name="comments" placeholder="Write your feedback here..." cols="30" rows="10" required></textarea>
+            </div>
+        </div>
+
+        <div class="inputBox">
+            <div class="input">
+                <span>Rating</span>
+                <div class="stars">
+                    <input type="radio" name="rating" value="1" id="star1">
+                    <label for="star1" class="fas fa-star"></label>
+
+                    <input type="radio" name="rating" value="2" id="star2">
+                    <label for="star2" class="fas fa-star"></label>
+
+                    <input type="radio" name="rating" value="3" id="star3">
+                    <label for="star3" class="fas fa-star"></label>
+
+                    <input type="radio" name="rating" value="4" id="star4">
+                    <label for="star4" class="fas fa-star"></label>
+
+                    <input type="radio" name="rating" value="5" id="star5">
+                    <label for="star5" class="fas fa-star"></label>
+                </div>
+            </div>
+        </div>
+
+        <input type="submit" value="Submit Feedback" class="btn">
+
+    </form>
+</section>
   <!-- החלק של הטופס מכסה את כל הצד הימני -->
   <section id="feedback-options" style="text-align: center; margin-top: 50px;">
     <h2 style="color: #4CAF50;">Choose Feedback Option</h2>
     <div style="margin-top: 20px;">
       <button onclick="window.location.href='/view-feedbacks';" style="padding: 15px 30px; margin: 10px; font-size: 18px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">View Feedbacks</button>
-      <button class="manage-feedback-button" onclick="window.location.href='/manage-feedbacks';" style="padding: 15px 30px; margin: 10px; font-size: 18px; background-color: #FF5733; color: white; border: none; border-radius: 5px; cursor: pointer;">Manage Feedbacks</button>
+   
     </div>
   </section>
   
