@@ -91,9 +91,13 @@ app.post('/register', (req, res) => {
 
 // Feedbacks route
 app.get('/feedbacks', (req, res) => {
+    if (!req.session.username) {
+        return res.status(401).send('User not logged in.');
+    }
+
     const query = `
-        SELECT f.id AS feedback_id, f.username, f.rating, f.Comments, f.created_at,
-               r.id AS reply_id, r.reply, r.created_at AS reply_created_at 
+        SELECT f.id AS feedback_id, f.username AS feedback_username, f.rating, f.Comments, f.created_at,
+               r.id AS reply_id, r.reply, r.username AS reply_username, r.created_at AS reply_created_at 
         FROM feedback f 
         LEFT JOIN replies r ON f.id = r.feedback_id 
         ORDER BY f.created_at DESC
@@ -110,7 +114,7 @@ app.get('/feedbacks', (req, res) => {
             if (!feedback) {
                 feedback = {
                     id: row.feedback_id,
-                    username: row.username,
+                    username: row.feedback_username,
                     rating: row.rating,
                     Comments: row.Comments,
                     created_at: row.created_at,
@@ -122,20 +126,30 @@ app.get('/feedbacks', (req, res) => {
                 feedback.replies.push({
                     id: row.reply_id,
                     reply: row.reply,
+                    username: row.reply_username, // Add username to reply
                     created_at: row.reply_created_at
                 });
             }
             return acc;
         }, []);
 
-        res.render('feedback.ejs', { feedbacks });
+        res.render('feedback.ejs', { feedbacks, username: req.session.username });
     });
 });
 
 
-app.post('/feedback', (req, res) => {
-    const { username, Comments, rating } = req.body;
 
+
+
+
+app.post('/feedback', (req, res) => {
+    const { Comments, rating } = req.body;
+
+    if (!req.session.username) {
+        return res.status(401).send('User not logged in.');
+    }
+
+    const username = req.session.username; // Retrieve username from session
     const sqlInsert = 'INSERT INTO feedback (username, Comments, rating) VALUES (?, ?, ?)';
     connection.query(sqlInsert, [username, Comments, rating], (err) => {
         if (err) {
@@ -147,21 +161,33 @@ app.post('/feedback', (req, res) => {
     });
 });
 
+
+// Add reply route
 // Add reply route
 app.post('/reply', (req, res) => {
-    const { feedbackId, reply } = req.body;
+    if (!req.session.username) {
+        return res.status(401).send('User not logged in.');
+    }
 
-    const query = 'INSERT INTO replies (feedback_id, reply) VALUES (?, ?)';
-    connection.query(query, [feedbackId, reply], (err) => {
+    const { feedbackId, reply } = req.body;
+    const username = req.session.username; // Retrieve username from session
+
+    // Insert reply into the database
+    const insertQuery = 'INSERT INTO replies (feedback_id, reply, username) VALUES (?, ?, ?)';
+    connection.query(insertQuery, [feedbackId, reply, username], (err) => {
         if (err) {
             console.error('Error inserting reply:', err);
             return res.status(500).send('Error saving reply.');
         }
-        res.redirect('/feedbacks'); // הפניה חזרה לדף הפידבקים
+        // Redirect back to the feedbacks page after successful insertion
+        res.redirect('/feedbacks');
     });
 });
-// Edit feedback route
-// Edit feedback route
+
+
+
+
+
 app.post('/edit-feedback', (req, res) => {
     const { feedbackId, Comments, rating } = req.body;
 
