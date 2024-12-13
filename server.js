@@ -10,13 +10,15 @@ app.use(express.json()); // Middleware לעיבוד JSON
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+
 // Middleware
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
-    secret: 'your-secret-key', // מפתח סודי לשימוש ב-session
+    secret: 'your-secret-key',
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: { secure: false } // Ensure secure cookies in production
 }));
 
 // Database connection
@@ -29,10 +31,12 @@ const connection = mysql.createConnection({
 });
 
 connection.connect((err) => {
-    if (err) throw err;
+    if (err) {
+        console.error('Database connection failed:', err);
+        process.exit(1);
+    }
     console.log('Connected to the database.');
 });
-
 // Routes
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'login.html'));
@@ -128,7 +132,7 @@ app.get('/feedbacks', (req, res) => {
     });
 });
 
-// Add feedback route
+
 app.post('/feedback', (req, res) => {
     const { username, Comments, rating } = req.body;
 
@@ -156,7 +160,7 @@ app.post('/reply', (req, res) => {
         res.redirect('/feedbacks'); // הפניה חזרה לדף הפידבקים
     });
 });
-
+// Edit feedback route
 // Edit feedback route
 app.post('/edit-feedback', (req, res) => {
     const { feedbackId, Comments, rating } = req.body;
@@ -171,7 +175,6 @@ app.post('/edit-feedback', (req, res) => {
     });
 });
 
-// Edit reply route
 app.post('/edit-reply', (req, res) => {
     const { replyId, reply } = req.body;
 
@@ -183,29 +186,6 @@ app.post('/edit-reply', (req, res) => {
         }
         res.redirect('/feedbacks'); // חזרה לדף הפידבקים
     });
-});
-
-// Contact route
-app.post('/contact1', (req, res) => {
-    const { name, email, phone } = req.body;
-
-    const sql = 'INSERT INTO contact (name, email, phone) VALUES (?, ?, ?)';
-    connection.query(sql, [name, email, phone], (err) => {
-        if (err) {
-            console.error('Error inserting contact:', err);
-            return res.status(500).send('Error saving contact.');
-        }
-        res.send('Contact saved successfully!');
-    });
-});
-
-// Get username route
-app.get('/get-username', (req, res) => {
-    if (req.session.username) {
-        res.json({ username: req.session.username });
-    } else {
-        res.status(404).send('No user logged in.');
-    }
 });
 
 app.post('/delete-feedback', (req, res) => {
@@ -274,6 +254,43 @@ app.get('/view-feedbacks', (req, res) => {
         res.render('view-feedbacks.ejs', { feedbacks: results }); // Ensure this EJS file exists
     });
 });
+
+// Contact route
+app.post('/contact1', (req, res) => {
+    const { name, email, phone } = req.body;
+
+    const sql = 'INSERT INTO contact (name, email, phone) VALUES (?, ?, ?)';
+    connection.query(sql, [name, email, phone], (err) => {
+        if (err) {
+            console.error('Error inserting contact:', err);
+            return res.status(500).send('Error saving contact.');
+        }
+        res.send('Contact saved successfully!');
+    });
+});
+
+// Get username route
+app.get('/get-username', (req, res) => {
+    if (req.session.username) {
+        res.json({ username: req.session.username });
+    } else {
+        res.status(404).send('No user logged in.');
+    }
+});
+
+
+app.get('/view-feedbacks', (req, res) => {
+    const query = 'SELECT * FROM feedback ORDER BY created_at DESC';
+
+    connection.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching feedbacks:', err);
+            return res.status(500).send('Error retrieving feedbacks.');
+        }
+
+        res.render('view-feedbacks.ejs', { feedbacks: results }); // Ensure this EJS file exists
+    });
+});
 app.get('/view', (req, res) => {
     const query = 'SELECT * FROM feedback ORDER BY created_at DESC';
 
@@ -286,47 +303,7 @@ app.get('/view', (req, res) => {
         res.render('Viewfee.ejs', { feedbacks: results }); // Ensure this EJS file exists
     });
 });
-app.get('/manage-feedbacks', (req, res) => {
-    const query = `
-        SELECT f.id AS feedback_id, f.username, f.rating, f.Comments, f.created_at,
-               r.id AS reply_id, r.reply, r.created_at AS reply_created_at 
-        FROM feedback f 
-        LEFT JOIN replies r ON f.id = r.feedback_id 
-        ORDER BY f.created_at DESC
-    `;
 
-    connection.query(query, (err, results) => {
-        if (err) {
-            console.error('Error fetching feedbacks:', err);
-            return res.status(500).send('Error retrieving feedbacks.');
-        }
-
-        const feedbacks = results.reduce((acc, row) => {
-            let feedback = acc.find(f => f.id === row.feedback_id);
-            if (!feedback) {
-                feedback = {
-                    id: row.feedback_id,
-                    username: row.username,
-                    rating: row.rating,
-                    Comments: row.Comments,
-                    created_at: row.created_at,
-                    replies: []
-                };
-                acc.push(feedback);
-            }
-            if (row.reply_id) {
-                feedback.replies.push({
-                    id: row.reply_id,
-                    reply: row.reply,
-                    created_at: row.reply_created_at
-                });
-            }
-            return acc;
-        }, []);
-
-        res.render('manage-feedbacks.ejs', { feedbacks }); // Make sure the EJS file exists
-    });
-});
 
 
 // Start the server
