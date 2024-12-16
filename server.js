@@ -187,19 +187,58 @@ app.post('/reply', (req, res) => {
 
 
 
-
 app.post('/edit-feedback', (req, res) => {
     const { feedbackId, Comments, rating } = req.body;
+    const username = req.session.username; // נניח שהשם משתמש מאוחסן ב-session
 
-    const query = 'UPDATE feedback SET Comments = ?, rating = ? WHERE id = ?';
-    connection.query(query, [Comments, rating, feedbackId], (err) => {
+    if (!feedbackId || !Comments || !rating) {
+        console.error('Missing feedback data.');
+        return res.status(400).send('All fields are required.');
+    }
+
+    if (!username) {
+        console.error('User is not logged in.');
+        return res.status(401).send('You must be logged in to edit feedback.');
+    }
+
+    // בדיקה אם ה-FEEDBACK שייך למשתמש הנוכחי
+    const checkOwnershipQuery = 'SELECT * FROM feedback WHERE id = ? AND username = ?';
+    connection.query(checkOwnershipQuery, [feedbackId, username], (err, rows) => {
         if (err) {
-            console.error('Error updating feedback:', err);
-            return res.status(500).send('Error updating feedback.');
+            console.error('Error verifying feedback ownership:', err);
+            return res.status(500).send('Error verifying feedback ownership.');
         }
-        res.redirect('/feedbacks'); // חזרה לדף הפידבקים
+
+        if (rows.length === 0) {
+            // אם ה-FEEDBACK לא שייך למשתמש
+            console.error('Feedback not found or does not belong to the user.');
+            return res.status(403).send(`
+                <html>
+                <head>
+                    <title>Unauthorized</title>
+                </head>
+                <body>
+                    <h1>You are not authorized to edit this feedback.</h1>
+                    <button onclick="history.back()">Go Back</button>
+                </body>
+                </html>
+            `);
+        }
+
+        // אם המשתמש הוא הבעלים, לעדכן את ה-FEEDBACK
+        const updateQuery = 'UPDATE feedback SET Comments = ?, rating = ? WHERE id = ?';
+        connection.query(updateQuery, [Comments, rating, feedbackId], (err) => {
+            if (err) {
+                console.error('Error updating feedback:', err);
+                return res.status(500).send('Error updating feedback.');
+            }
+            console.log(`Feedback with ID ${feedbackId} updated.`);
+            res.redirect('/feedbacks'); // חזרה לדף הפידבקים
+        });
     });
 });
+
+
 
 app.post('/edit-reply', (req, res) => {
     const { replyId, reply } = req.body;
@@ -249,25 +288,54 @@ app.post('/delete-feedback', (req, res) => {
 
 app.post('/delete-reply', (req, res) => {
     const { replyId } = req.body;
+    const username = req.session.username; // Assuming the username is stored in the session.
 
     if (!replyId) {
         console.error('Reply ID is missing.');
         return res.status(400).send('Reply ID is required.');
     }
 
-    const deleteReplyQuery = 'DELETE FROM replies WHERE id = ?';
-    connection.query(deleteReplyQuery, [replyId], (err, result) => {
+    if (!username) {
+        console.error('User is not logged in.');
+        return res.status(401).send('User not authorized.');
+    }
+
+    // Check if the reply belongs to the logged-in user
+    const checkOwnershipQuery = 'SELECT * FROM replies WHERE id = ? AND username = ?';
+    connection.query(checkOwnershipQuery, [replyId, username], (err, rows) => {
         if (err) {
-            console.error('Error deleting reply:', err);
-            return res.status(500).send('Error deleting reply.');
+            console.error('Error verifying reply ownership:', err);
+            return res.status(500).send('Error verifying reply ownership.');
         }
-        if (result.affectedRows === 0) {
-            return res.status(404).send('Reply not found.');
+
+        if (rows.length === 0) {
+            console.error('Reply not found or does not belong to the user.');
+            return res.status(403).send(`
+                <html>
+                <head>
+                    <title>Unauthorized</title>
+                </head>
+                <body>
+                    <h1>You are not authorized to delete this reply.</h1>
+                    <button onclick="history.back()">Go Back</button>
+                </body>
+                </html>
+            `);
         }
-        console.log(`Reply with ID ${replyId} deleted.`);
-        res.redirect('/feedbacks'); // חזרה לדף הפידבקים
+
+        // Proceed to delete the reply
+        const deleteReplyQuery = 'DELETE FROM replies WHERE id = ?';
+        connection.query(deleteReplyQuery, [replyId], (err, result) => {
+            if (err) {
+                console.error('Error deleting reply:', err);
+                return res.status(500).send('Error deleting reply.');
+            }
+            console.log(`Reply with ID ${replyId} deleted.`);
+            res.redirect('/feedbacks'); // Redirect to the feedbacks page
+        });
     });
 });
+
 app.get('/view-feedbacks', (req, res) => {
     const query = 'SELECT * FROM feedback ORDER BY created_at DESC';
 
