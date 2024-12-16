@@ -293,35 +293,67 @@ app.post('/edit-reply', (req, res) => {
 
 app.post('/delete-feedback', (req, res) => {
     const { feedbackId } = req.body;
+    const username = req.session.username; // נניח שהשם משתמש מאוחסן ב-session
 
     if (!feedbackId) {
         console.error('Feedback ID is missing.');
         return res.status(400).send('Feedback ID is required.');
     }
 
-    // מחיקת כל התגובות הקשורות לפידבק
-    const deleteRepliesQuery = 'DELETE FROM replies WHERE feedback_id = ?';
-    connection.query(deleteRepliesQuery, [feedbackId], (err) => {
+    if (!username) {
+        console.error('User is not logged in.');
+        return res.status(401).send('You must be logged in to delete feedback.');
+    }
+
+    // בדיקה אם הפידבק שייך למשתמש הנוכחי
+    const checkOwnershipQuery = 'SELECT * FROM feedback WHERE id = ? AND username = ?';
+    connection.query(checkOwnershipQuery, [feedbackId, username], (err, rows) => {
         if (err) {
-            console.error('Error deleting replies:', err);
-            return res.status(500).send('Error deleting replies.');
+            console.error('Error verifying feedback ownership:', err);
+            return res.status(500).send('Error verifying feedback ownership.');
         }
 
-        // מחיקת הפידבק עצמו לאחר מחיקת התגובות
-        const deleteFeedbackQuery = 'DELETE FROM feedback WHERE id = ?';
-        connection.query(deleteFeedbackQuery, [feedbackId], (err, result) => {
+        if (rows.length === 0) {
+            // אם הפידבק לא שייך למשתמש
+            console.error('Feedback not found or does not belong to the user.');
+            return res.status(403).send(`
+                <html>
+                <head>
+                    <title>Unauthorized</title>
+                </head>
+                <body>
+                    <h1>You are not authorized to delete this feedback.</h1>
+                    <button onclick="history.back()">Go Back</button>
+                </body>
+                </html>
+            `);
+        }
+
+        // אם הפידבק שייך למשתמש, מחיקת התגובות הקשורות אליו
+        const deleteRepliesQuery = 'DELETE FROM replies WHERE feedback_id = ?';
+        connection.query(deleteRepliesQuery, [feedbackId], (err) => {
             if (err) {
-                console.error('Error deleting feedback:', err);
-                return res.status(500).send('Error deleting feedback.');
+                console.error('Error deleting replies:', err);
+                return res.status(500).send('Error deleting replies.');
             }
-            if (result.affectedRows === 0) {
-                return res.status(404).send('Feedback not found.');
-            }
-            console.log(`Feedback with ID ${feedbackId} and its replies deleted.`);
-            res.redirect('/feedbacks'); // חזרה לדף הפידבקים
+
+            // מחיקת הפידבק עצמו לאחר מחיקת התגובות
+            const deleteFeedbackQuery = 'DELETE FROM feedback WHERE id = ?';
+            connection.query(deleteFeedbackQuery, [feedbackId], (err, result) => {
+                if (err) {
+                    console.error('Error deleting feedback:', err);
+                    return res.status(500).send('Error deleting feedback.');
+                }
+                if (result.affectedRows === 0) {
+                    return res.status(404).send('Feedback not found.');
+                }
+                console.log(`Feedback with ID ${feedbackId} and its replies deleted.`);
+                res.redirect('/feedbacks'); // חזרה לדף הפידבקים
+            });
         });
     });
 });
+
 
 
 app.post('/delete-reply', (req, res) => {
