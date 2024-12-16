@@ -239,19 +239,57 @@ app.post('/edit-feedback', (req, res) => {
 });
 
 
-
 app.post('/edit-reply', (req, res) => {
     const { replyId, reply } = req.body;
+    const username = req.session.username; // נניח שהשם משתמש מאוחסן ב-session
 
-    const query = 'UPDATE replies SET reply = ? WHERE id = ?';
-    connection.query(query, [reply, replyId], (err) => {
+    if (!replyId || !reply) {
+        console.error('Missing reply data.');
+        return res.status(400).send('Reply ID and reply text are required.');
+    }
+
+    if (!username) {
+        console.error('User is not logged in.');
+        return res.status(401).send('You must be logged in to edit a reply.');
+    }
+
+    // בדיקה אם ה-Reply שייך למשתמש הנוכחי
+    const checkOwnershipQuery = 'SELECT * FROM replies WHERE id = ? AND username = ?';
+    connection.query(checkOwnershipQuery, [replyId, username], (err, rows) => {
         if (err) {
-            console.error('Error updating reply:', err);
-            return res.status(500).send('Error updating reply.');
+            console.error('Error verifying reply ownership:', err);
+            return res.status(500).send('Error verifying reply ownership.');
         }
-        res.redirect('/feedbacks'); // חזרה לדף הפידבקים
+
+        if (rows.length === 0) {
+            // אם ה-Reply לא שייך למשתמש
+            console.error('Reply not found or does not belong to the user.');
+            return res.status(403).send(`
+                <html>
+                <head>
+                    <title>Unauthorized</title>
+                </head>
+                <body>
+                    <h1>You are not authorized to edit this reply.</h1>
+                    <button onclick="history.back()">Go Back</button>
+                </body>
+                </html>
+            `);
+        }
+
+        // אם המשתמש הוא הבעלים, לעדכן את ה-Reply
+        const updateQuery = 'UPDATE replies SET reply = ? WHERE id = ?';
+        connection.query(updateQuery, [reply, replyId], (err) => {
+            if (err) {
+                console.error('Error updating reply:', err);
+                return res.status(500).send('Error updating reply.');
+            }
+            console.log(`Reply with ID ${replyId} updated.`);
+            res.redirect('/feedbacks'); // חזרה לדף הפידבקים
+        });
     });
 });
+
 
 app.post('/delete-feedback', (req, res) => {
     const { feedbackId } = req.body;
