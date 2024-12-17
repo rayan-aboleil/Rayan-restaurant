@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>בלוגים - Rayan Restaurant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        /* עיצוב בסיסי */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(to right, #000000, #222222);
+            color: #fff;
+            text-align: center;
+            padding: 20px 10px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        /* עיצוב כרטיס בלוג */
+        .blog-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .blog-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border: 1px solid #ddd;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .blog-title {
+            font-size: 1.8em;
+            color: #ffcc00;
+            margin-bottom: 10px;
+        }
+
+        .blog-meta {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .blog-content {
+            font-size: 1em;
+            line-height: 1.6;
+        }
+
+        /* תגובות */
+        .comments-section {
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+        }
+
+        .comment {
+            background: #f0f0f0;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        .comment-username {
+            font-weight: bold;
+            color: #444;
+        }
+
+        /* טופס תגובה */
+        .reply-form {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .reply-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+            font-size: 1em;
+        }
+
+        .reply-form button {
+            background-color: #ffcc00;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .reply-form button:hover {
+            background-color: #e6b800;
+        }
+    </style>
+</head>
+<body>
+    <!-- כותרת ראשית -->
+    <header>
+        <h1>ברוכים הבאים לבלוגים שלנו</h1>
+    </header>
+
+    <!-- אזור הצגת בלוגים -->
+    <div class="blog-container">
+        <% blogs.forEach(blog => { %>
+            <div class="blog-card">
+                <!-- כותרת ותוכן הבלוג -->
+                <div class="blog-title"><%= blog.title %></div>
+                <div class="blog-meta">
+                    פורסם על ידי: <strong><%= blog.username %></strong> | תאריך: <%= blog.created_at %>
+                </div>
+                <div class="blog-content">
+                    <%= blog.content %>
+                </div>
+
+                <!-- אזור הצגת תגובות -->
+                <div class="comments-section">
+                    <h3>תגובות:</h3>
+                    <% if (blog.replies.length > 0) { %>
+                        <% blog.replies.forEach(reply => { %>
+                            <div class="comment">
+                                <span class="comment-username"><%= reply.username %></span>: 
+                                <%= reply.reply_content %>
+                            </div>
+                        <% }); %>
+                    <% } else { %>
+                        <p>אין תגובות לפוסט זה.</p>
+                    <% } %>
+                </div>
+
+                <!-- טופס להוספת תגובה -->
+                <form class="reply-form" action="/replyblogs" method="POST">
+                    <input type="hidden" name="blog_id" value="<%= blog.id %>">
+                    <textarea name="reply_content" placeholder="הוסף תגובה..." rows="3" required></textarea>
+                    <button type="submit">שלח תגובה</button>
+                </form>
+            </div>
+        <% }); %>
+    </div>
+</body>
+</html>
