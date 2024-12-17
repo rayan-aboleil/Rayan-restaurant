@@ -467,6 +467,95 @@ app.get('/view', (req, res) => {
         res.render('Viewfee.ejs', { feedbacks: results }); // Ensure this EJS file exists
     });
 });
+app.get('/blogs', (req, res) => {
+    if (!req.session.username) {
+        return res.status(401).send('User not logged in.');
+    }
+
+    const query = `
+        SELECT b.id AS blog_id, b.username AS blog_username, b.title, b.content, b.created_at,
+               r.id AS reply_id, r.reply_content, r.username AS reply_username, r.created_at AS reply_created_at 
+        FROM blogs b
+        LEFT JOIN blog_replies r ON b.id = r.blog_id
+        ORDER BY b.created_at DESC, r.created_at ASC
+    `;
+
+    connection.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching blogs:', err);
+            return res.status(500).send('Error retrieving blogs.');
+        }
+
+        // עיבוד התוצאות לקיבוץ בלוגים עם התגובות
+        const blogs = results.reduce((acc, row) => {
+            let blog = acc.find(b => b.id === row.blog_id);
+            if (!blog) {
+                blog = {
+                    id: row.blog_id,
+                    username: row.blog_username,
+                    title: row.title,
+                    content: row.content,
+                    created_at: row.created_at,
+                    replies: []
+                };
+                acc.push(blog);
+            }
+            if (row.reply_id) {
+                blog.replies.push({
+                    id: row.reply_id,
+                    reply_content: row.reply_content,
+                    username: row.reply_username,
+                    created_at: row.reply_created_at
+                });
+            }
+            return acc;
+        }, []);
+
+        // שליחת התוצאה לתבנית ה-EJS
+        res.render('blogs.ejs', { blogs, username: req.session.username });
+    });
+});
+app.post('/blogs', (req, res) => {
+    const { title, content } = req.body; // שליפת כותרת ותוכן מהטופס
+
+    if (!req.session.username) {
+        return res.status(401).send('User not logged in.');
+    }
+
+    const username = req.session.username; // שליפת שם המשתמש מה-session
+    const sqlInsert = 'INSERT INTO blogs (username, title, content) VALUES (?, ?, ?)';
+
+    // הכנסת הפוסט לטבלת blogs
+    connection.query(sqlInsert, [username, title, content], (err) => {
+        if (err) {
+            console.error('Error inserting blog:', err);
+            return res.status(500).send('Error saving blog post.');
+        }
+
+        res.redirect('/blogs'); // הפניה לעמוד הצגת הפוסטים
+    });
+});
+app.post('/replyblogs', (req, res) => {
+    if (!req.session.username) {
+        return res.status(401).send('User not logged in.');
+    }
+
+    const { blog_id, reply_content } = req.body; // קבלת ID של הבלוג ותוכן התגובה
+    const username = req.session.username; // שם המשתמש מה-session
+
+    // הוספת תגובה לטבלה blog_replies
+    const insertQuery = 'INSERT INTO blog_replies (blog_id, username, reply_content, created_at) VALUES (?, ?, ?, NOW())';
+    connection.query(insertQuery, [blog_id, username, reply_content], (err) => {
+        if (err) {
+            console.error('Error inserting reply:', err);
+            return res.status(500).send('Error saving reply.');
+        }
+        // הפניה חזרה לרשימת הבלוגים לאחר הוספת התגובה
+        res.redirect('/blogs');
+    });
+});
+
+
 
 
 
