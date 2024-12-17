@@ -49,7 +49,7 @@
         <a href="#feedback"><i class="fas fa-box"></i> Feedback</a>
         <a href="#review"><i class="fas fa-star"></i> Review</a>
         <a href="#contact"><i class="fas fa-phone"></i> Contact</a>
-        <a href="#blogs"><i class="fas fa-blog"></i> Blogs</a>
+        <a href="#blogs"><i class="fas fa-blog"></i> Blogs</a>      
       </nav>
     </header>
 
@@ -732,55 +732,146 @@
     </div>
 
   </section>
+<!-- חלק הבלוג המעוצב -->
+<section class="blog" id="blogs">
+  <div class="blog-wrapper">
+    <!-- טופס הבלוג בצד שמאל -->
+    <div class="blog-container">
+      <h1 class="heading">שתף את הבלוג שלך</h1>
+      <form id="blogForm" class="blog-form">
+        <input type="text" id="blogTitle" placeholder="כותרת לבלוג" required />
+        <textarea id="blogContent" placeholder="הקלד כאן את הבלוג שלך..." rows="5" required></textarea>
+        <button type="submit">פרסם בלוג</button>
+      </form>
 
-  <!-- review section ends -->
+      <!-- אזור להצגת פוסטים -->
+      <div id="blogPosts" class="blog-posts"></div>
+    </div>
 
- <!-- Our Blogs Section for Restaurant Website -->
- <section class="blogs mt-5" id="blogs" style="background-color: #030303; padding: 60px 0;">
-  <div class="container" style="max-width: 1200px; margin: 0 auto;">
-      <h2 class="text-center" style="color: #f8f8f8; font-size: 36px; font-weight: bold; margin-bottom: 20px;">Our Blogs</h2>
-      <p class="text-center" style="color: #ffffff; font-size: 18px; margin-bottom: 40px;">
-          Discover the latest updates, news, and tips from our restaurant blog.
-      </p>
-
-      <!-- Blog Cards Container -->
-      <div class="blog-cards" style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
-
-          <!-- Blog Card 1 -->
-          <div class="blog-card" style="background-color: #fff; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); width: 30%; overflow: hidden;">
-            <img src="images/cookbook-with-ingredients-tablerecipe-book_434193-6697.jpg" alt="Blog Image" style="width: 100%; height: 200px; object-fit: cover;">
-              <div class="blog-content" style="padding: 20px;">
-                  <h3 style="color: #333; font-size: 22px; margin-bottom: 10px;">15 Essential Cooking Tips</h3>
-                  <p style="color: #777; font-size: 16px; line-height: 1.5;">Cooking is not just an art but also a science that requires precision, understanding, and creativity. These essential tips are designed to enhance your cooking experience and help you become a more skilled chef. Whether it's the importance of thoroughly reading a recipe before starting, ensuring your tools are sharp and efficient, or knowing exactly when to season your dish, each tip adds value to your everyday cooking. It's also important to learn advanced techniques, like using a meat thermometer or cooking pasta to the perfect al dente, to elevate the final result of your meals.</p>
-                  <a href="15 Essential Cooking Tips.html" style="color: #ffdd00; font-weight: bold; text-decoration: none;">Read More</a>
-              </div>
-          </div>
-          <!-- Blog Card 2 -->
-          <div class="blog-card" style="background-color: #fff; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); width: 30%; overflow: hidden;">
-            <img src="images/multitasking-chef-teacher-engaging-students-with-tech-communication-ar-32_1000124-203196.jpg" alt="Blog Image" style="width: 100%; height: 200px; object-fit: cover;">
-              <div class="blog-content" style="padding: 20px;">
-                  <h3 style="color: #333; font-size: 22px; margin-bottom: 10px;">Interviews with Chefs and Staff</h3>
-                  <p style="color: #777; font-size: 16px; line-height: 1.5;">provide a unique opportunity to gain insights into the world of culinary professionals. Through personal stories, chefs and team members share their journeys, from the early days of their careers to their passion for cooking that continues to drive them. These interviews offer a behind-the-scenes look at the challenges and rewards of working in a fast-paced kitchen, the inspiration behind their favorite dishes, and the creative process involved in developing new recipes. Such content not only humanizes the staff but also connects the restaurant’s audience with the people who make the dining experience special..</p>
-                  <a href="Interviews with Chefs and Staff.html" style="color: #ffdd00; font-weight: bold; text-decoration: none;">Read More</a>
-              </div>
-          </div>
-       
-        <!-- Blog Card 3 -->
-<div class="blog-card" style="background-color: #fff; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); width: 30%; overflow: hidden; margin: 10px;">
-  <img src="images/smiling-woman-enjoying-fresh-salad_175117-5253.jpg" alt="Blog Image" style="width: 100%; height: 200px; object-fit: cover;">
-  <div class="blog-content" style="padding: 20px;">
-      <h3 style="color: #333; font-size: 22px; margin-bottom: 10px;">Healthy Eating Tips for Busy Days</h3>
-      <p style="color: #777; font-size: 16px; line-height: 1.5;">
-          Learn how to stay healthy and energized with quick and nutritious meals even on your busiest days.
-      </p>
-      <a href="Healthy Eating Tips.html" style="color: #ffdd00; font-weight: bold; text-decoration: none; font-size: 16px;">Read More</a>
-  </div>
-</div>
-
-
-      </div>
+    <!-- תמונה בצד ימין -->
+    <div class="blog-image">
+      <img src="images/The%20w.webp" alt="שפית מצליחה">
+    </div>
   </div>
 </section>
+
+<!-- CSS משופר -->
+<style>
+/* חלק הבלוג - עיצוב מתקדם */
+.blog {
+    background: linear-gradient(to bottom, #000000, #1e1e1e);
+    color: #9b4343;
+    padding: 60px 20px;
+}
+
+.blog-wrapper {
+    display: flex;
+    align-items: stretch; /* מיישר לגובה אחיד */
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    overflow: hidden; /* חיתוך חלקים חורגים */
+}
+
+/* טופס הבלוג בצד שמאל */
+.blog-container {
+    flex: 1; /* חצי רוחב */
+    background-color: #ffffff;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+.heading {
+    color: #c3a9a9;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.blog-form input, .blog-form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    background: #fae8e8;
+    color: #000000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.blog-form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #050404;
+    color: #df3535;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.blog-form button:hover {
+    background-color: #000000;
+    color: #d75b5b;
+}
+
+/* תמונה בצד ימין */
+.blog-image {
+    flex: 1; /* חצי רוחב */
+    background-color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.blog-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* מתאים את התמונה לגובה ורוחב אחיד */
+    transition: transform 0.3s ease;
+}
+
+.blog-image img:hover {
+    transform: scale(1.02);
+}
+
+/* פוסטים */
+.blog-posts .post {
+    background-color: #444;
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.blog-posts .post:hover {
+    transform: scale(1.02);
+}
+
+.blog-posts h3 {
+    color: #ffcc00;
+    margin-bottom: 10px;
+}
+
+.blog-posts p {
+    color: #ddd;
+}
+</style>
+
+
 
   <!-- blog section ends -->
   <!-- contact section starts -->
