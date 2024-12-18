@@ -555,6 +555,56 @@ app.post('/replyblogs', (req, res) => {
     });
 });
 
+app.post('/edit-blog', (req, res) => {
+    const { blogId, title, content } = req.body; // שליפת הנתונים מהטופס
+    const username = req.session.username; // שליפת שם המשתמש מה-session
+
+    if (!blogId || !title || !content) {
+        console.error('Missing blog data.');
+        return res.status(400).send('All fields are required.');
+    }
+
+    if (!username) {
+        console.error('User is not logged in.');
+        return res.status(401).send('You must be logged in to edit this blog.');
+    }
+
+    // בדיקה אם הפוסט שייך למשתמש הנוכחי
+    const checkOwnershipQuery = 'SELECT * FROM blogs WHERE id = ? AND username = ?';
+    connection.query(checkOwnershipQuery, [blogId, username], (err, rows) => {
+        if (err) {
+            console.error('Error verifying blog ownership:', err);
+            return res.status(500).send('Error verifying blog ownership.');
+        }
+
+        if (rows.length === 0) {
+            // אם הפוסט לא שייך למשתמש
+            console.error('Blog not found or does not belong to the user.');
+            return res.status(403).send(`
+                <html>
+                <head>
+                    <title>Unauthorized</title>
+                </head>
+                <body>
+                    <h1>You are not authorized to edit this blog.</h1>
+                    <button onclick="history.back()">Go Back</button>
+                </body>
+                </html>
+            `);
+        }
+
+        // אם המשתמש הוא הבעלים, לעדכן את הפוסט
+        const updateQuery = 'UPDATE blogs SET title = ?, content = ? WHERE id = ?';
+        connection.query(updateQuery, [title, content, blogId], (err) => {
+            if (err) {
+                console.error('Error updating blog:', err);
+                return res.status(500).send('Error updating blog.');
+            }
+            console.log(`Blog with ID ${blogId} updated.`);
+            res.redirect('/blogs'); // חזרה לרשימת הבלוגים
+        });
+    });
+});
 
 
 
