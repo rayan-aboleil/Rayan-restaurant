@@ -718,6 +718,55 @@ app.post('/delete-blog', (req, res) => {
         });
     });
 });
+app.post('/delete-replys', (req, res) => {
+    const { replyId } = req.body;
+    const username = req.session.username; 
+
+    if (!replyId) {
+        console.error('Reply ID is missing.');
+        return res.status(400).send('Reply ID is required.');
+    }
+
+    if (!username) {
+        console.error('User is not logged in.');
+        return res.status(401).send('User not authorized.');
+    }
+
+    // Check if the reply belongs to the logged-in user
+    const checkOwnershipQuery = 'SELECT * FROM blog_replies WHERE id = ? AND username = ?';
+    connection.query(checkOwnershipQuery, [replyId, username], (err, rows) => {
+        if (err) {
+            console.error('Error verifying reply ownership:', err);
+            return res.status(500).send('Error verifying reply ownership.');
+        }
+
+        if (rows.length === 0) {
+            console.error('Reply not found or does not belong to the user.');
+            return res.status(403).send(`
+                <html>
+                <head>
+                    <title>Unauthorized</title>
+                </head>
+                <body>
+                    <h1>You are not authorized to delete this reply.</h1>
+                    <button onclick="history.back()">Go Back</button>
+                </body>
+                </html>
+            `);
+        }
+
+        // Proceed to delete the reply
+        const deleteReplyQuery = 'DELETE FROM blog_replies WHERE id = ?';
+        connection.query(deleteReplyQuery, [replyId], (err, result) => {
+            if (err) {
+                console.error('Error deleting reply:', err);
+                return res.status(500).send('Error deleting reply.');
+            }
+            console.log(`Reply with ID ${replyId} deleted.`);
+            res.redirect('/blogs'); // Redirect to the blogs page
+        });
+    });
+});
 
 
 
