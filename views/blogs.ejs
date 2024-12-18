@@ -153,7 +153,13 @@
                             <div class="comment">
                                 <span class="comment-username"><%= reply.username %></span>: 
                                 <%= reply.reply_content %>
-                               
+                                <button onclick="toggleForm('edit-reply-form-<%= reply.id %>')">Edit Reply</button>
+                                <form id="edit-reply-form-<%= reply.id %>" method="POST" action="/edit-replys" style="display: none;">
+                                    <textarea name="reply_content" rows="3" required><%= reply.reply_content %></textarea>
+                                    <input type="hidden" name="replyId" value="<%= reply.id %>">
+                                    <button type="submit">Save Reply</button>
+                                </form>
+                                
                                 
                             </div>
                         
@@ -182,6 +188,17 @@
             form.style.display = 'none';
         }
     }
+</script>
+<script>
+   function toggleForm(formId) {
+    const form = document.getElementById(formId);
+    if (form.style.display === 'none' || form.style.display === '') {
+        form.style.display = 'block';
+    } else {
+        form.style.display = 'none';
+    }
+}
+ 
 </script>
 </body>
 </html>
