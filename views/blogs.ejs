@@ -136,7 +136,15 @@
                 <div class="blog-content">
                     <%= blog.content %>
                 </div>
-
+                <div class="edit-section">
+                    <button onclick="toggleForm('edit-form-<%= blog.id %>')">Edit Blog</button>
+                    <form id="edit-form-<%= blog.id %>" method="POST" action="/edit-blog" style="display: none;">
+                        <input type="text" name="title" value="<%= blog.title %>" placeholder="Enter Title" required>
+                        <textarea name="content" rows="5" required><%= blog.content %></textarea>
+                        <input type="hidden" name="blogId" value="<%= blog.id %>">
+                        <button type="submit">Save Changes</button>
+                    </form>
+                </div>
                 <!-- אזור הצגת תגובות -->
                 <div class="comments-section">
                     <h3>תגובות:</h3>
@@ -145,7 +153,11 @@
                             <div class="comment">
                                 <span class="comment-username"><%= reply.username %></span>: 
                                 <%= reply.reply_content %>
+                               
+                                
                             </div>
+                        
+                            
                         <% }); %>
                     <% } else { %>
                         <p>אין תגובות לפוסט זה.</p>
@@ -161,5 +173,15 @@
             </div>
         <% }); %>
     </div>
+    <script>
+    function toggleForm(formId) {
+        const form = document.getElementById(formId);
+        if (form.style.display === 'none' || form.style.display === '') {
+            form.style.display = 'block';
+        } else {
+            form.style.display = 'none';
+        }
+    }
+</script>
 </body>
 </html>
