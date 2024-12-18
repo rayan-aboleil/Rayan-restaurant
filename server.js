@@ -605,6 +605,56 @@ app.post('/edit-blog', (req, res) => {
         });
     });
 });
+app.post('/edit-replys', (req, res) => {
+    const { replyId, reply_content } = req.body;
+    const username = req.session.username; // שליפת שם המשתמש מה-session
+
+    if (!replyId || !reply_content) {
+        console.error('Missing reply data.');
+        return res.status(400).send('Reply ID and reply content are required.');
+    }
+
+    if (!username) {
+        console.error('User is not logged in.');
+        return res.status(401).send('You must be logged in to edit a reply.');
+    }
+
+    // בדיקה אם ה-Reply שייך למשתמש הנוכחי
+    const checkOwnershipQuery = 'SELECT * FROM blog_replies WHERE id = ? AND username = ?';
+    connection.query(checkOwnershipQuery, [replyId, username], (err, rows) => {
+        if (err) {
+            console.error('Error verifying reply ownership:', err);
+            return res.status(500).send('Error verifying reply ownership.');
+        }
+
+        if (rows.length === 0) {
+            // אם ה-Reply לא שייך למשתמש
+            console.error('Reply not found or does not belong to the user.');
+            return res.status(403).send(`
+                <html>
+                <head>
+                    <title>Unauthorized</title>
+                </head>
+                <body>
+                    <h1>You are not authorized to edit this reply.</h1>
+                    <button onclick="history.back()">Go Back</button>
+                </body>
+                </html>
+            `);
+        }
+
+        // אם המשתמש הוא הבעלים, לעדכן את ה-Reply
+        const updateQuery = 'UPDATE blog_replies SET reply_content = ? WHERE id = ?';
+        connection.query(updateQuery, [reply_content, replyId], (err) => {
+            if (err) {
+                console.error('Error updating reply:', err);
+                return res.status(500).send('Error updating reply.');
+            }
+            console.log(`Reply with ID ${replyId} updated.`);
+            res.redirect('/blogs'); // חזרה לדף הבלוגים
+        });
+    });
+});
 
 
 
