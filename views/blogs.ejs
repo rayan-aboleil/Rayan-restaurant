@@ -144,6 +144,12 @@
                         <input type="hidden" name="blogId" value="<%= blog.id %>">
                         <button type="submit">Save Changes</button>
                     </form>
+                     
+                    <form method="POST" action="/delete-blog">
+                        <input type="hidden" name="blogId" value="<%= blog.id %>">
+                        <button type="submit" class="delete-section">Delete Blog Only</button>
+                    </form>
+                    
                 </div>
                 <!-- אזור הצגת תגובות -->
                 <div class="comments-section">
@@ -159,8 +165,7 @@
                                     <input type="hidden" name="replyId" value="<%= reply.id %>">
                                     <button type="submit">Save Reply</button>
                                 </form>
-                                
-                                
+                               
                             </div>
                         
                             
