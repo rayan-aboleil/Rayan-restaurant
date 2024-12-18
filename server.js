@@ -656,6 +656,68 @@ app.post('/edit-replys', (req, res) => {
     });
 });
 
+app.post('/delete-blog', (req, res) => {
+    const { blogId } = req.body;
+    const username = req.session.username; // נניח שהשם משתמש מאוחסן ב-session
+
+    if (!blogId) {
+        console.error('Blog ID is missing.');
+        return res.status(400).send('Blog ID is required.');
+    }
+
+    if (!username) {
+        console.error('User is not logged in.');
+        return res.status(401).send('You must be logged in to delete a blog.');
+    }
+
+    // בדיקה אם הבלוג שייך למשתמש הנוכחי
+    const checkOwnershipQuery = 'SELECT * FROM blogs WHERE id = ? AND username = ?';
+    connection.query(checkOwnershipQuery, [blogId, username], (err, rows) => {
+        if (err) {
+            console.error('Error verifying blog ownership:', err);
+            return res.status(500).send('Error verifying blog ownership.');
+        }
+
+        if (rows.length === 0) {
+            // אם הבלוג לא שייך למשתמש
+            console.error('Blog not found or does not belong to the user.');
+            return res.status(403).send(`
+                <html>
+                <head>
+                    <title>Unauthorized</title>
+                </head>
+                <body>
+                    <h1>You are not authorized to delete this blog.</h1>
+                    <button onclick="history.back()">Go Back</button>
+                </body>
+                </html>
+            `);
+        }
+
+        // אם הבלוג שייך למשתמש, מחיקת התגובות הקשורות אליו
+        const deleteRepliesQuery = 'DELETE FROM blog_replies WHERE blog_id = ?';
+        connection.query(deleteRepliesQuery, [blogId], (err) => {
+            if (err) {
+                console.error('Error deleting blog replies:', err);
+                return res.status(500).send('Error deleting blog replies.');
+            }
+
+            // מחיקת הבלוג עצמו לאחר מחיקת התגובות
+            const deleteBlogQuery = 'DELETE FROM blogs WHERE id = ?';
+            connection.query(deleteBlogQuery, [blogId], (err, result) => {
+                if (err) {
+                    console.error('Error deleting blog:', err);
+                    return res.status(500).send('Error deleting blog.');
+                }
+                if (result.affectedRows === 0) {
+                    return res.status(404).send('Blog not found.');
+                }
+                console.log(`Blog with ID ${blogId} and its replies deleted.`);
+                res.redirect('/blogs'); // חזרה לדף הבלוגים
+            });
+        });
+    });
+});
 
 
 
