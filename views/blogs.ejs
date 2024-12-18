@@ -165,7 +165,13 @@
                                     <input type="hidden" name="replyId" value="<%= reply.id %>">
                                     <button type="submit">Save Reply</button>
                                 </form>
-                               
+                                <form method="POST" action="/delete-replys">
+                                    <input type="hidden" name="replyId" value="<%= reply.id %>">
+                                    <button type="submit" class="delete-section" style="background-color: red; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                                        Delete Reply
+                                    </button>
+                                </form>
+                                
                             </div>
                         
                             
