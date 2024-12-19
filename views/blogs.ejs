@@ -8,51 +8,99 @@
     <style>
         /* עיצוב בסיסי */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f9f9f9;
             color: #333;
+            background: url('https://image.freepik.com/free-photo/female-chef-holding-salad-bowl_23-2148412398.jpg') no-repeat center center fixed;
+            background-size: cover;
+            animation: changeBackground 2s infinite;
         }
 
-        header {
-            background: linear-gradient(to right, #000000, #222222);
-            color: #fff;
-            text-align: center;
-            padding: 20px 10px;
+        @keyframes changeBackground {
+    0% {
+        background-image: url('images/chef-cooks-modern-kitchen-ai-generated_749851-9048.jpg');
+        background-size: cover;
+        background-position: center;
+    }
+    33% {
+        background-image: url('images/chef-cooking-kitchen-while-wearing-professional-attire.jpg');
+        background-size: cover;
+        background-position: center;
+    }
+    66% {
+        background-image: url('images/female-chef-putting-sauce-dish_23-2148763119.jpg');
+        background-size: cover;
+        background-position: center;
+    }
+    100% {
+        background-image: url('images/man-with-ginger-beard-apron-gloves-holding-knife-meat_273609-22049.jpg');
+        background-size: cover;
+        background-position: center;
+    }
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    animation: changeBackground 15s infinite ease-in-out;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+
+          
+    
+
+header {
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    text-align: center;
+    padding: 20px 10px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
         }
 
         h1 {
             margin: 0;
-            font-size: 2.5em;
+            font-size: 3em;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
         }
 
-        /* עיצוב כרטיס בלוג */
         .blog-container {
             max-width: 1200px;
-            margin: 30px auto;
+            margin: 40px auto;
             display: flex;
             flex-direction: column;
             gap: 20px;
+            padding: 0 20px;
         }
 
-        .blog-card {
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            border: 1px solid #ddd;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+
+
+.blog-card {
+    background-color: rgba(255, 255, 255, 0.6); /* צבע לבן עם שקיפות */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* צל קליל */
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3); /* גבול שקוף */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    backdrop-filter: blur(10px); /* אפקט טשטוש לרקע מתחת */
+}
 
         .blog-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
         }
 
         .blog-title {
-            font-size: 1.8em;
-            color: #ffcc00;
+            font-size: 2em;
+            color: #ff5733;
             margin-bottom: 10px;
         }
 
@@ -63,58 +111,40 @@
         }
 
         .blog-content {
-            font-size: 1em;
+            font-size: 1.1em;
             line-height: 1.6;
         }
 
-        /* תגובות */
-        .comments-section {
-            margin-top: 20px;
-            padding-top: 10px;
-            border-top: 1px solid #ddd;
-        }
-
-        .comment {
-            background: #f0f0f0;
-            border-radius: 5px;
-            padding: 10px;
-            margin: 10px 0;
-        }
-
-        .comment-username {
-            font-weight: bold;
-            color: #444;
-        }
-
-        /* טופס תגובה */
-        .reply-form {
-            margin-top: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .reply-form textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            resize: none;
-            font-size: 1em;
-        }
-
-        .reply-form button {
-            background-color: #ffcc00;
-            color: #000;
-            border: none;
+        .btn {
+            display: inline-block;
             padding: 10px 20px;
+            color: #fff;
+            background-color: #ff5733;
+            border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: background-color 0.3s, transform 0.2s;
         }
 
-        .reply-form button:hover {
-            background-color: #e6b800;
+        .btn:hover {
+            background-color: #e64c24;
+            transform: scale(1.05);
+        }
+
+        .delete-section {
+            background-color: red;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .delete-section:hover {
+            background-color: darkred;
         }
     </style>
 </head>
