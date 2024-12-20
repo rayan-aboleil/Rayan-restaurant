@@ -520,7 +520,7 @@
     </h2>
    
     <div class="view">
-      <button class="/view" onclick="window.location.href='/view';">view-feedbacks</button>
+      <button class="/view" onclick="window.location.href='/view-feedback';">view-feedbacks</button>
     </div>
   </div>
   <script>
@@ -602,131 +602,14 @@
 
  <!-- Our Blogs Section for Restaurant Website -->
 
- <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Our Blogs</title>
-  <style>
-      body {
-          font-family: Arial, sans-serif;
-          background-color: #030303;
-          color: #fff;
-          margin: 0;
-          padding: 0;
-      }
-      .container {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 20px;
-      }
-      h1 {
-          text-align: center;
-          margin-bottom: 40px;
-      }
-      .blog-card {
-          background-color: #fff;
-          color: #333;
-          margin-bottom: 20px;
-          border-radius: 8px;
-          padding: 20px;
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      }
-      .blog-card img {
-          max-width: 100%;
-          border-radius: 8px;
-          margin-bottom: 15px;
-      }
-      .blog-card h2 {
-          font-size: 24px;
-          margin-bottom: 10px;
-      }
-      .blog-card p {
-          font-size: 16px;
-          line-height: 1.5;
-      }
-  </style>
-</head>
-<body>
-
-  <div class="container">
-      <h1>Our Blogs</h1>
-      <div id="blogs"></div>
-  </div>
-
-  <script>
-      // שליפת נתוני הבלוגים מהשרת
-      fetch('http://localhost:3000/blogs')
-          .then(response => response.json())
-          .then(data => {
-              const blogsContainer = document.getElementById('blogs');
-              data.forEach(blog => {
-                  blogsContainer.innerHTML += `
-                      <div class="blog-card">
-                          <h2>${blog.title}</h2>
-                          <p>${blog.content}</p>
-                          ${blog.image_url ? `<img src="${blog.image_url}" alt="${blog.title}">` : ''}
-                          ${blog.video_url ? `<video controls><source src="${blog.video_url}" type="video/mp4"></video>` : ''}
-                      </div>
-                  `;
-              });
-          })
-          .catch(err => console.error('Error fetching blogs:', err));
-  </script>
+ 
 
 
 
 
 
 
-
-
- <section class="blogs mt-5" id="blogs" style="background-color: #030303; padding: 60px 0;">
-  <div class="container" style="max-width: 1200px; margin: 0 auto;">
-      <h2 class="text-center" style="color: #f8f8f8; font-size: 36px; font-weight: bold; margin-bottom: 20px;">Our Blogs</h2>
-      <p class="text-center" style="color: #ffffff; font-size: 18px; margin-bottom: 40px;">
-          Discover the latest updates, news, and tips from our restaurant blog.
-      </p>
-
-      <!-- Blog Cards Container -->
-      <div class="blog-cards" style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
-
-          <!-- Blog Card 1 -->
-          <div class="blog-card" style="background-color: #fff; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); width: 30%; overflow: hidden;">
-            <img src="images/cookbook-with-ingredients-tablerecipe-book_434193-6697.jpg" alt="Blog Image" style="width: 100%; height: 200px; object-fit: cover;">
-              <div class="blog-content" style="padding: 20px;">
-                  <h3 style="color: #333; font-size: 22px; margin-bottom: 10px;">15 Essential Cooking Tips</h3>
-                  <p style="color: #777; font-size: 16px; line-height: 1.5;">Cooking is not just an art but also a science that requires precision, understanding, and creativity. These essential tips are designed to enhance your cooking experience and help you become a more skilled chef. Whether it's the importance of thoroughly reading a recipe before starting, ensuring your tools are sharp and efficient, or knowing exactly when to season your dish, each tip adds value to your everyday cooking. It's also important to learn advanced techniques, like using a meat thermometer or cooking pasta to the perfect al dente, to elevate the final result of your meals.</p>
-                  <a href="15 Essential Cooking Tips.html" style="color: #ffdd00; font-weight: bold; text-decoration: none;">Read More</a>
-              </div>
-          </div>
-          <!-- Blog Card 2 -->
-          <div class="blog-card" style="background-color: #fff; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); width: 30%; overflow: hidden;">
-            <img src="images/multitasking-chef-teacher-engaging-students-with-tech-communication-ar-32_1000124-203196.jpg" alt="Blog Image" style="width: 100%; height: 200px; object-fit: cover;">
-              <div class="blog-content" style="padding: 20px;">
-                  <h3 style="color: #333; font-size: 22px; margin-bottom: 10px;">Interviews with Chefs and Staff</h3>
-                  <p style="color: #777; font-size: 16px; line-height: 1.5;">provide a unique opportunity to gain insights into the world of culinary professionals. Through personal stories, chefs and team members share their journeys, from the early days of their careers to their passion for cooking that continues to drive them. These interviews offer a behind-the-scenes look at the challenges and rewards of working in a fast-paced kitchen, the inspiration behind their favorite dishes, and the creative process involved in developing new recipes. Such content not only humanizes the staff but also connects the restaurant’s audience with the people who make the dining experience special..</p>
-                  <a href="Interviews with Chefs and Staff.html" style="color: #ffdd00; font-weight: bold; text-decoration: none;">Read More</a>
-              </div>
-          </div>
-       
-        <!-- Blog Card 3 -->
-<div class="blog-card" style="background-color: #fff; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); width: 30%; overflow: hidden; margin: 10px;">
-  <img src="images/smiling-woman-enjoying-fresh-salad_175117-5253.jpg" alt="Blog Image" style="width: 100%; height: 200px; object-fit: cover;">
-  <div class="blog-content" style="padding: 20px;">
-      <h3 style="color: #333; font-size: 22px; margin-bottom: 10px;">Healthy Eating Tips for Busy Days</h3>
-      <p style="color: #777; font-size: 16px; line-height: 1.5;">
-          Learn how to stay healthy and energized with quick and nutritious meals even on your busiest days.
-      </p>
-      <a href="Healthy Eating Tips.html" style="color: #ffdd00; font-weight: bold; text-decoration: none; font-size: 16px;">Read More</a>
-  
-    </div>
-</div>
-
-
-      </div>
-  </div>
-</section>
-
+ 
   <!-- blog section ends -->
 
 
