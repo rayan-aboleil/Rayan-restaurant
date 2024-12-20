@@ -665,7 +665,7 @@
   <section id="feedback-options" style="text-align: center; margin-top: 50px;">
     <h2 style="color: #4CAF50;">Choose Feedback Option</h2>
     <div style="margin-top: 20px;">
-      <button onclick="window.location.href='/view-feedbacks';" style="padding: 15px 30px; margin: 10px; font-size: 18px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">View Feedbacks</button>
+      <button onclick="window.location.href='/view-feedback1';" style="padding: 15px 30px; margin: 10px; font-size: 18px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">View Feedbacks</button>
    
     </div>
   </section>
@@ -737,15 +737,12 @@
   <div class="blog-wrapper">
     <!-- טופס הבלוג בצד שמאל -->
     <div class="blog-container">
-      <h1 class="heading">שתף את הבלוג שלך</h1>
-      <form id="blogForm" class="blog-form">
-        <input type="text" id="blogTitle" placeholder="כותרת לבלוג" required />
-        <textarea id="blogContent" placeholder="הקלד כאן את הבלוג שלך..." rows="5" required></textarea>
+      <form action="/blogs" method="POST" class="blog-form">
+        <h1 class="heading">שתף את הבלוג שלך</h1>
+        <input type="text" name="title" placeholder="כותרת לבלוג" required />
+        <textarea name="content" placeholder="הקלד כאן את הבלוג שלך..." rows="5" required></textarea>
         <button type="submit">פרסם בלוג</button>
       </form>
-
-      <!-- אזור להצגת פוסטים -->
-      <div id="blogPosts" class="blog-posts"></div>
     </div>
 
     <!-- תמונה בצד ימין -->
@@ -754,6 +751,7 @@
     </div>
   </div>
 </section>
+
 
 <!-- CSS משופר -->
 <style>
