@@ -74,16 +74,73 @@
     <div class="container">
         <h1>Customer Feedbacks</h1>
         <% feedbacks.forEach(feedback => { %>
-            <div class="feedback-card">
-                <h3><%= feedback.username || 'Anonymous' %></h3>
-                <p><strong>Comments:</strong> <%= feedback.Comments || 'No comments provided' %></p>
-                <% if (feedback.rating) { %>
-                    <span class="rating">Rating: <%= feedback.rating %></span>
-                <% } %>
-                <p class="created-at">Submitted on: <%= new Date(feedback.created_at).toLocaleString() %></p>
+        <div class="feedback-card">
+            <h3><%= feedback.username %></h3>
+            <p><strong>Comments:</strong> <%= feedback.Comments %></p>
+            <p class="rating">Rating: <%= feedback.rating %> stars</p>
+            <small class="created-at">Submitted on: <%= new Date(feedback.created_at).toLocaleString() %></small>
+
+            <!-- כפתור תגובה -->
+            <button onclick="showReplyForm('<%= feedback.id %>')" style="margin-top: 10px;">Reply</button>
+
+            <!-- טופס תגובה -->
+            <div id="reply-form-<%= feedback.id %>" style="display: none; margin-top: 10px;">
+                <textarea id="reply-text-<%= feedback.id %>" placeholder="Write your reply..." style="width: 100%; height: 80px;"></textarea>
+                <button onclick="submitReply('<%= feedback.id %>')" style="margin-top: 10px;">Submit Reply</button>
             </div>
+
+            <!-- הצגת תגובות קיימות -->
+            <% if (feedback.replies.length > 0) { %>
+            <div style="margin-top: 20px;">
+                <h4>Replies:</h4>
+                <% feedback.replies.forEach(reply => { %>
+                <div style="background-color: #f9f9f9; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+                    <strong><%= reply.username %>:</strong>
+                    <p><%= reply.reply %></p>
+                    <small>Submitted on: <%= new Date(reply.created_at).toLocaleString() %></small>
+                </div>
+                <% }); %>
+            </div>
+            <% } else { %>
+            <p>No replies yet.</p>
+            <% } %>
+        </div>
         <% }); %>
         <a href="/index.html" class="back-button">Back to Home</a>
     </div>
+
+    <script>
+        function showReplyForm(feedbackId) {
+            const form = document.getElementById(`reply-form-${feedbackId}`);
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function submitReply(feedbackId) {
+            const replyText = document.getElementById(`reply-text-${feedbackId}`).value;
+
+            if (!replyText) {
+                alert('Reply text cannot be empty.');
+                return;
+            }
+
+            fetch('/reply', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ feedbackId, reply: replyText })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Reply submitted successfully.');
+                    window.location.reload();
+                } else {
+                    alert('Failed to submit reply.');
+                }
+            })
+            .catch(error => {
+                console.error('Error submitting reply:', error);
+                alert('An error occurred while submitting the reply.');
+            });
+        }
+    </script>
 </body>
 </html>
