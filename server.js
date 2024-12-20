@@ -405,19 +405,104 @@ app.post('/delete-reply', (req, res) => {
         });
     });
 });
+app.get('/view-feedback', (req, res) => {
+  
 
-app.get('/view-feedbacks', (req, res) => {
-    const query = 'SELECT * FROM feedback ORDER BY created_at DESC';
+    const query = `
+        SELECT 
+            f.id AS feedback_id, f.username AS feedback_username, f.rating, f.Comments, f.created_at,
+            r.id AS reply_id, r.reply, r.username AS reply_username, r.created_at AS reply_created_at 
+        FROM feedback f 
+        LEFT JOIN replies r ON f.id = r.feedback_id 
+        ORDER BY f.created_at DESC, r.created_at ASC
+    `;
 
     connection.query(query, (err, results) => {
         if (err) {
-            console.error('Error fetching feedbacks:', err);
-            return res.status(500).send('Error retrieving feedbacks.');
+            console.error('Error fetching feedbacks and replies:', err);
+            return res.status(500).send('Error fetching feedback from the database.');
         }
 
-        res.render('view-feedbacks.ejs', { feedbacks: results }); // Ensure this EJS file exists
+        const feedbackMap = {};
+        results.forEach(row => {
+            if (!feedbackMap[row.feedback_id]) {
+                feedbackMap[row.feedback_id] = {
+                    username: row.feedback_username,
+                    comments: row.Comments,
+                    rating: row.rating,
+                    createdAt: row.created_at,
+                    replies: []
+                };
+            }
+
+            if (row.reply_id) {
+                feedbackMap[row.feedback_id].replies.push({
+                    reply: row.reply,
+                    username: row.reply_username,
+                    createdAt: row.reply_created_at
+                });
+            }
+        });
+
+        const feedbackHtml = Object.values(feedbackMap).map(feedback => `
+            <div>
+                <h3>${feedback.username}</h3>
+                <p>Rating: ${feedback.rating} stars</p>
+                <p>${feedback.comments}</p>
+                <small>Submitted on: ${new Date(feedback.createdAt).toLocaleString()}</small>
+                ${feedback.replies.length > 0 ? `
+                    <div style="margin-left: 20px; border-left: 2px solid #ddd; padding-left: 10px;">
+                        <h4>Replies:</h4>
+                        ${feedback.replies.map(reply => `
+                            <div>
+                                <strong>${reply.username}</strong> replied:
+                                <p>${reply.reply}</p>
+                                <small>Submitted on: ${new Date(reply.createdAt).toLocaleString()}</small>
+                            </div>
+                        `).join('')}
+                    </div>
+                ` : '<p>No replies yet.</p>'}
+            </div>
+            <hr>
+        `).join('');
+
+        res.send(`
+            <html>
+                <head>
+                    <title>User Feedback</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 20px; }
+                        h3 { color: #ff4d4d; }
+                        hr { margin: 20px 0; }
+                        .back-button {
+                            display: inline-block;
+                            margin-top: 20px;
+                            padding: 10px 20px;
+                            font-size: 16px;
+                            color: white;
+                            background-color: #4CAF50;
+                            border: none;
+                            border-radius: 5px;
+                            text-decoration: none;
+                            text-align: center;
+                            cursor: pointer;
+                        }
+                        .back-button:hover {
+                            background-color: #45a049;
+                        }
+                        .replies { margin-left: 20px; }
+                    </style>
+                </head>
+                <body>
+                    <h1>All Feedback</h1>
+                    ${feedbackHtml}
+                    <a href="/index1.html" class="back-button">Back to Home</a>
+                </body>
+            </html>
+        `);
     });
 });
+
 
 // Contact route
 app.post('/contact1', (req, res) => {
