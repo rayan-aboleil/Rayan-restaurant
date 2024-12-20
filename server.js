@@ -503,102 +503,49 @@ app.get('/view-feedback', (req, res) => {
     });
 });
 app.get('/view-feedback1', (req, res) => {
-  
-
-    const query = `
-        SELECT 
-            f.id AS feedback_id, f.username AS feedback_username, f.rating, f.Comments, f.created_at,
-            r.id AS reply_id, r.reply, r.username AS reply_username, r.created_at AS reply_created_at 
+    
+   const query = `
+        SELECT f.id AS feedback_id, f.username AS feedback_username, f.rating, f.Comments, f.created_at,
+               r.id AS reply_id, r.reply, r.username AS reply_username, r.created_at AS reply_created_at 
         FROM feedback f 
         LEFT JOIN replies r ON f.id = r.feedback_id 
-        ORDER BY f.created_at DESC, r.created_at ASC
+        ORDER BY f.created_at DESC
     `;
 
     connection.query(query, (err, results) => {
         if (err) {
-            console.error('Error fetching feedbacks and replies:', err);
-            return res.status(500).send('Error fetching feedback from the database.');
+            console.error('Error fetching feedbacks:', err);
+            return res.status(500).send('Error retrieving feedbacks.');
         }
 
-        const feedbackMap = {};
-        results.forEach(row => {
-            if (!feedbackMap[row.feedback_id]) {
-                feedbackMap[row.feedback_id] = {
+        const feedbacks = results.reduce((acc, row) => {
+            let feedback = acc.find(f => f.id === row.feedback_id);
+            if (!feedback) {
+                feedback = {
+                    id: row.feedback_id,
                     username: row.feedback_username,
-                    comments: row.Comments,
                     rating: row.rating,
-                    createdAt: row.created_at,
+                    Comments: row.Comments,
+                    created_at: row.created_at,
                     replies: []
                 };
+                acc.push(feedback);
             }
-
             if (row.reply_id) {
-                feedbackMap[row.feedback_id].replies.push({
+                feedback.replies.push({
+                    id: row.reply_id,
                     reply: row.reply,
-                    username: row.reply_username,
-                    createdAt: row.reply_created_at
+                    username: row.reply_username, // Add username to reply
+                    created_at: row.reply_created_at
                 });
             }
-        });
+            return acc;
+        }, []);
 
-        const feedbackHtml = Object.values(feedbackMap).map(feedback => `
-            <div>
-                <h3>${feedback.username}</h3>
-                <p>Rating: ${feedback.rating} stars</p>
-                <p>${feedback.comments}</p>
-                <small>Submitted on: ${new Date(feedback.createdAt).toLocaleString()}</small>
-                ${feedback.replies.length > 0 ? `
-                    <div style="margin-left: 20px; border-left: 2px solid #ddd; padding-left: 10px;">
-                        <h4>Replies:</h4>
-                        ${feedback.replies.map(reply => `
-                            <div>
-                                <strong>${reply.username}</strong> replied:
-                                <p>${reply.reply}</p>
-                                <small>Submitted on: ${new Date(reply.createdAt).toLocaleString()}</small>
-                            </div>
-                        `).join('')}
-                    </div>
-                ` : '<p>No replies yet.</p>'}
-            </div>
-            <hr>
-        `).join('');
-
-        res.send(`
-            <html>
-                <head>
-                    <title>User Feedback</title>
-                    <style>
-                        body { font-family: Arial, sans-serif; margin: 20px; }
-                        h3 { color: #ff4d4d; }
-                        hr { margin: 20px 0; }
-                        .back-button {
-                            display: inline-block;
-                            margin-top: 20px;
-                            padding: 10px 20px;
-                            font-size: 16px;
-                            color: white;
-                            background-color: #4CAF50;
-                            border: none;
-                            border-radius: 5px;
-                            text-decoration: none;
-                            text-align: center;
-                            cursor: pointer;
-                        }
-                        .back-button:hover {
-                            background-color: #45a049;
-                        }
-                        .replies { margin-left: 20px; }
-                    </style>
-                </head>
-                <body>
-                    <h1>All Feedback</h1>
-                    ${feedbackHtml}
-                    <a href="/index.html" class="back-button">Back to Home</a>
-                </body>
-            </html>
-        `);
+        res.render('feedback.ejs', { feedbacks, username: req.session.username });
     });
 });
+
 
 
 // Contact route
