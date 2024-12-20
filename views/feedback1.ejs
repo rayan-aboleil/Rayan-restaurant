@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Feedback</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        padding: 20px;
+    }
+
+    .feedback-card {
+        background-color: #000;
+        color: #fff;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .feedback-card h4 {
+        font-size: 18px;
+        margin: 0;
+        color: #ccc;
+    }
+
+    .replies {
+        margin-top: 10px;
+        background: #111;
+        padding: 10px;
+        border-radius: 5px;
+        color: #ddd;
+    }
+
+    button {
+        background-color: #007BFF;
+        color: white;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    .delete-section button {
+        background-color: #FF4136;
+    }
+
+    .delete-section button:hover {
+        background-color: #C0392B;
+    }
+
+    textarea {
+        width: 100%;
+        border: 1px solid #555;
+        background-color: #222;
+        color: #fff;
+        resize: none;
+        margin-top: 10px;
+        padding: 8px;
+        border-radius: 5px;
+    }
+
+    .reply-section textarea,
+    .edit-section textarea {
+        margin-bottom: 10px;
+    }
+</style>
+</head>
+<body>
+    <h1>Welcome, <%= username %></h1>
+    <% if (feedbacks && feedbacks.length > 0) { %>
+        <% feedbacks.forEach(function(feedback) { %>
+        <div class="feedback-card">
+            <strong><%= feedback.username %>:</strong> 
+            <%= feedback.Comments %> (Rating: <%= feedback.rating %>) 
+            
+
+
+            <div class="replies">
+                <% if (feedback.replies && feedback.replies.length > 0) { %>
+                    <% feedback.replies.forEach(function(reply) { %>
+                        <p><strong><%= reply.username %>:</strong> </p>
+                        <p><strong>Reply:</strong> <%= reply.reply %></p>
+                        <button onclick="toggleForm('edit-reply-form-<%= reply.id %>')">Edit Reply</button>
+                        <form id="edit-reply-form-<%= reply.id %>" method="POST" action="/edit-reply" style="display: none;">
+                            <textarea name="reply" rows="3" required><%= reply.reply %></textarea>
+                            <input type="hidden" name="replyId" value="<%= reply.id %>">
+                            <button type="submit">Save Reply</button>
+                        </form>
+                        <form method="POST" action="/delete-reply">
+                            <input type="hidden" name="replyId" value="<%= reply.id %>">
+                            <button type="submit" class="delete-section">Delete Reply</button>
+                        </form>
+                    <% }); %>
+                <% } else { %>
+                    <p>No replies yet.</p>
+                <% } %>
+            </div>
+
+            <div class="edit-section">
+                <button onclick="toggleForm('edit-form-<%= feedback.id %>')">Edit Feedback</button>
+                <form id="edit-form-<%= feedback.id %>" method="POST" action="/edit-feedback" style="display: none;">
+                    <textarea name="Comments" rows="3" required><%= feedback.Comments %></textarea>
+                    <input type="number" name="rating" min="1" max="5" value="<%= feedback.rating %>" required>
+                    <input type="hidden" name="feedbackId" value="<%= feedback.id %>">
+                    <button type="submit">Save Changes</button>
+                </form>
+            </div>
+
+            <form method="POST" action="/delete-feedback">
+                <input type="hidden" name="feedbackId" value="<%= feedback.id %>">
+                <button type="submit" class="delete-section">Delete Feedback Only</button>
+            </form>
+        </div>
+        <% }); %>
+    <% } else { %>
+        <p>No feedback found.</p>
+    <% } %>
+
+    <script>
+        function toggleForm(formId) {
+            const form = document.getElementById(formId);
+            if (form) {
+                form.style.display = form.style.display === "none" ? "block" : "none";
+            }
+        }
+    </script>
+</body>
+</html>
