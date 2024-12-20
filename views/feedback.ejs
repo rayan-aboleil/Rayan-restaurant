@@ -82,7 +82,8 @@
         <div class="feedback-card">
             <strong><%= feedback.username %>:</strong> 
             <%= feedback.Comments %> (Rating: <%= feedback.rating %>) 
-            <small><%= feedback.created_at %></small>
+            
+
 
             <div class="replies">
                 <% if (feedback.replies && feedback.replies.length > 0) { %>
@@ -103,15 +104,6 @@
                 <% } else { %>
                     <p>No replies yet.</p>
                 <% } %>
-            </div>
-
-            <div class="reply-section">
-                <button onclick="toggleForm('reply-form-<%= feedback.id %>')">Reply</button>
-                <form id="reply-form-<%= feedback.id %>" method="POST" action="/reply" style="display: none;">
-                    <textarea name="reply" rows="3" placeholder="Write your reply here..." required></textarea>
-                    <input type="hidden" name="feedbackId" value="<%= feedback.id %>">
-                    <button type="submit">Submit Reply</button>
-                </form>
             </div>
 
             <div class="edit-section">
