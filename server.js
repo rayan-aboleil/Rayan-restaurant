@@ -76,7 +76,7 @@ app.post('/register', (req, res) => {
             return res.status(409).send('Username already exists');
         }
 
-        const query = 'INSERT INTO users (firstName, lastName, username, email, password) VALUES (?, ?, ?, ?, ?)';
+        const query = 'INSERT INTO project (firstName, lastName, username, email, password) VALUES (?, ?, ?, ?, ?)';
         connection.query(query, [firstName, lastName, username, email, password], (err) => {
             if (err) {
                 console.error('Error registering user:', err);
@@ -184,6 +184,44 @@ app.post('/reply', (req, res) => {
     });
 });
 
+// Get all dishes
+app.get('/dishes', (req, res) => {
+    const query = 'SELECT * FROM dishes';
+    connection.query(query, (err, results) => {
+        if (err) return res.status(500).send(err);
+        res.json(results);
+    });
+});
+
+// Add a new dish
+app.post('/add-dish', (req, res) => {
+    const { username, name, image_url, price, old_price, description } = req.body;
+
+    if (!username || !name || !image_url || !price || !description) {
+        return res.status(400).send('All required fields must be filled');
+    }
+
+    const query = 'INSERT INTO dishes (username, name, image_url, price, old_price, description) VALUES (?, ?, ?, ?, ?, ?)';
+  connection.query(query, [username, name, image_url, price, old_price || null, description], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('Error adding dish');
+        }
+        res.status(201).json({ message: 'Dish added successfully', id: results.insertId });
+    });
+});
+
+
+
+// Delete a dish
+app.delete('/delete-dish/:id', (req, res) => {
+    const dishId = req.params.id;
+    const query = 'DELETE FROM dishes WHERE id = ?';
+    connection.query(query, [dishId], (err) => {
+        if (err) return res.status(500).send(err);
+        res.json({ message: 'Dish deleted successfully' });
+    });
+});
 
 
 
@@ -548,19 +586,132 @@ app.get('/view-feedback1', (req, res) => {
 
 
 
-// Contact route
 app.post('/contact1', (req, res) => {
     const { name, email, phone } = req.body;
 
-    const sql = 'INSERT INTO contact (name, email, phone) VALUES (?, ?, ?)';
-    connection.query(sql, [name, email, phone], (err) => {
+    // שאילתת הוספת הנתונים
+    const insertSql = 'INSERT INTO contact (name, email, phone) VALUES (?, ?, ?)';
+    connection.query(insertSql, [name, email, phone], (err) => {
         if (err) {
             console.error('Error inserting contact:', err);
             return res.status(500).send('Error saving contact.');
         }
-        res.send('Contact saved successfully!');
+
+        // שאילתת שליפת כל הנתונים אחרי ההוספה
+        const selectSql = 'SELECT * FROM contact';
+        connection.query(selectSql, (err, results) => {
+            if (err) {
+                console.error('Error fetching contacts:', err);
+                return res.status(500).send('Error fetching contacts.');
+            }
+
+            // יצירת HTML להצגת התוצאות
+            let html = `
+            <!DOCTYPE html>
+            <html lang="he">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>רשימת אנשי קשר</title>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        margin: 0;
+                        padding: 0;
+                        background-color: #f4f4f9;
+                        color: #333;
+                    }
+                    .container {
+                        width: 90%;
+                        max-width: 800px;
+                        margin: 20px auto;
+                        padding: 20px;
+                        background: #ffffff;
+                        border-radius: 15px;
+                        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+                    }
+                    h1 {
+                        text-align: center;
+                        margin-bottom: 20px;
+                        color: #2c3e50;
+                    }
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin: 20px 0;
+                    }
+                    table th, table td {
+                        border: 1px solid #ddd;
+                        padding: 10px;
+                        text-align: left;
+                    }
+                    table th {
+                        background-color: #f2f2f2;
+                        color: #333;
+                    }
+                    .message {
+                        background-color: #dff0d8;
+                        color: #3c763d;
+                        padding: 10px;
+                        margin-bottom: 20px;
+                        border-radius: 5px;
+                        text-align: center;
+                    }
+                    .back-button {
+                        display: inline-block;
+                        margin-top: 20px;
+                        padding: 10px 20px;
+                        font-size: 1em;
+                        color: #fff;
+                        background: linear-gradient(135deg, #007bff, #0056b3);
+                        text-decoration: none;
+                        border-radius: 5px;
+                        text-align: center;
+                        transition: background-color 0.3s ease, transform 0.3s ease;
+                    }
+                    .back-button:hover {
+                        background-color: #004080;
+                        transform: scale(1.05);
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <h1>רשימת אנשי קשר</h1>
+                    <div class="message">הנתון נשמר בהצלחה!</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>שם</th>
+                                <th>אימייל</th>
+                                <th>טלפון</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${results.map((contact, index) => `
+                                <tr>
+                                    <td>${index + 1}</td>
+                                    <td>${contact.name}</td>
+                                    <td>${contact.email}</td>
+                                    <td>${contact.phone}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                    <a href="/" class="back-button">חזור לדף הראשי</a>
+                </div>
+            </body>
+            </html>
+            `;
+
+            // שליחת התוצאה ללקוח
+            res.send(html);
+        });
     });
 });
+
+
 
 // Get username route
 app.get('/get-username', (req, res) => {
