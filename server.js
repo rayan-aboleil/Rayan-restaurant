@@ -508,28 +508,7 @@ app.get('/view-feedback', (req, res) => {
             <html>
                 <head>
                     <title>User Feedback</title>
-                    <style>
-                        body { font-family: Arial, sans-serif; margin: 20px; }
-                        h3 { color: #ff4d4d; }
-                        hr { margin: 20px 0; }
-                        .back-button {
-                            display: inline-block;
-                            margin-top: 20px;
-                            padding: 10px 20px;
-                            font-size: 16px;
-                            color: white;
-                            background-color: #4CAF50;
-                            border: none;
-                            border-radius: 5px;
-                            text-decoration: none;
-                            text-align: center;
-                            cursor: pointer;
-                        }
-                        .back-button:hover {
-                            background-color: #45a049;
-                        }
-                        .replies { margin-left: 20px; }
-                    </style>
+                   
                 </head>
                 <body>
                     <h1>All Feedback</h1>
@@ -581,6 +560,104 @@ app.get('/view-feedback1', (req, res) => {
         }, []);
 
         res.render('feedback.ejs', { feedbacks, username: req.session.username });
+    });
+});
+app.get('/view-blogs', (req, res) => {
+    const query = `
+        SELECT b.id AS blog_id, b.username AS blog_username, b.title, b.content, b.created_at,
+               r.id AS reply_id, r.reply_content, r.username AS reply_username, r.created_at AS reply_created_at 
+        FROM blogs b
+        LEFT JOIN blog_replies r ON b.id = r.blog_id
+        ORDER BY b.created_at DESC, r.created_at ASC
+    `;
+
+    connection.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching blogs:', err);
+            return res.status(500).send('Error retrieving blogs.');
+        }
+
+        // Process the results to group blogs with their replies
+        const blogs = results.reduce((acc, row) => {
+            let blog = acc.find(b => b.id === row.blog_id);
+            if (!blog) {
+                blog = {
+                    id: row.blog_id,
+                    username: row.blog_username,
+                    title: row.title,
+                    content: row.content,
+                    created_at: row.created_at,
+                    replies: []
+                };
+                acc.push(blog);
+            }
+            if (row.reply_id) {
+                blog.replies.push({
+                    id: row.reply_id,
+                    reply_content: row.reply_content,
+                    username: row.reply_username,
+                    created_at: row.reply_created_at
+                });
+            }
+            return acc;
+        }, []);
+
+        // Generate HTML for blogs and replies
+        const blogsHtml = blogs.map(blog => `
+            <div>
+                <h2>${blog.title}</h2>
+                <h3>By: ${blog.username}</h3>
+                <p>${blog.content}</p>
+                <small>Posted on: ${new Date(blog.created_at).toLocaleString()}</small>
+                <div class="replies">
+                    <h4>Replies:</h4>
+                    ${blog.replies.length > 0 ? blog.replies.map(reply => `
+                        <div>
+                            <strong>${reply.username}</strong> replied:
+                            <p>${reply.reply_content}</p>
+                            <small>Submitted on: ${new Date(reply.created_at).toLocaleString()}</small>
+                        </div>
+                    `).join('') : '<p>No replies yet.</p>'}
+                </div>
+            </div>
+            <hr>
+        `).join('');
+
+        res.send(`
+            <html>
+                <head>
+                    <title>View Blogs</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 20px; }
+                        h2 { color: #333; }
+                        h3 { color: #555; }
+                        .replies { margin-left: 20px; border-left: 2px solid #ddd; padding-left: 10px; }
+                        hr { margin: 20px 0; }
+                        .back-button {
+                            display: inline-block;
+                            margin-top: 20px;
+                            padding: 10px 20px;
+                            font-size: 16px;
+                            color: white;
+                            background-color: #4CAF50;
+                            border: none;
+                            border-radius: 5px;
+                            text-decoration: none;
+                            text-align: center;
+                            cursor: pointer;
+                        }
+                        .back-button:hover {
+                            background-color: #45a049;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <h1>All Blogs</h1>
+                    ${blogsHtml}
+                    <a href="/index1.html" class="back-button">Back to Home</a>
+                </body>
+            </html>
+        `);
     });
 });
 
