@@ -505,6 +505,201 @@
     </div>
     </div>
   </section>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .heading {
+        text-align: center;
+        font-size: 24px;
+        margin: 20px 0;
+    }
+
+    #dishes-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .dish-card {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 15px;
+        width: 300px;
+        text-align: center;
+        background: #f9f9f9;
+    }
+
+    .dish-card img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 5px;
+    }
+
+    .dish-card button {
+        background-color: #ff4d4d;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .dish-card button:hover {
+        background-color: #cc0000;
+    }
+
+    form {
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    form input, form textarea, form button {
+        margin: 10px 0;
+        padding: 10px;
+        width: 80%;
+    }
+
+    form button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    form button:hover {
+        background-color: #45a049;
+    }
+</style>
+</head>
+<body>
+<h1 class="heading">Manage Your Dishes</h1>
+
+<section id="dishes-container">
+    <!-- Dishes will be dynamically displayed here -->
+</section>
+
+<section id="addDish">
+    <h1 class="heading">Add a New Dish</h1>
+    <form id="add-dish-form">
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="text" name="name" placeholder="Dish Name" required>
+      <input type="url" name="image_url" placeholder="Image URL" required>
+      <input type="number" name="price" placeholder="Price" required>
+      <input type="number" name="old_price" placeholder="Old Price (Optional)">
+      <textarea name="description" placeholder="Description" required></textarea>
+      <button type="submit">Add Dish</button>
+  </form>
+  
+  
+</section>
+
+<script src="scripts.js" defer></script>
+</body>
+<script>
+  document.getElementById('add-dish-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const dishData = {};
+    formData.forEach((value, key) => {
+        dishData[key] = value;
+    });
+
+    fetch('/add-dish', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dishData)
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Failed to add dish');
+            }
+        })
+        .then(newDish => {
+            alert('Dish added successfully');
+            loadDishes(); // Reload dishes
+            e.target.reset(); // Clear the form
+        })
+        .catch(error => console.error('Error adding dish:', error));
+});
+
+</script>
+<script>
+// Fetch and display all dishes
+function loadDishes() {
+    fetch('/dishes')
+        .then(response => response.json())
+        .then(data => {
+            const dishesContainer = document.getElementById('dishes-container');
+            dishesContainer.innerHTML = ''; // Clear existing content
+
+            data.forEach(dish => {
+                const dishCard = document.createElement('div');
+                dishCard.classList.add('dish-card');
+                dishCard.innerHTML = `
+                    <h3>${dish.name}</h3>
+                    <img src="${dish.image_url}" alt="${dish.name}">
+                    <p>Price: ILS ${dish.price}</p>
+                    <p>${dish.description}</p>
+                    <button onclick="deleteDish(${dish.id})">Delete</button>
+                `;
+                dishesContainer.appendChild(dishCard);
+            });
+        })
+        .catch(error => console.error('Error fetching dishes:', error));
+}
+
+// Add a new dish
+document.getElementById('add-dish-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+
+    fetch('/add-dish', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => {
+            if (response.ok) {
+                loadDishes(); // Reload dishes
+                e.target.reset(); // Reset the form
+            } else {
+                throw new Error('Failed to add dish');
+            }
+        })
+        .catch(error => console.error('Error adding dish:', error));
+});
+
+// Delete a dish
+function deleteDish(dishId) {
+    fetch(`/delete-dish/${dishId}`, {
+        method: 'DELETE'
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message === 'Dish deleted successfully') {
+                loadDishes(); // Reload dishes
+            } else {
+                alert(data.message || 'Failed to delete dish');
+            }
+        })
+        .catch(error => console.error('Error deleting dish:', error));
+}
+
+// Load dishes on page load
+document.addEventListener('DOMContentLoaded', loadDishes);
+</script>
+ 
   <!-- Feedback Section for Restaurant Website -->
 <section class="feedback mt-5" id="feedback" style="background-color: #000000; padding: 0; height: 100vh; display: flex;">
     
@@ -907,7 +1102,44 @@
     </div>
 
   </section>
+<script>
+  // הוספת אירוע לטופס
+document.getElementById('addDishForm').addEventListener('submit', function (e) {
+    e.preventDefault();
 
+    const username = document.getElementById('username').value.trim();
+    const name = document.getElementById('dishName').value.trim();
+    const image = document.getElementById('dishImage').value.trim();
+    const price = document.getElementById('dishPrice').value.trim();
+    const oldPrice = document.getElementById('dishOldPrice').value.trim();
+    const description = document.getElementById('dishDescription').value.trim();
+
+    // בדיקת שדות ריקים
+    if (!username || !name || !image || !price || !description) {
+        alert('Please fill in all required fields.');
+        return;
+    }
+
+    // שליחת הנתונים לשרת
+    fetch('/api/dishes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, name, image, price, oldPrice, description })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Dish added successfully!');
+                loadDishes(); // רענון התפריט
+                this.reset(); // איפוס הטופס
+            } else {
+                alert('Error adding dish.');
+            }
+        })
+        .catch(err => console.error('Error:', err));
+});
+
+</script>
   <!-- contact section ends -->
 
 
